@@ -3,6 +3,7 @@ import { AiFillLock, AiOutlineMail } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import Eddie from '../assets/img/2.png'
+import Logo from '../assets/img/Logo-Pygmalion.png'
 
 const SignIn = () => {
   const [email,setEmail] = useState('')
@@ -16,7 +17,7 @@ const SignIn = () => {
     setError('');
     try {
       await signIn(email,password)
-      navigate('/account')
+      navigate('/home')
     } catch (e) {
       setError(e.message);
       console.log(e.message)
@@ -25,9 +26,11 @@ const SignIn = () => {
   }
 
   return (
+   
     <div className='flex-none md:flex items-center gap-10'>
         <div>
-            <img src={Eddie} alt="" className='w-72'/>
+            <img src={Eddie} alt="" className='hidden md:block w-72 mb-1'/>
+             <img src={Logo} alt="" className='w-72'/>
         </div>
       <div className='max-w-[400px] mx-auto min-h-[600px] px-4 py-20'>
         <h1 className='text-2xl font-bold'>Ingreso</h1>
@@ -66,6 +69,7 @@ const SignIn = () => {
         </p>
       </div>
     </div>
+
   )
 }
 
