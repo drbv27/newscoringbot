@@ -46,10 +46,10 @@ const handleLogout = async () => {
 /* const {userDetails,setUserDetails} =useUsersDB(user) */
 /* console.log(userDetails) */
   return (
-    <div className='rounded-div flex items-center justify-between h-20 font-bold bg-appblue mt-1'>
+    <div className='rounded-div flex items-center justify-between h-20 font-bold' id="upnav">
         <Link to="/">
             <div>
-            <h1 className='text-3xl'>ProductivityApp</h1>
+            <h1 className='text-3xl'>ScoringBot</h1>
             <div className='flex ml-24 mt-2'><p>By: </p><img src={PygmaLogo} alt="" className='w-24 ml-2'/></div>
             </div>
         </Link>
