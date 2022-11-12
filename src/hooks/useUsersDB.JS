@@ -13,24 +13,26 @@ const useUsersDB = (user)=>{
     const userEmail = user.email;
     /* console.log("correo usuario",correoUsuario) */
     /* console.log(usuario.email); */
-
+    
     
     async function searchDocOrCreateDoc(docId){
       //crear referencia sl documento
-      const docuRef = doc(firestore,`usersActivities/${docId}`)
+      const docuRef = doc(firestore,`usersArray/${docId}`)
       //buscar documento
       const query = await getDoc(docuRef);
       //revisar si existe
       if (query.exists()){
         //si si existe
         const infoDoc = query.data();
-        return infoDoc.details;
+        /* console.log(infoDoc) */
+        return infoDoc;
       }else{
         //si no existe
        /*  await setDoc(docuRef,{activities:[...fakeData]}); */
         const query = await getDoc(docuRef);
         const infoDocu = query.data();
-        return infoDocu.details;
+        console.log(infoDocu)
+        return infoDocu;
       }
     }
 

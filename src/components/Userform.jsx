@@ -8,7 +8,7 @@ const animatedComponents = makeAnimated();
 
 const firestore = getFirestore(app)
 
-const UserForm = () => {
+const UserForm = ({usersArray,setUsersArray}) => {
 
   const [value,setValue] = useState("user")
 
@@ -27,9 +27,14 @@ const UserForm = () => {
       country:userCountry,
       city:userCity,
       role:value
-
     }
-    console.log(newUser);
+    const newUsersArray = [
+      ...usersArray,newUser
+    ]
+      const docuRef = doc(firestore, `usersArray`);
+      updateDoc(docuRef,{users:[...newUsersArray]})
+      //actualizar state
+      setTasksArray(newUsersArray);
   }
 
     const myData =  [

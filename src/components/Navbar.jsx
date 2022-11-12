@@ -40,9 +40,10 @@ const handleLogout = async () => {
         }
       }
 
-
+/* console.log(user) */
  const {userDetails,setuserDetails} = useUsersDB(user)
-
+ /* console.log(userDetails.name); */
+/* console.log(user) */
 /* const {userDetails,setUserDetails} =useUsersDB(user) */
 /* console.log(userDetails) */
   return (
@@ -77,7 +78,7 @@ const handleLogout = async () => {
                         <Link to='/dash'><AiOutlineBarChart/></Link>
                     </div>
                     </TooltipP>
-                    {userDetails && !userDetails.isAdmin
+                    {userDetails && userDetails.role==="admin"
                     ?                    <TooltipP tooltipText="Usuarios">
                     <div className='text-4xl'>
                         <Link to='/usersP'><AiOutlineTeam/></Link>
