@@ -27,16 +27,27 @@ console.log(usersArray);
 
   return (
     <div>
+        <div className='columns-4 bg-gray-800 py-4 text-xl text-white text-center'>
+            <p>Nombre Completo</p>
+            <p>Email</p>
+            <p>Rol</p>
+            <p>Acciones</p>
+
+        </div>
         {usersArray.map((user)=>{
             return(
-                <div className='columns-3'>
-                    <p>{user.name}</p>
-                    <p>{user.lastname}</p>
+                <>
+                <div className='columns-4 text-center mt-3'>
+                    <p>{user.name} {user.lastname}</p>
+                    <p>{user.email}</p>
+                    <p>{user.role}</p>
                     <div>
                         <button>editar</button>
                         <button>BORRAR</button>
                     </div>
                 </div>
+                <hr />
+                </>
             )
         })}
     </div>
