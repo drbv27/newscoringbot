@@ -20,7 +20,7 @@ const UsersList = () => {
         setUsersArray(usuarios)
     }
 useEffect(() => {queryUsers()},[])
-console.log(usersArray);
+/* console.log(usersArray); */
 
 
 
@@ -37,7 +37,7 @@ console.log(usersArray);
         {usersArray.map((user)=>{
             return(
                 <>
-                <div className='columns-4 text-center mt-3'>
+                <div className='columns-4 text-center mt-3' key={user.email}>
                     <p>{user.name} {user.lastname}</p>
                     <p>{user.email}</p>
                     <p>{user.role}</p>

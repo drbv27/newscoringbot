@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { UserAuth } from '../context/AuthContext';
 import app from '../firebase';
-import { getFirestore,updateDoc,doc } from 'firebase/firestore'
+import { getFirestore,updateDoc,doc,getDoc,setDoc } from 'firebase/firestore'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 const animatedComponents = makeAnimated();
@@ -10,7 +10,12 @@ const firestore = getFirestore(app)
 
 const UserForm = ({usersArray,setUsersArray}) => {
 
-  const [value,setValue] = useState("user")
+
+  const [rolValue,setRolValue] = useState("user")
+  const { createUser } = UserAuth()
+  const handleChange = (value) =>{
+    setRolValue(value.value)
+  }
 
   async function addUsers(e){
     e.preventDefault();
@@ -19,22 +24,36 @@ const UserForm = ({usersArray,setUsersArray}) => {
     const userEmail = e.target.userFormEmail.value;
     const userCountry = e.target.userFormCountry.value;
     const userCity = e.target.userFormCity.value;
-    /* const userRole = e.target.userFormRole.value; */
-    const newUser = {
-      name:userName,
-      lastname:userLastname,
-      email:userEmail,
-      country:userCountry,
-      city:userCity,
-      role:value
-    }
-    const newUsersArray = [
-      ...usersArray,newUser
-    ]
-      const docuRef = doc(firestore, `usersArray`);
-      updateDoc(docuRef,{users:[...newUsersArray]})
-      //actualizar state
-      setTasksArray(newUsersArray);
+    const password = e.target.userPassword.value;
+    const userRole = e.target.userFormRole.value;
+
+    createUser(userEmail,password)
+
+
+
+      //crear referencia al documento del usuario
+      const docuRef = doc(firestore, `usersArray/${userEmail}`);
+      //buscar usuario
+      const queryUser = await getDoc(docuRef);
+      //reviso si existe el usuario
+      if(queryUser.exists()){
+        //si existe
+        console.log("Ya existe el usuario");
+      }else{
+        //si no existe
+        await setDoc(docuRef,{
+                              name:userName,
+                              lastname:userLastname,
+                              institute:"pygmalion",
+                              email:userEmail,
+                              country:userCountry,
+                              city:userCity,
+                              role:userRole,
+                              password:password,
+                              phone:"564321",
+                              })
+              }
+
   }
 
     const myData =  [
@@ -42,10 +61,9 @@ const UserForm = ({usersArray,setUsersArray}) => {
   { value: 'judge', label: 'Juez' },
   { value: 'admin', label: 'Administrador' },
 ]
+ const roles = ["user","judge","admin"]
 
-const handleChange = (value) =>{
-  setValue(value)
-}
+
   return (
     <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl' onSubmit={addUsers}>
         <div className='mb-4'>
@@ -123,17 +141,22 @@ const handleChange = (value) =>{
                                     focus:ring-opacity-50'
                                     id="userFormCity"/>
         <label htmlFor="userFormRole">Rol</label>
-        <Select
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
-                options={myData}
-                id="userFormRole"
-                value={value}
-                onChange={handleChange}
-                className='mt-1'/>
+        <div className='my-2 w-full relative rounded-2xl shadow-xl'>
+          <input 
+                list="roles" 
+                name="roles" 
+                id="userFormRole" 
+                className='w-full p-2 bg-primary border border-input rounded-2xl' 
+                placeholder='Selecciona Rol' 
+          />
+          <datalist id="roles">
+                {roles.map((rol,index) => (
+                  <option key={index}>{rol}</option>
+                ))}
+          </datalist>
+            </div>
         <div className='inline-block mt-1 w-1/2 pr-1'>
-            <label htmlFor="passWord">Contraseña*</label>
+            <label htmlFor="userPassword">Contraseña*</label>
             <input type="password" className='
                                     mt-1
                                     form-input 
@@ -146,7 +169,7 @@ const handleChange = (value) =>{
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="passWord"/>
+                                    id="userPassword"/>
         </div>
         <div className='inline-block mt-1 w-1/2 pl-1'>
             <label htmlFor="PassConfirm">Confirmar Contraseña*</label>
@@ -165,16 +188,6 @@ const handleChange = (value) =>{
                                     id="PassConfirm"/>
         </div>
 
-
-        <label htmlFor="challenges">Retos</label>
-        <Select
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
-                options={myData}
-                id="challenges"
-                className='
-                        mt-1'/>
 
         <div className='inline-block mt-3 w-1/2 pl-1'>
             <button type="submit" className='bg-blue-900 p-2 text-white rounded mr-2'>Guardar</button>
