@@ -22,10 +22,11 @@ const UserForm = ({usersArray,setUsersArray}) => {
     const userName = e.target.userFormName.value;
     const userLastname = e.target.userFormLastname.value;
     const userEmail = e.target.userFormEmail.value;
+    const userInstitution = e.target.userInstitution.value;
     const userCountry = e.target.userFormCountry.value;
     const userCity = e.target.userFormCity.value;
-    const password = e.target.userPassword.value;
     const userRole = e.target.userFormRole.value;
+    const password = e.target.userPassword.value;
 
     createUser(userEmail,password)
 
@@ -44,25 +45,15 @@ const UserForm = ({usersArray,setUsersArray}) => {
         await setDoc(docuRef,{
                               name:userName,
                               lastname:userLastname,
-                              institute:"pygmalion",
+                              institute:userInstitution,
                               email:userEmail,
                               country:userCountry,
                               city:userCity,
                               role:userRole,
-                              password:password,
-                              phone:"564321",
                               })
               }
-
   }
-
-    const myData =  [
-  { value: 'user', label: 'Usuario' },
-  { value: 'judge', label: 'Juez' },
-  { value: 'admin', label: 'Administrador' },
-]
  const roles = ["user","judge","admin"]
-
 
   return (
     <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl' onSubmit={addUsers}>
@@ -76,7 +67,7 @@ const UserForm = ({usersArray,setUsersArray}) => {
                                     form-input 
                                     block 
                                     w-full 
-                                    rounded-md 
+                                    rounded-2xl 
                                     border-gray-300 
                                     shadow-sm
                                     focus:border-indigo-300 
@@ -90,7 +81,7 @@ const UserForm = ({usersArray,setUsersArray}) => {
                                     form-input 
                                     block 
                                     w-full 
-                                    rounded-md 
+                                    rounded-2xl 
                                     border-gray-300 
                                     shadow-sm
                                     focus:border-indigo-300 
@@ -104,7 +95,7 @@ const UserForm = ({usersArray,setUsersArray}) => {
                                     form-input 
                                     block 
                                     w-full 
-                                    rounded-md 
+                                    rounded-2xl 
                                     border-gray-300 
                                     shadow-sm
                                     focus:border-indigo-300 
@@ -112,13 +103,27 @@ const UserForm = ({usersArray,setUsersArray}) => {
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
                                     id="userFormEmail"/>
-        <label htmlFor="userFormCountry">Pais</label>
+        <label htmlFor="userInstitution">Institución</label>
+        <input type="institution" className='
+                                    mt-1
+                                    form-input 
+                                    block 
+                                    w-full 
+                                    rounded-2xl 
+                                    border-gray-300 
+                                    shadow-sm
+                                    focus:border-indigo-300 
+                                    focus:ring 
+                                    focus:ring-indigo-200 
+                                    focus:ring-opacity-50'
+                                    id="userInstitution"/>
+        <label htmlFor="userInstitution">Pais</label>
         <input type="text" className='
                                     mt-1
                                     form-input 
                                     block 
                                     w-full 
-                                    rounded-md 
+                                    rounded-2xl 
                                     border-gray-300 
                                     shadow-sm
                                     focus:border-indigo-300 
@@ -132,7 +137,7 @@ const UserForm = ({usersArray,setUsersArray}) => {
                                     form-input 
                                     block 
                                     w-full 
-                                    rounded-md 
+                                    rounded-2xl 
                                     border-gray-300 
                                     shadow-sm
                                     focus:border-indigo-300 
@@ -162,7 +167,7 @@ const UserForm = ({usersArray,setUsersArray}) => {
                                     form-input 
                                     block 
                                     w-full 
-                                    rounded-md 
+                                    rounded-2xl 
                                     border-gray-300 
                                     shadow-sm
                                     focus:border-indigo-300 
@@ -178,7 +183,7 @@ const UserForm = ({usersArray,setUsersArray}) => {
                                     form-input 
                                     block 
                                     w-full 
-                                    rounded-md 
+                                    rounded-2xl 
                                     border-gray-300 
                                     shadow-sm
                                     focus:border-indigo-300 
@@ -187,7 +192,6 @@ const UserForm = ({usersArray,setUsersArray}) => {
                                     focus:ring-opacity-50'
                                     id="PassConfirm"/>
         </div>
-
 
         <div className='inline-block mt-3 w-1/2 pl-1'>
             <button type="submit" className='bg-blue-900 p-2 text-white rounded mr-2'>Guardar</button>
