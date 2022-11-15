@@ -1,4 +1,5 @@
 import React, {useState,useEffect} from 'react'
+import { FaUserEdit,FaRegTrashAlt } from 'react-icons/fa'
 import { getFirestore,collection, getDocs } from "firebase/firestore";
 import app from '../firebase';
 const firestore = getFirestore(app)
@@ -42,8 +43,8 @@ useEffect(() => {queryUsers()},[])
                     <p>{user.email}</p>
                     <p>{user.role}</p>
                     <div>
-                        <button>editar</button>
-                        <button>BORRAR</button>
+                        <button><FaUserEdit className='bg-amber-500 p-1 text-3xl text-white rounded border border-amber-800 mr-1'/></button>
+                        <button><FaRegTrashAlt className='bg-red-600 p-1 text-3xl text-white rounded border border-red-800'/></button>
                     </div>
                 </div>
                 <hr />
