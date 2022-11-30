@@ -154,12 +154,12 @@ const UserForm = ({usersArray,setUsersArray}) => {
                 className='w-full p-2 bg-primary border border-input rounded-2xl' 
                 placeholder='Selecciona Rol' 
           />
-          <datalist id="roles">
+            <datalist id="roles">
                 {roles.map((rol,index) => (
                   <option key={index}>{rol}</option>
                 ))}
-          </datalist>
-            </div>
+            </datalist>
+          </div>
         <div className='inline-block mt-1 w-1/2 pr-1'>
             <label htmlFor="userPassword">Contraseña*</label>
             <input type="password" className='

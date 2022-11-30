@@ -24,3 +24,9 @@
 hr{
     border-top: 1px solid #8c8b8b;
 }
+
+.react-switch {
+    vertical-align: middle;
+    margin-left: 4px;
+    margin-bottom: 0.5rem;
+}
