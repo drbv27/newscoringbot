@@ -10,9 +10,13 @@ const Challenges = () => {
         className='text-3xl text-center font-bold text-blue-900'>
           RETOS
         </h1>
-        <div className='mt-4 mb-4 ml-12'>
-          <Link to='/challenges/addchallenge' className='bg-blue-900 text-white p-2  rounded'>
-            Agregar Reto
+        <div className='mt-4 mb-4 ml-12 flex gap-4'>
+          <h2 className='text-2xl'>Agregar reto:</h2>
+          <Link to='/challenges/addtaskchallenge' className='bg-blue-900 text-white p-2  rounded'>
+            Tareas
+          </Link>
+          <Link to='/challenges/addmatchchallenge' className='bg-blue-900 text-white p-2  rounded'>
+            Partido
           </Link>
         </div>
         <ChallengesList/>

@@ -10,7 +10,8 @@ import Users from './routes/Users';
 import Teams from './routes/Teams';
 import AddEvent from './routes/AddEvent';
 import AddUser from './routes/AddUser';
-import AddChallenge from './routes/AddChallenge';
+import AddTaskChallenge from './routes/AddTaskChallenge';
+import AddMatchChallenge from './routes/AddMatchChallenge';
 
 function App() {
 
@@ -22,7 +23,8 @@ function App() {
         <Route path='/events' element={<Events />} />
         <Route path='/events/addevent' element={<AddEvent/>} />
         <Route path='/challenges' element={<Challenges />} />
-        <Route path='/challenges/addchallenge' element={<AddChallenge />} />
+        <Route path='/challenges/addtaskchallenge' element={<AddTaskChallenge />} />
+        <Route path='/challenges/addmatchchallenge' element={<AddMatchChallenge />} />
         <Route path='/users' element={<Users />} />
         <Route path='/users/adduser' element={<AddUser />} />
         <Route path='/teams' element={<Teams />} />

@@ -13,23 +13,23 @@ const LateralBar = () => {
               <Link to='/events' className='menu'>
                 <SiProbot className='iconMenu text-4xl sm:text-xl'/>
               </Link>
-              <Link to='/teams' className='menu invisible sm:visible'>
+              <Link to='/events' className='menu invisible sm:visible'>
                 Eventos
               </Link>
             </li>
             <li className='text-lg pt-4 flex'>
-              <Link to='/teams' className='menu'>
+              <Link to='/challenges' className='menu'>
                 <MdOutlineEmojiEvents className='iconMenu text-4xl sm:text-xl'/>
               </Link>
-              <Link to='/teams' className='menu invisible sm:visible'>
+              <Link to='/challenges' className='menu invisible sm:visible'>
                 Retos
               </Link>
             </li>
             <li className='text-lg pt-4 flex'>
-              <Link to='/teams' className='menu'>
+              <Link to='/users' className='menu'>
                 <HiOutlineUser className='iconMenu text-4xl sm:text-xl'/>
               </Link>
-              <Link to='/teams' className='menu invisible sm:visible'>
+              <Link to='/users' className='menu invisible sm:visible'>
                 Usuarios
               </Link>
             </li>
