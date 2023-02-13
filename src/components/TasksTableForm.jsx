@@ -19,22 +19,7 @@ const TasksTableForm = ({taskArray}) => {
             <th>{task.penalidad}</th>
                         </tr>)}
         </tbody>
-        <tfoot>
-            <tr>
-                <td>
-                    <input type="text" className='mt-5'/>
-                </td>
-                <td>
-                    <input type="text" className='mt-5'/>
-                </td>
-                <td>
-                    <input type="text" className='mt-5'/>
-                </td>
-                <td>
-                    <button>Añadir</button>
-                </td>
-            </tr>
-        </tfoot>
+
     </table>
   )
 }

@@ -29,6 +29,10 @@ const AddTaskChallenge = () => {
   }
   console.log(challType);
 
+  function addTask(){
+
+  }
+
     return (
         <Layout>
             <div className='py-4'>
@@ -216,6 +220,22 @@ const AddTaskChallenge = () => {
                                     focus:ring-opacity-50'
                                     id="maxTaskTime"/>
         <TasksTableForm taskArray={taskArray}/>
+        <tfoot>
+            <tr>
+                <td>
+                    <input type="text" className='mt-5' id="task"/>
+                </td>
+                <td>
+                    <input type="text" className='mt-5' id="points"/>
+                </td>
+                <td>
+                    <input type="text" className='mt-5' id="injurie"/>
+                </td>
+                <td>
+                    <button>Añadir</button>
+                </td>
+            </tr>
+        </tfoot>
           </div>
           {/* {challType === "partido" && <MatchChallengeForm/>} */}
          {/*  {challType === "tareas" && <TaskChallengeForm/>}
