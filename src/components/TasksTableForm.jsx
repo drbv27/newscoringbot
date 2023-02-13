@@ -1,6 +1,7 @@
 import React from 'react'
 
-const TasksTableForm = () => {
+const TasksTableForm = ({taskArray}) => {
+    console.log(taskArray)
   return (
     <table className='mt-5 w-full'>
         <thead className='bg-black text-white mb-5'>
@@ -11,7 +12,13 @@ const TasksTableForm = () => {
                 <th></th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+         {taskArray.map((task)=><tr>
+            <th>{task.tarea}</th>
+            <th>{task.puntos}</th>
+            <th>{task.penalidad}</th>
+                        </tr>)}
+        </tbody>
         <tfoot>
             <tr>
                 <td>
