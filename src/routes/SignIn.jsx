@@ -28,13 +28,13 @@ const SignIn = () => {
   return (
    
     <div className='flex-none md:flex items-center gap-10'>
-        <div>
-            <img src={Eddie} alt="" className='hidden md:block w-72 mb-1'/>
-             <img src={Logo} alt="" className='w-72'/>
-        </div>
-      <div className='max-w-[400px] mx-auto min-h-[600px] px-4 py-20'>
-        <h1 className='text-2xl font-bold'>Ingreso</h1>
-        <form onSubmit={handleSubmit}>
+      <div className='mx-auto'>
+        <img src={Eddie} alt="" className='hidden md:block w-72 mb-1'/>
+        <img src={Logo} alt="" className='w-72 mx-auto'/>
+      </div>
+      <div className='max-w-[600px] mx-auto min-h-[600px] px-1 py-20'>
+        <h1 className='text-2xl font-bold mx-auto'>Ingreso</h1>
+        <form onSubmit={handleSubmit} className="w-96 mx-auto">
           <div className='my-4'>
             <label>Email</label>
             <div className='my-2 w-full relative rounded-2xl shadow-xl'>
@@ -57,7 +57,7 @@ const SignIn = () => {
               <AiFillLock className='absolute right-2 top-3 text-gray-400' />
             </div>
           </div>
-          <button className='w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl'>
+          <button className='bg-sky-500 text-white w-full my-2 p-3 bg-button text-btnText rounded-2xl shadow-xl hover:bg-sky-700 hover:color-white'>
             Ingresar
           </button>
         </form>
