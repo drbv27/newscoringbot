@@ -11,7 +11,44 @@ import TasksTableForm from '../components/TasksTableForm'
 
 const animatedComponents = makeAnimated();
 
+const initialState = {
+    name: "",
+    slug: "",
+    imageURL: "",
+    description: "",
+    maxTeams: 0,
+    maxTurns: 0,
+    topMaxTurns: 0,
+    playoffs: false,
+    finalTeams: 0,
+    categories: [],
+    available: "",
+    maxTime: 0,
+    tasks: [],
+    taskSecuence: true,
+    stopTime: true,
+    bonusType: "",
+  };
+
 const AddTaskChallenge = () => {
+    const [formData, setFormData] = useState(initialState);
+    const {
+        name,
+        slug,
+        imageURL,
+        description,
+        maxTeams,
+        maxTurns,
+        topMaxTurns,
+        tasks,
+        taskSecuence,
+        stopTime,
+        bonusType,
+        maxTime,
+        playoffs,
+        finalTeams,
+        available,
+      } = formData;
     const [challType,setChallType] = useState("none")
     const challengeTypes = ["tareas","partido"]
     const myData =  [
@@ -27,11 +64,12 @@ const AddTaskChallenge = () => {
     const challengeType = e.target.userChallengeType.value
     console.log(challengeType)
   }
-  console.log(challType);
+  /* console.log(challType); */
 
-  function addTask(){
-
-  }
+  const addTask = (task) => {
+    setFormData({ ...formData, tasks: [...tasks, task] });
+    console.log("tareas",tasks)
+};
 
     return (
         <Layout>
@@ -219,22 +257,9 @@ const AddTaskChallenge = () => {
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
                                     id="maxTaskTime"/>
-        <TasksTableForm taskArray={taskArray}/>
+        <TasksTableForm taskArray={tasks}/>
         <tfoot>
-            <tr>
-                <td>
-                    <input type="text" className='mt-5' id="task"/>
-                </td>
-                <td>
-                    <input type="text" className='mt-5' id="points"/>
-                </td>
-                <td>
-                    <input type="text" className='mt-5' id="injurie"/>
-                </td>
-                <td>
-                    <button>Añadir</button>
-                </td>
-            </tr>
+        <MatchChallengeForm addTask={addTask} textButton="Añadir" />
         </tfoot>
           </div>
           {/* {challType === "partido" && <MatchChallengeForm/>} */}

@@ -13,10 +13,10 @@ const TasksTableForm = ({taskArray}) => {
             </tr>
         </thead>
         <tbody>
-         {taskArray.map((task)=><tr>
-            <th>{task.tarea}</th>
-            <th>{task.puntos}</th>
-            <th>{task.penalidad}</th>
+         {taskArray && taskArray.map((task)=><tr>
+            <th>{task.label}</th>
+            <th>{task.points}</th>
+            <th>{task.penalty}</th>
                         </tr>)}
         </tbody>
 
