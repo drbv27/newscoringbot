@@ -61,14 +61,20 @@ const AddTaskChallenge = () => {
 
   async function addChallenge(e){
     e.preventDefault();
-    const challengeType = e.target.userChallengeType.value
-    console.log(challengeType)
+    
+    console.log(formData)
   }
   /* console.log(challType); */
 
   const addTask = (task) => {
     setFormData({ ...formData, tasks: [...tasks, task] });
     console.log("tareas",tasks)
+};
+  const deleteTask = (e,index) => {
+    e.preventDefault()
+    const copyTask= [...tasks]
+    copyTask.splice(index,1)
+    setFormData({ ...formData, tasks: [...copyTask] });
 };
 
     return (
@@ -257,17 +263,12 @@ const AddTaskChallenge = () => {
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
                                     id="maxTaskTime"/>
-        <TasksTableForm taskArray={tasks}/>
-        <tfoot>
+        <TasksTableForm taskArray={tasks} deleteTask={deleteTask}/>
+        
         <MatchChallengeForm addTask={addTask} textButton="Añadir" />
-        </tfoot>
+        
           </div>
-          {/* {challType === "partido" && <MatchChallengeForm/>} */}
-         {/*  {challType === "tareas" && <TaskChallengeForm/>}
-          {(challType !== "tareas"&& challType !== "partido")  && <div>selecciona</div>} */}
-       
-
-
+   
 
         <div className='inline-block mt-3 w-1/2 pl-1'>
             <button type="submit" className='bg-blue-900 p-2 text-white rounded mr-2'>Guardar</button>

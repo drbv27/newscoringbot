@@ -36,6 +36,8 @@ const MatchChallengeForm = ({
   };
 
   return (
+    <table>
+      <tbody>
     <tr>
     <td>
       <input
@@ -72,6 +74,8 @@ const MatchChallengeForm = ({
       </button>
     </td>
   </tr>
+  </tbody>
+  </table>
   )
 }
 
