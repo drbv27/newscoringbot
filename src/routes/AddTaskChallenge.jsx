@@ -59,7 +59,7 @@ const AddTaskChallenge = () => {
     { value: 'junior', label: 'Junior' },
     { value: 'youth', label: 'Juvenil' },
     { value: 'senior', label: 'Senior' },
-    { value: '0', label: 'Finalizar' },
+    { value: '0', label: 'Fin' },
   ]
 
   async function addChallenge(e){
@@ -82,7 +82,7 @@ const AddTaskChallenge = () => {
 };
 
 const handleChange = (e)=>{
-    setFormData({...formData,[e.target.name]:e.target.value})
+    setFormData({...formData,[e.target.name]:e.target.type === 'checkbox' ? e.target.checked : e.target.value})
     /* setFormData({...formData,
         [e.target.name]:e.target.type === 'checkbox' ? e.target.checked : e.target.value}) */
 }
@@ -197,7 +197,7 @@ const handleChangeSelect = (data)=>{
                 /> */}
         <Select
                 closeMenuOnSelect={true}
-                placeholder='Selecciona las categorias y finaliza con "end"'
+                placeholder='Selecciona las categorias y finaliza con "Fin"'
                 components={animatedComponents}
                 isMulti
                 isClearable
@@ -228,7 +228,7 @@ const handleChangeSelect = (data)=>{
                                     value={maxTeams}
                                     onChange={handleChange}/>
 
-        <label htmlFor="userFormRole">Tipo de reto: </label>
+{/*         <label htmlFor="userFormRole">Tipo de reto: </label>
         <div className='my-2 w-full relative rounded-2xl shadow-xl'>
           <input 
                 list="challengetype" 
@@ -243,7 +243,7 @@ const handleChangeSelect = (data)=>{
                   <option key={index}>{type}</option>
                 ))}
             </datalist>
-          </div>
+          </div> */}
           <div>
           <hr className='mt-5'/>
         <h2 className='text-xl font-bold'>Turnos</h2>
@@ -260,7 +260,10 @@ const handleChangeSelect = (data)=>{
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="innings"/>
+                                    id="innings"
+                                    name="maxTurns"
+                                    value={maxTurns}
+                                    onChange={handleChange}/>
         <label htmlFor="inningsTop">No. Turnos por Suma Top para clasificar(*):</label>
         <input type="number" className='
                                     mt-1
@@ -274,10 +277,13 @@ const handleChangeSelect = (data)=>{
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="inningsTop"/>
+                                    id="inningsTop"
+                                    name="topMaxTurns"
+                                    value={topMaxTurns}
+                                    onChange={handleChange}/>
         <hr className='mt-5'/>
         <h2 className='text-xl font-bold'>Finales</h2>
-        <label htmlFor="isPlayOff">PlayOffs:</label>
+        <label htmlFor="playoffs">PlayOffs:</label>
         <input type="checkbox" className='
                                     mt-1
                                     form-input 
@@ -290,8 +296,12 @@ const handleChangeSelect = (data)=>{
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="isPlayOff"/>
-        <label htmlFor="playOffsTeams">No. equipos finalistas:</label>
+                                    id="playoffs"
+                                    name="playoffs"
+                                    checked={playoffs.check}
+                                    value={playoffs}
+                                    onChange={handleChange}/>
+        <label htmlFor="finalTeams">No. equipos finalistas:</label>
         <input type="number" className='
                                     mt-1
                                     form-input 
@@ -304,10 +314,13 @@ const handleChangeSelect = (data)=>{
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="playOffsTeams"/>
+                                    id="finalTeams"
+                                    name="finalTeams"
+                                    value={finalTeams}
+                                    onChange={handleChange}/>
         <hr className='mt-5'/>
         <h2 className='text-xl font-bold'>Tareas</h2>
-        <label htmlFor="maxTaskTime">Tiempo Maxímo (segundos):</label>
+        <label htmlFor="maxTime">Tiempo Maxímo (segundos):</label>
         <input type="number" className='
                                     mt-1
                                     form-input 
@@ -320,13 +333,73 @@ const handleChangeSelect = (data)=>{
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="maxTaskTime"/>
+                                    id="maxTime"
+                                    name="maxTime"
+                                    value={maxTime}
+                                    onChange={handleChange}/>
         <TasksTableForm taskArray={tasks} deleteTask={deleteTask}/>
         
         <MatchChallengeForm addTask={addTask} textButton="Añadir" />
+
+        <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="taskSecuence">
+                    Tareas en secuencia
+                  </label>
+                  <div className="col-sm">
+                    <input
+                      type="checkBox"
+                      name="taskSecuence"
+                      checked={taskSecuence}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          taskSecuence: e.target.checked,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="stopTime">
+                    Detener tiempo última tarea
+                  </label>
+                  <div className="col-sm">
+                    <input
+                      type="checkBox"
+                      name="stopTime"
+                      checked={stopTime}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          stopTime: e.target.checked,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group row">
+                  <label className="col-sm-3 col-form-label" htmlFor="bonusType">
+                    Puntaje Bonus
+                  </label>
+                  <div className="col-sm-6">
+                    <select
+                      className="form-control"
+                      name="bonusType"
+                      id="bonustype"
+                      value={bonusType}
+                      onChange={handleChange}
+                    >
+                      <option value="">Ninguno</option>
+                      <option value="timer">Sumar tiempo restante Timer</option>
+                      <option value="manual">Ingresar manualmente</option>
+                    </select>
+                  </div>
+                </div>
         
           </div>
-   
+        <hr className='mt-4'/>
 
         <div className='inline-block mt-3 w-1/2 pl-1'>
             <button type="submit" className='bg-blue-900 p-2 text-white rounded mr-2'>Guardar</button>
