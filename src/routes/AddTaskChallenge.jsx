@@ -32,11 +32,14 @@ const initialState = {
 
 const AddTaskChallenge = () => {
     const [formData, setFormData] = useState(initialState);
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [choices, setChoices] = useState([]);
     const {
         name,
         slug,
         imageURL,
         description,
+        categories,
         maxTeams,
         maxTurns,
         topMaxTurns,
@@ -56,11 +59,12 @@ const AddTaskChallenge = () => {
     { value: 'junior', label: 'Junior' },
     { value: 'youth', label: 'Juvenil' },
     { value: 'senior', label: 'Senior' },
+    { value: '0', label: 'Finalizar' },
   ]
-    const [taskArray,setTaskArray] = useState([{tarea:"encender vela",puntos:25,penalidad:0}])
 
   async function addChallenge(e){
     e.preventDefault();
+    
     
     console.log(formData)
   }
@@ -76,6 +80,25 @@ const AddTaskChallenge = () => {
     copyTask.splice(index,1)
     setFormData({ ...formData, tasks: [...copyTask] });
 };
+
+const handleChange = (e)=>{
+    setFormData({...formData,[e.target.name]:e.target.value})
+    /* setFormData({...formData,
+        [e.target.name]:e.target.type === 'checkbox' ? e.target.checked : e.target.value}) */
+}
+/* const handleChangeSelect = (e)=>{
+    setChoices(Array.isArray(e) ? e.map(x=>x.value):[])
+    setFormData({...formData, categories:choices})
+    console.log("adentro",choices)
+    console.log(formData)
+} */
+const handleChangeSelect = (data)=>{
+    setSelectedOptions(data);
+    setFormData({...formData, categories:selectedOptions})
+    console.log(selectedOptions)
+}
+
+/* console.log("afuera",selectedOptions) */
 
     return (
         <Layout>
@@ -101,7 +124,10 @@ const AddTaskChallenge = () => {
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="name"/>
+                            id="name"
+                            name="name"
+                            value={name}
+                            onChange={handleChange}/>
         <label htmlFor="challengeSlug">Slug Reto (*):</label>
         <input type="text" className='
                                     mt-1
@@ -115,7 +141,10 @@ const AddTaskChallenge = () => {
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="challengeSlug"/>
+                            id="challengeSlug"
+                            name="slug"
+                            value={slug}
+                            onChange={handleChange}/>
         <label htmlFor="urlImage">url imagen(*):</label>
         <input type="text" className='
                                     mt-1
@@ -129,7 +158,11 @@ const AddTaskChallenge = () => {
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="urlImage"/>
+                            id="urlImage"
+                            name="imageURL"
+                            value={imageURL}
+                            onChange={handleChange}
+                                    />
         <label htmlFor="description">Descripcion: </label>
         <textarea  className='
                                     mt-1
@@ -143,17 +176,39 @@ const AddTaskChallenge = () => {
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="description"/>
+                                    id="description"
+                                    name="description"
+                                    value={description}
+                                    onChange={handleChange}/>
 
         <label htmlFor="categorias">Categorias (*): </label>
-        <Select
-                closeMenuOnSelect={false}
+{/*         <Select
+                closeMenuOnSelect={true}
+                placeholder="Selecciona las categorias"
                 components={animatedComponents}
                 isMulti
+                isClearable
                 options={myData}
                 id="categorias"
-                className='
-                        mt-1'/>
+                className='mt-1'
+                name="categorias"
+                value={myData.filter(obj => choices.includes(obj.value))}
+                onChange={handleChangeSelect}
+                /> */}
+        <Select
+                closeMenuOnSelect={true}
+                placeholder='Selecciona las categorias y finaliza con "end"'
+                components={animatedComponents}
+                isMulti
+                isClearable
+                options={myData}
+                id="categories"
+                className='mt-1'
+                name="categories"
+                value={selectedOptions}
+                onChange={handleChangeSelect}
+                />
+
 
         <label htmlFor="maxTeams">maximo de equipos(*):</label>
         <input type="number" className='
@@ -168,7 +223,10 @@ const AddTaskChallenge = () => {
                                     focus:ring 
                                     focus:ring-indigo-200 
                                     focus:ring-opacity-50'
-                                    id="maxTeams"/>
+                                    id="maxTeams"
+                                    name="maxTeams"
+                                    value={maxTeams}
+                                    onChange={handleChange}/>
 
         <label htmlFor="userFormRole">Tipo de reto: </label>
         <div className='my-2 w-full relative rounded-2xl shadow-xl'>

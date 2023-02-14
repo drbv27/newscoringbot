@@ -12,6 +12,7 @@ import AddEvent from './routes/AddEvent';
 import AddUser from './routes/AddUser';
 import AddTaskChallenge from './routes/AddTaskChallenge';
 import AddMatchChallenge from './routes/AddMatchChallenge';
+import MiPrueba from './routes/MiPrueba';
 
 function App() {
 
@@ -27,7 +28,8 @@ function App() {
         <Route path='/challenges/addmatchchallenge' element={<AddMatchChallenge />} />
         <Route path='/users' element={<Users />} />
         <Route path='/users/adduser' element={<AddUser />} />
-        <Route path='/teams' element={<Teams />} />
+        <Route path='/users/adduser' element={<AddUser />} />
+        <Route path='/prueba' element={<MiPrueba />} />
       </Routes>
     </AuthContextProvider>
   )

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const TasksTableForm = ({taskArray,deleteTask}) => {
-    console.log(taskArray)
+    /* console.log(taskArray) */
   return (
     <table className='mt-5 w-full'>
         <thead className='bg-black text-white mb-5'>
