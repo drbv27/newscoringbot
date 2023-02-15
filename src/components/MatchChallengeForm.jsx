@@ -36,46 +36,71 @@ const MatchChallengeForm = ({
   };
 
   return (
-    <table>
-      <tbody>
-    <tr>
-    <td>
+    <div className='flex justify-between'>
       <input
         type="text"
-        className="form-control"
         placeholder="Nombre Tarea"
         name="label"
         value={label}
         onChange={handleChange}
+        className='
+                  form-control
+                  mt-1
+                  form-input 
+                  block
+                  w-full 
+                  rounded-md 
+                  border-gray-300 
+                  shadow-sm
+                  focus:border-indigo-300 
+                  focus:ring 
+                  focus:ring-indigo-200 
+                  focus:ring-opacity-50'
       />
-    </td>
-    <td>
       <input
         type="number"
-        className="form-control"
         name="points"
         value={points}
         onChange={handleChange}
+        className='
+                  form-control
+                  mt-1
+                  form-input 
+                  block
+                  w-full 
+                  rounded-md 
+                  border-gray-300 
+                  shadow-sm
+                  focus:border-indigo-300 
+                  focus:ring 
+                  focus:ring-indigo-200 
+                  focus:ring-opacity-50'
       />
-    </td>
-
-    <td>
       <input
         type="number"
-        className="form-control"
         name="penalty"
         value={penalty}
         onChange={handleChange}
+        className='
+                  form-control
+                  mt-1
+                  form-input 
+                  block
+                  w-full 
+                  rounded-md 
+                  border-gray-300 
+                  shadow-sm
+                  focus:border-indigo-300 
+                  focus:ring 
+                  focus:ring-indigo-200 
+                  focus:ring-opacity-50'
       />
-    </td>
-    <td>
-      <button className="btn btn-sm btn-primary" onClick={handleSubmit}>
+      <button className='bg-blue-900 p-2 text-white rounded mr-2' onClick={handleSubmit}>
         {textButton}
       </button>
-    </td>
-  </tr>
-  </tbody>
-  </table>
+
+    </div>
+    
   )
 }
 

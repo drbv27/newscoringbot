@@ -3,9 +3,9 @@ import React from 'react'
 const TasksTableForm = ({taskArray,deleteTask}) => {
     /* console.log(taskArray) */
   return (
-    <table className='mt-5 w-full'>
-        <thead className='bg-black text-white mb-5'>
-            <tr>
+    <table className='mt-5 w-full mb-2'>
+        <thead className='bg-sky-900 text-white mb-5 rounded-sm'>
+            <tr className='rounded-sm'>
                 <th>Tarea</th>
                 <th>Puntos</th>
                 <th>Penalidad</th>
