@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import Switch from "react-switch";
 
-const BasicHooksExample = () => {
+const BasicHooksExample = ({functionChange}) => {
   const [checked, setChecked] = useState(false);
   const handleChange = nextChecked => {
     setChecked(nextChecked);
