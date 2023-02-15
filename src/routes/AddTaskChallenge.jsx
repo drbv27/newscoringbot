@@ -22,11 +22,11 @@ const initialState = {
     playoffs: false,
     finalTeams: 0,
     categories: [],
-    available: "",
+    available: false,
     maxTime: 0,
     tasks: [],
-    taskSecuence: true,
-    stopTime: true,
+    taskSecuence: false,
+    stopTime: false,
     bonusType: "",
   };
 
@@ -96,24 +96,32 @@ const AddTaskChallenge = () => {
                 <Link to="/challenges" className='bg-blue-900 text-white p-2 mt-8 ml-24 rounded'>Atrás</Link>
             </div>
             <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl' onSubmit={addChallenge}>
-                <div className='mb-4'>
+                <div className='mb-4 flex'>
                     <h1 className='text-4xl font-bold text-blue-900'>Agregar Reto</h1>
-                    <ToggleSwitch functionChange={handleChange}/>
-                    <div className="col-sm">
-                        <input
-                            id="available"
-                            name="available"
-                            type="checkbox"
-                            checked={available}
-                            className="form-control-custom"
-                            onChange={() =>
-                                setFormData({
-                                ...formData,
-                                available: !formData.available,})
-                            }
-                        />
+                    <div className='ml-auto flex gap-2'>
+                        <label htmlFor="available" className='text-xl'>Habilitar:</label>
+                        <input type="checkbox" className='
+                                                        mt-1
+                                                        form-input 
+                                                        block 
+                                                        h-6
+                                                        rounded-md 
+                                                        border-gray-300 
+                                                        shadow-sm
+                                                        focus:border-indigo-300 
+                                                        focus:ring 
+                                                        ocus:ring-indigo-200 
+                                                        focus:ring-opacity-50'
+                                                id="available"
+                                                name="available"
+                                                checked={available.check}
+                                                value={available}
+                                                onChange={() =>
+                                                    setFormData({
+                                                    ...formData,
+                                                    available: !formData.available,})}/>
                     </div>
-                <hr className='text-black'/>
+                    <hr className='text-black'/>
                 </div>
                 <label htmlFor="name">Nombre Reto (*):</label>
                 <input type="text" className='
@@ -253,24 +261,26 @@ const AddTaskChallenge = () => {
                                         onChange={handleChange}/>
                     <hr className='mt-5'/>
                     <h2 className='text-xl font-bold'>Finales</h2>
-                    <label htmlFor="playoffs">PlayOffs:</label>
-                    <input type="checkbox" className='
-                                                    mt-1
-                                                    form-input 
-                                                    block 
-                                                    h-6
-                                                    rounded-md 
-                                                    border-gray-300 
-                                                    shadow-sm
-                                                    focus:border-indigo-300 
-                                                    focus:ring 
-                                                    focus:ring-indigo-200 
-                                                    focus:ring-opacity-50'
-                                            id="playoffs"
-                                            name="playoffs"
-                                            checked={playoffs.check}
-                                            value={playoffs}
-                                            onChange={handleChange}/>
+                    <div className='flex gap-2'>
+                        <label htmlFor="playoffs" className='text-lg'>PlayOffs:</label>
+                        <input type="checkbox" className='
+                                                        mt-1
+                                                        form-input 
+                                                        block 
+                                                        h-6
+                                                        rounded-md 
+                                                        border-gray-300 
+                                                        shadow-sm
+                                                        focus:border-indigo-300 
+                                                        focus:ring 
+                                                        focus:ring-indigo-200 
+                                                        focus:ring-opacity-50'
+                                                id="playoffs"
+                                                name="playoffs"
+                                                checked={playoffs.check}
+                                                value={playoffs}
+                                                onChange={handleChange}/>
+                    </div>
                     <label htmlFor="finalTeams">No. equipos finalistas:</label>
                     <input type="number" className='
                                                     mt-1
@@ -309,41 +319,63 @@ const AddTaskChallenge = () => {
                                         onChange={handleChange}/>
                     <TasksTableForm taskArray={tasks} deleteTask={deleteTask}/>
                     <MatchChallengeForm addTask={addTask} textButton="Añadir" />
-                    <div className="form-group row">
-                        <label className="col-sm-3 col-form-label" htmlFor="taskSecuence">
+                    <div className='flex gap-2 mt-2'>
+                        <label htmlFor="taskSecuence" className='text-lg'>
                             Tareas en secuencia
                         </label>
-                        <div className="col-sm">
-                            <input
-                                type="checkBox"
-                                name="taskSecuence"
-                                checked={taskSecuence}
-                                onChange={(e) =>
-                                    setFormData({
-                                    ...formData,
-                                    taskSecuence: e.target.checked,
-                                    })
-                            }/>
-                        </div>
+                        <input type="checkbox" className='
+                                                        mt-1
+                                                        form-input 
+                                                        block 
+                                                        h-6
+                                                        rounded-md 
+                                                        border-gray-300 
+                                                        shadow-sm
+                                                        focus:border-indigo-300 
+                                                        focus:ring 
+                                                        focus:ring-indigo-200 
+                                                        focus:ring-opacity-50'
+                                                id="taskSecuence"
+                                                name="taskSecuence"
+                                                checked={taskSecuence.check}
+                                                value={taskSecuence}
+                                                onChange={(e) =>
+                                                            setFormData({
+                                                            ...formData,
+                                                            taskSecuence: e.target.checked,
+                                                            })
+                                                        }
+                        />
                     </div>
-                    <div className="form-group row">
-                        <label className="col-sm-3 col-form-label" htmlFor="stopTime">
-                            Detener tiempo última tarea
+                    <div className='flex gap-2 mt-2'>
+                        <label htmlFor="stopTime" className='text-lg'>
+                            Detener tiempo última vuelta
                         </label>
-                        <div className="col-sm">
-                            <input
-                                type="checkBox"
-                                name="stopTime"
-                                checked={stopTime}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        stopTime: e.target.checked,
-                                    })
-                                }
-                            />
-                        </div>
+                        <input type="checkbox" className='
+                                                        mt-1
+                                                        form-input 
+                                                        block 
+                                                        h-6
+                                                        rounded-md 
+                                                        border-gray-300 
+                                                        shadow-sm
+                                                        focus:border-indigo-300 
+                                                        focus:ring 
+                                                        focus:ring-indigo-200 
+                                                        focus:ring-opacity-50'
+                                                id="stopTime"
+                                                name="stopTime"
+                                                checked={stopTime.check}
+                                                value={stopTime}
+                                                onChange={(e) =>
+                                                            setFormData({
+                                                            ...formData,
+                                                            stopTime: e.target.checked,
+                                                            })
+                                                        }
+                        />
                     </div>
+
                     <div className="form-group row">
                         <label className="col-sm-3 col-form-label" htmlFor="bonusType">
                             Puntaje Bonus
