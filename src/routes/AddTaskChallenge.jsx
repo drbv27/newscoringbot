@@ -9,6 +9,10 @@ import MatchChallengeForm from '../components/MatchChallengeForm';
 import TaskChallengeForm from '../components/TaskChallengeForm';
 import TasksTableForm from '../components/TasksTableForm'
 import { CategoriesType } from '../helpers/categories'
+import app from '../firebase';
+import { getFirestore,updateDoc,doc,setDoc } from 'firebase/firestore';
+
+const firestore = getFirestore(app)
 
 const animatedComponents = makeAnimated();
 const initialState = {
@@ -61,9 +65,17 @@ const AddTaskChallenge = () => {
 
     async function addChallenge(e){
     e.preventDefault();
-
-
+    numberFormat()
     console.log(formData)
+    await setDoc(doc(firestore,"challenges",name),formData)
+    }
+
+    const numberFormat = () => {
+        setFormData({...formData,maxTeams:parseInt(maxTeams)})
+        setFormData({...formData,maxTurns:parseInt(maxTurns)})
+        setFormData({...formData,finalTeams:parseInt(finalTeams)})
+        setFormData({...formData,maxTime:parseInt(maxTime)})
+        setFormData({...formData,topMaxTurns:parseInt(topMaxTurns)})
     }
 
     const addTask = (task) => {
@@ -80,6 +92,7 @@ const AddTaskChallenge = () => {
 
     const handleChange = (e)=>{
     setFormData({...formData,[e.target.name]:e.target.type === 'checkbox' ? e.target.checked : e.target.value})
+    /* setFormData({...formData,maxTeams:parseInt(maxTeams)}) */
     };
 
     const handleChangeSelect = (e)=>{
@@ -199,7 +212,7 @@ const AddTaskChallenge = () => {
 
                 <label htmlFor="categorias">Categorias (*): </label>
                 <Select
-                        placeholder='Selecciona las categorias y finaliza con "Fin"'
+                        placeholder='Selecciona las categorias'
                         closeMenuOnSelect={true}
                         components={animatedComponents}
                         isMulti
@@ -247,7 +260,7 @@ const AddTaskChallenge = () => {
                                         name="maxTurns"
                                         value={maxTurns}
                                         onChange={handleChange}/>
-                    <label htmlFor="inningsTop">No. Turnos por Suma Top para clasificar(*):</label>
+                    <label htmlFor="topMaxTurns">No. Turnos por Suma Top para clasificar(*):</label>
                     <input type="number" className='
                                                     mt-1
                                                     form-input 
@@ -260,7 +273,7 @@ const AddTaskChallenge = () => {
                                                     focus:ring 
                                                     focus:ring-indigo-200 
                                                     focus:ring-opacity-50'
-                                        id="inningsTop"
+                                        id="topMaxTurns"
                                         name="topMaxTurns"
                                         value={topMaxTurns}
                                         onChange={handleChange}/>
