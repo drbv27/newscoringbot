@@ -8,9 +8,9 @@ import makeAnimated from 'react-select/animated';
 import MatchChallengeForm from '../components/MatchChallengeForm';
 import TaskChallengeForm from '../components/TaskChallengeForm';
 import TasksTableForm from '../components/TasksTableForm'
+import { CategoriesType } from '../helpers/categories'
 
 const animatedComponents = makeAnimated();
-
 const initialState = {
     name: "",
     slug: "",
@@ -31,8 +31,15 @@ const initialState = {
   };
 
 const AddTaskChallenge = () => {
+      // selecet Categories use State
+    const categoryOptions = CategoriesType.map((elm, index) => ({
+                    value: index,
+                     label: elm,
+                            }));
+    const [selectedCategory, setSelectedCategory] = useState([])
+
     const [formData, setFormData] = useState(initialState);
-    const [selectedOptions, setSelectedOptions] = useState([]);
+    /* const [selectedOptions, setSelectedOptions] = useState([]); */
     const {
         name,
         slug,
@@ -51,41 +58,39 @@ const AddTaskChallenge = () => {
         finalTeams,
         available,
       } = formData;
-    const myData =  [
-    { value: 'child', label: 'Infantil' },
-    { value: 'junior', label: 'Junior' },
-    { value: 'youth', label: 'Juvenil' },
-    { value: 'senior', label: 'Senior' },
-    { value: '0', label: 'Fin' },
-    ]
 
-  async function addChallenge(e){
+    async function addChallenge(e){
     e.preventDefault();
-    
-    
-    console.log(formData)
-  }
 
-  const addTask = (task) => {
+
+    console.log(formData)
+    }
+
+    const addTask = (task) => {
     setFormData({ ...formData, tasks: [...tasks, task] });
     console.log("tareas",tasks)
     };
 
-  const deleteTask = (e,index) => {
+    const deleteTask = (e,index) => {
     e.preventDefault()
     const copyTask= [...tasks]
     copyTask.splice(index,1)
     setFormData({ ...formData, tasks: [...copyTask] });
     };
 
-  const handleChange = (e)=>{
+    const handleChange = (e)=>{
     setFormData({...formData,[e.target.name]:e.target.type === 'checkbox' ? e.target.checked : e.target.value})
     };
 
-  const handleChangeSelect = (data)=>{
-    setSelectedOptions(data);
-    setFormData({...formData, categories:selectedOptions})
-    console.log(selectedOptions)
+    const handleChangeSelect = (e)=>{
+    const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
+    setSelectedCategory(selectedOptions)
+    setFormData({
+        ...formData,
+        categories: categoryOptions
+            .filter((option) => selectedOptions.includes(option.value))
+            .map((elm) => elm.label),
+        });
     };
 
 /* console.log("afuera",selectedOptions) */
@@ -199,11 +204,11 @@ const AddTaskChallenge = () => {
                         components={animatedComponents}
                         isMulti
                         isClearable
-                        options={myData}
+                        options={categoryOptions}
                         id="categories"
                         className='mt-1'
                         name="categories"
-                        value={selectedOptions}
+                        value={categoryOptions.filter((elm)=>selectedCategory.includes(elm.value))}
                         onChange={handleChangeSelect}/>
                 <label htmlFor="maxTeams">maximo de equipos(*):</label>
                 <input type="number" className='
