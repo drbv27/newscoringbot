@@ -36,7 +36,7 @@ const MatchChallengeForm = ({
   };
 
   return (
-    <div className='flex justify-between'>
+    <div className='flex gap-1'>
       <input
         type="text"
         placeholder="Nombre Tarea"
@@ -47,15 +47,14 @@ const MatchChallengeForm = ({
                   form-control
                   mt-1
                   form-input 
-                  block
-                  w-full 
                   rounded-md 
                   border-gray-300 
                   shadow-sm
                   focus:border-indigo-300 
                   focus:ring 
                   focus:ring-indigo-200 
-                  focus:ring-opacity-50'
+                  focus:ring-opacity-50
+                  grow'
       />
       <input
         type="number"
@@ -66,15 +65,14 @@ const MatchChallengeForm = ({
                   form-control
                   mt-1
                   form-input 
-                  block
-                  w-full 
                   rounded-md 
                   border-gray-300 
                   shadow-sm
                   focus:border-indigo-300 
                   focus:ring 
                   focus:ring-indigo-200 
-                  focus:ring-opacity-50'
+                  focus:ring-opacity-50
+                  grow'
       />
       <input
         type="number"
@@ -85,17 +83,16 @@ const MatchChallengeForm = ({
                   form-control
                   mt-1
                   form-input 
-                  block
-                  w-full 
                   rounded-md 
                   border-gray-300 
                   shadow-sm
                   focus:border-indigo-300 
                   focus:ring 
                   focus:ring-indigo-200 
-                  focus:ring-opacity-50'
+                  focus:ring-opacity-50
+                  grow'
       />
-      <button className='bg-blue-900 p-2 text-white rounded mr-2' onClick={handleSubmit}>
+      <button className='bg-blue-900 p-2 text-white rounded mr-2 grow' onClick={handleSubmit}>
         {textButton}
       </button>
 

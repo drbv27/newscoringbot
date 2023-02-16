@@ -1,4 +1,5 @@
 import React from 'react'
+import { BsTrash } from 'react-icons/bs'
 
 const TasksTableForm = ({taskArray,deleteTask}) => {
     /* console.log(taskArray) */
@@ -9,16 +10,26 @@ const TasksTableForm = ({taskArray,deleteTask}) => {
                 <th>Tarea</th>
                 <th>Puntos</th>
                 <th>Penalidad</th>
-                <th></th>
+                <th>acción</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody >
          {taskArray && taskArray.map((task,index)=>
-         <tr key={index}>
-            <th>{task.label}</th>
-            <th>{task.points}</th>
-            <th>{task.penalty}</th>
-            <th><button onClick={(e)=>deleteTask(e,index)}>Borrar</button></th>
+         <tr key={index} className='pt-12'>
+            <th className='pt-2'>{task.label}</th>
+            <th className='pt-2'>{task.points}</th>
+            <th className='pt-2'>{task.penalty}</th>
+            <th>
+              <button onClick={(e)=>deleteTask(e,index)}
+                      className='
+                                text-white
+                                bg-red-600
+                                p-1.5
+                                rounded-md
+                                '>
+                <BsTrash />
+              </button>
+            </th>
         </tr>)}
         </tbody>
 

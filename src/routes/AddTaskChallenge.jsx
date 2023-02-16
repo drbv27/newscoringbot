@@ -376,13 +376,24 @@ const AddTaskChallenge = () => {
                         />
                     </div>
 
-                    <div className="form-group row">
+                    <div className="mt-3">
                         <label className="col-sm-3 col-form-label" htmlFor="bonusType">
                             Puntaje Bonus
                         </label>
-                        <div className="col-sm-6">
+                        <div className="">
                             <select
-                                className="form-control"
+                                className='
+                                            p-2
+                                            border-gray-300
+                                            rounded-md
+                                            form-input
+                                            mt-1
+                                            block
+                                            shadow-sm
+                                            focus:border-indigo-300 
+                                            focus:ring 
+                                            focus:ring-indigo-200 
+                                            focus:ring-opacity-50'
                                 name="bonusType"
                                 id="bonustype"
                                 value={bonusType}
