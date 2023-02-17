@@ -67,10 +67,8 @@ const AddTaskChallenge = () => {
 
     async function addChallenge(e){
     e.preventDefault();
-    console.log("uno",formData)
-    /* await setDoc(doc(firestore,"challenges",name),formData) */
+    await setDoc(doc(firestore,"challenges",name),formData)
     cleanForm(e)
-    console.log("dos",formData)
     }
 
     const cleanForm = (e) => {
