@@ -126,7 +126,7 @@ const AddTaskChallenge = () => {
             <div className='py-4'>
                 <Link to="/challenges" className='bg-blue-900 text-white p-2 mt-8 ml-24 rounded'>Atrás</Link>
             </div>
-            <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl' onSubmit={addChallenge}>
+            <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl mb-5' onSubmit={addChallenge}>
                 <div className='mb-4 flex'>
                     <h1 className='text-4xl font-bold text-blue-900'>Agregar Reto</h1>
                     <div className='ml-auto flex gap-2'>

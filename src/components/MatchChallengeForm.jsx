@@ -36,7 +36,7 @@ const MatchChallengeForm = ({
   };
 
   return (
-    <div className='flex gap-1'>
+    <div className='flex:lg gap-1'>
       <input
         type="text"
         placeholder="Nombre Tarea"
