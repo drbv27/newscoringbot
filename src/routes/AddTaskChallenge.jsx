@@ -63,20 +63,14 @@ const AddTaskChallenge = () => {
         available,
       } = formData;
 
+
     async function addChallenge(e){
     e.preventDefault();
-    numberFormat()
-    console.log(formData)
-    await setDoc(doc(firestore,"challenges",name),formData)
+    console.log("dos",formData)
+    /* await setDoc(doc(firestore,"challenges",name),formData) */
     }
 
-    const numberFormat = () => {
-        setFormData({...formData,maxTeams:parseInt(maxTeams)})
-        setFormData({...formData,maxTurns:parseInt(maxTurns)})
-        setFormData({...formData,finalTeams:parseInt(finalTeams)})
-        setFormData({...formData,maxTime:parseInt(maxTime)})
-        setFormData({...formData,topMaxTurns:parseInt(topMaxTurns)})
-    }
+
 
     const addTask = (task) => {
     setFormData({ ...formData, tasks: [...tasks, task] });
@@ -91,8 +85,18 @@ const AddTaskChallenge = () => {
     };
 
     const handleChange = (e)=>{
-    setFormData({...formData,[e.target.name]:e.target.type === 'checkbox' ? e.target.checked : e.target.value})
-    /* setFormData({...formData,maxTeams:parseInt(maxTeams)}) */
+    /* setFormData({...formData,[e.target.name]:e.target.type === 'checkbox' ? e.target.checked : e.target.value}) */
+    setFormData({...formData,
+        [e.target.name]:
+        ('maxTurns'===e.target.name
+        ||'maxTeams'===e.target.name
+        ||'finalTeams'===e.target.name
+        ||'maxTime'===e.target.name
+        ||'topMaxTurns'===e.target.name)
+        ? parseInt(e.target.value)
+        :e.target.type === 'checkbox'
+        ? e.target.checked 
+        : e.target.value})
     };
 
     const handleChangeSelect = (e)=>{
