@@ -32,6 +32,7 @@ const initialState = {
     taskSecuence: false,
     stopTime: false,
     bonusType: "",
+    challengeType:"tasks"
   };
 
 const AddTaskChallenge = () => {
@@ -128,7 +129,7 @@ const AddTaskChallenge = () => {
             </div>
             <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl mb-5' onSubmit={addChallenge}>
                 <div className='mb-4 flex'>
-                    <h1 className='text-4xl font-bold text-blue-900'>Agregar Reto</h1>
+                    <h1 className='text-4xl font-bold text-blue-900'>Agregar Reto Tareas</h1>
                     <div className='ml-auto flex gap-2'>
                         <label htmlFor="available" className='text-xl'>Habilitar:</label>
                         <input type="checkbox" className='
@@ -358,7 +359,6 @@ const AddTaskChallenge = () => {
                                         onChange={handleChange}/>
                     <TasksTableForm taskArray={tasks} deleteTask={deleteTask}/>
                     <TaskChallengeForm addTask={addTask} textButton="Añadir" />
-                    {/* <MatchChallengeForm addTask={addTask} textButton="Añadir" /> */}
                     <div className='flex gap-2 mt-2'>
                         <label htmlFor="taskSecuence" className='text-lg'>
                             Tareas en secuencia
@@ -383,8 +383,7 @@ const AddTaskChallenge = () => {
                                                             setFormData({
                                                             ...formData,
                                                             taskSecuence: e.target.checked,
-                                                            })
-                                                        }
+                                                            })}
                         />
                     </div>
                     <div className='flex gap-2 mt-2'>
@@ -411,8 +410,7 @@ const AddTaskChallenge = () => {
                                                             setFormData({
                                                             ...formData,
                                                             stopTime: e.target.checked,
-                                                            })
-                                                        }
+                                                            })}
                         />
                     </div>
 
@@ -445,14 +443,12 @@ const AddTaskChallenge = () => {
                             </select>
                         </div>
                     </div>
-        
                 </div>
                 <hr className='mt-4'/>
                 <div className='inline-block mt-3 w-1/2 pl-1'>
                     <button type="submit" className='bg-blue-900 p-2 text-white rounded mr-2'>Guardar</button>
                     <button type="reset" className='border border-blue-900 p-2 text-blue-900 rounded'>Cancelar</button>
                 </div>
-
             </form>
         </Layout>
     )
