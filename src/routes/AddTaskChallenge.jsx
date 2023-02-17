@@ -357,7 +357,8 @@ const AddTaskChallenge = () => {
                                         value={maxTime}
                                         onChange={handleChange}/>
                     <TasksTableForm taskArray={tasks} deleteTask={deleteTask}/>
-                    <MatchChallengeForm addTask={addTask} textButton="Añadir" />
+                    <TaskChallengeForm addTask={addTask} textButton="Añadir" />
+                    {/* <MatchChallengeForm addTask={addTask} textButton="Añadir" /> */}
                     <div className='flex gap-2 mt-2'>
                         <label htmlFor="taskSecuence" className='text-lg'>
                             Tareas en secuencia

@@ -1,88 +1,103 @@
-import React from 'react'
-import TasksTableForm from './TasksTableForm'
+import React,{useState} from 'react'
 
-const TaskChallengeForm = () => {
+const initialState = {
+  label: "",
+  points: 0,
+  penalty: 0,
+};
+
+const TaskChallengeForm = ({
+  index,
+  task,
+  textButton,
+  addTask,
+  updateTask,
+  setEdit,
+}) => {
+
+  const [newTask, setNewTask] = useState(task ? task : initialState);
+  const { label, points, penalty } = newTask;
+
+  const handleChange = (e) => {
+    setNewTask({ ...newTask, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (label !== "" && !task) {
+      addTask(newTask);
+    } else {
+      updateTask(index, newTask);
+      setEdit(false);
+    }
+
+    setNewTask(initialState);
+  };
+
   return (
-    <>
-        <hr className='mt-5'/>
-        <h2 className='text-xl font-bold'>Turnos</h2>
-        <label htmlFor="innings">No. Turnos por Equipo(*):</label>
-        <input type="number" className='
-                                    mt-1
-                                    form-input 
-                                    block 
-                                    w-full 
-                                    rounded-md 
-                                    border-gray-300 
-                                    shadow-sm
-                                    focus:border-indigo-300 
-                                    focus:ring 
-                                    focus:ring-indigo-200 
-                                    focus:ring-opacity-50'
-                                    id="innings"/>
-        <label htmlFor="inningsTop">No. Turnos por Suma Top para clasificar(*):</label>
-        <input type="number" className='
-                                    mt-1
-                                    form-input 
-                                    block 
-                                    w-full 
-                                    rounded-md 
-                                    border-gray-300 
-                                    shadow-sm
-                                    focus:border-indigo-300 
-                                    focus:ring 
-                                    focus:ring-indigo-200 
-                                    focus:ring-opacity-50'
-                                    id="inningsTop"/>
-        <hr className='mt-5'/>
-        <h2 className='text-xl font-bold'>Finales</h2>
-        <label htmlFor="isPlayOff">PlayOffs:</label>
-        <input type="checkbox" className='
-                                    mt-1
-                                    form-input 
-                                    block 
-                                    h-6
-                                    rounded-md 
-                                    border-gray-300 
-                                    shadow-sm
-                                    focus:border-indigo-300 
-                                    focus:ring 
-                                    focus:ring-indigo-200 
-                                    focus:ring-opacity-50'
-                                    id="isPlayOff"/>
-        <label htmlFor="playOffsTeams">No. equipos finalistas:</label>
-        <input type="number" className='
-                                    mt-1
-                                    form-input 
-                                    block 
-                                    w-full 
-                                    rounded-md 
-                                    border-gray-300 
-                                    shadow-sm
-                                    focus:border-indigo-300 
-                                    focus:ring 
-                                    focus:ring-indigo-200 
-                                    focus:ring-opacity-50'
-                                    id="playOffsTeams"/>
-        <hr className='mt-5'/>
-        <h2 className='text-xl font-bold'>Tareas</h2>
-        <label htmlFor="maxTaskTime">Tiempo Maxímo (segundos):</label>
-        <input type="number" className='
-                                    mt-1
-                                    form-input 
-                                    block
-                                    w-full 
-                                    rounded-md 
-                                    border-gray-300 
-                                    shadow-sm
-                                    focus:border-indigo-300 
-                                    focus:ring 
-                                    focus:ring-indigo-200 
-                                    focus:ring-opacity-50'
-                                    id="maxTaskTime"/>
-        <TasksTableForm/>
-        
-    </>
+    <div className='flex:lg gap-1'>
+      <input
+        type="text"
+        placeholder="Nombre Tarea"
+        name="label"
+        value={label}
+        onChange={handleChange}
+        className='
+                  form-control
+                  mt-1
+                  form-input 
+                  rounded-md 
+                  border-gray-300 
+                  shadow-sm
+                  focus:border-indigo-300 
+                  focus:ring 
+                  focus:ring-indigo-200 
+                  focus:ring-opacity-50
+                  grow'
+      />
+      <input
+        type="number"
+        name="points"
+        value={points}
+        onChange={handleChange}
+        className='
+                  form-control
+                  mt-1
+                  form-input 
+                  rounded-md 
+                  border-gray-300 
+                  shadow-sm
+                  focus:border-indigo-300 
+                  focus:ring 
+                  focus:ring-indigo-200 
+                  focus:ring-opacity-50
+                  grow'
+      />
+      <input
+        type="number"
+        name="penalty"
+        value={penalty}
+        onChange={handleChange}
+        className='
+                  form-control
+                  mt-1
+                  form-input 
+                  rounded-md 
+                  border-gray-300 
+                  shadow-sm
+                  focus:border-indigo-300 
+                  focus:ring 
+                  focus:ring-indigo-200 
+                  focus:ring-opacity-50
+                  grow'
+      />
+      <button className='bg-blue-900 p-2 text-white rounded mr-2 grow' onClick={handleSubmit}>
+        {textButton}
+      </button>
+
+    </div>
+    
   )
 }
 
