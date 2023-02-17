@@ -66,13 +66,19 @@ const AddTaskChallenge = () => {
 
     async function addChallenge(e){
     e.preventDefault();
-    console.log("dos",formData)
+    console.log("uno",formData)
     /* await setDoc(doc(firestore,"challenges",name),formData) */
-    setSelectedCategory([])
-    setFormData(initialState)
+    cleanForm(e)
+    console.log("dos",formData)
     }
 
-    const cleanForm = () => {
+    const cleanForm = (e) => {
+        setSelectedCategory([])
+        e.target.available.checked=false
+        e.target.playoffs.checked=false
+        e.target.stopTime.checked=false
+        e.target.taskSecuence.checked=false
+        setFormData(initialState)
 
     }
 
