@@ -170,7 +170,8 @@ const AddTaskChallenge = () => {
                                     id="name"
                                     name="name"
                                     value={name}
-                                    onChange={handleChange}/>
+                                    onChange={handleChange}
+                                    required/>
                 <label htmlFor="challengeSlug">Slug Reto (*):</label>
                 <input type="text" className='
                                             mt-1
@@ -187,7 +188,8 @@ const AddTaskChallenge = () => {
                                     id="challengeSlug"
                                     name="slug"
                                     value={slug}
-                                    onChange={handleChange}/>
+                                    onChange={handleChange}
+                                    required/>
                 <label htmlFor="urlImage">url imagen(*):</label>
                 <input type="text" className='
                                             mt-1
@@ -204,7 +206,8 @@ const AddTaskChallenge = () => {
                                     id="urlImage"
                                     name="imageURL"
                                     value={imageURL}
-                                    onChange={handleChange}/>
+                                    onChange={handleChange}
+                                    required/>
                 <label htmlFor="description">Descripcion: </label>
                 <textarea  className='
                                     mt-1
@@ -235,7 +238,8 @@ const AddTaskChallenge = () => {
                         className='mt-1'
                         name="categories"
                         value={categoryOptions.filter((elm)=>selectedCategory.includes(elm.value))}
-                        onChange={handleChangeSelect}/>
+                        onChange={handleChangeSelect}
+                        required/>
                 <label htmlFor="maxTeams">maximo de equipos(*):</label>
                 <input type="number" className='
                                                 mt-1
@@ -252,11 +256,12 @@ const AddTaskChallenge = () => {
                                     id="maxTeams"
                                     name="maxTeams"
                                     value={maxTeams}
-                                    onChange={handleChange}/>
+                                    onChange={handleChange}
+                                    required/>
                 <div>
                     <hr className='mt-5'/>
                     <h2 className='text-xl font-bold'>Turnos</h2>
-                    <label htmlFor="innings">No. Turnos por Equipo(*):</label>
+                    <label htmlFor="maxTurns">No. Turnos por Equipo(*):</label>
                     <input type="number" className='
                                                     mt-1
                                                     form-input 
@@ -269,10 +274,11 @@ const AddTaskChallenge = () => {
                                                     focus:ring 
                                                     focus:ring-indigo-200 
                                                     focus:ring-opacity-50'
-                                        id="innings"
+                                        id="maxTurns"
                                         name="maxTurns"
                                         value={maxTurns}
-                                        onChange={handleChange}/>
+                                        onChange={handleChange}
+                                        required/>
                     <label htmlFor="topMaxTurns">No. Turnos por Suma Top para clasificar(*):</label>
                     <input type="number" className='
                                                     mt-1
@@ -289,7 +295,8 @@ const AddTaskChallenge = () => {
                                         id="topMaxTurns"
                                         name="topMaxTurns"
                                         value={topMaxTurns}
-                                        onChange={handleChange}/>
+                                        onChange={handleChange}
+                                        required/>
                     <hr className='mt-5'/>
                     <h2 className='text-xl font-bold'>Finales</h2>
                     <div className='flex gap-2'>
@@ -328,7 +335,8 @@ const AddTaskChallenge = () => {
                                         id="finalTeams"
                                         name="finalTeams"
                                         value={finalTeams}
-                                        onChange={handleChange}/>
+                                        onChange={handleChange}
+                                        disabled={!playoffs}/>
                     <hr className='mt-5'/>
                     <h2 className='text-xl font-bold'>Tareas</h2>
                     <label htmlFor="maxTime">Tiempo Maxímo (segundos):</label>
