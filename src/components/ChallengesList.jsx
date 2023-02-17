@@ -1,8 +1,15 @@
 import React from 'react'
 
-const ChallengesList = () => {
+const ChallengesList = ({challenges}) => {
+  /* console.log(challenges) */
   return (
-    <div>ChallengesList</div>
+    <div>
+      {challenges && challenges.map((challenge)=>{
+        return(
+          <p key={challenge.name}>{challenge.name}</p>
+        )
+      })}
+    </div>
   )
 }
 
