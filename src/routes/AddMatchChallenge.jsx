@@ -29,11 +29,6 @@ const initialState = {
     finalTeams: 0,
     categories: [],
     available: false,
-    maxTime: 0,
-    tasks: [],
-    taskSecuence: false,
-    stopTime: false,
-    bonusType: "",
     challengeType:"match"
   };
 
@@ -58,11 +53,6 @@ const AddMatchChallenge = () => {
         inningTime,
         winningPoints,
         tiePoints,
-        tasks,
-        taskSecuence,
-        stopTime,
-        bonusType,
-        maxTime,
         playoffs,
         finalTeams,
         available,
@@ -81,32 +71,20 @@ const AddMatchChallenge = () => {
         setSelectedCategory([])
         e.target.available.checked=false
         e.target.playoffs.checked=false
-        e.target.stopTime.checked=false
-        e.target.taskSecuence.checked=false
         setFormData(initialState)
 
     }
 
-    const addTask = (task) => {
-    setFormData({ ...formData, tasks: [...tasks, task] });
-    console.log("tareas",tasks)
-    };
-
-    const deleteTask = (e,index) => {
-    e.preventDefault()
-    const copyTask= [...tasks]
-    copyTask.splice(index,1)
-    setFormData({ ...formData, tasks: [...copyTask] });
-    };
 
     const handleChange = (e)=>{
     setFormData({...formData,
         [e.target.name]:
-        ('maxTurns'===e.target.name
-        ||'maxTeams'===e.target.name
-        ||'finalTeams'===e.target.name
-        ||'maxTime'===e.target.name
-        ||'topMaxTurns'===e.target.name)
+        ('maxTeams'===e.target.name
+        ||'innings'===e.target.name
+        ||'inningTime'===e.target.name
+        ||'winningPoints'===e.target.name
+        ||'tiePoints'===e.target.name
+        ||'finalTeams'===e.target.name)
         ? parseInt(e.target.value)
         :e.target.type === 'checkbox'
         ? e.target.checked 
@@ -387,110 +365,6 @@ const AddMatchChallenge = () => {
                                         onChange={handleChange}
                                         disabled={!playoffs}/>
 
-{/*                     <h2 className='text-xl font-bold'>Tareas</h2>
-                    <label htmlFor="maxTime">Tiempo Maxímo (segundos):</label>
-                    <input type="number" className='
-                                                    mt-1
-                                                    form-input 
-                                                    block
-                                                    w-full 
-                                                    rounded-md 
-                                                    border-gray-300 
-                                                    shadow-sm
-                                                    focus:border-indigo-300 
-                                                    focus:ring 
-                                                    focus:ring-indigo-200 
-                                                    focus:ring-opacity-50'
-                                        id="maxTime"
-                                        name="maxTime"
-                                        value={maxTime}
-                                        onChange={handleChange}/> */}
-{/*                     <TasksTableForm taskArray={tasks} deleteTask={deleteTask}/>
-                    <TaskChallengeForm addTask={addTask} textButton="Añadir" />
-                    <div className='flex gap-2 mt-2'>
-                        <label htmlFor="taskSecuence" className='text-lg'>
-                            Tareas en secuencia
-                        </label>
-                        <input type="checkbox" className='
-                                                        mt-1
-                                                        form-input 
-                                                        block 
-                                                        h-6
-                                                        rounded-md 
-                                                        border-gray-300 
-                                                        shadow-sm
-                                                        focus:border-indigo-300 
-                                                        focus:ring 
-                                                        focus:ring-indigo-200 
-                                                        focus:ring-opacity-50'
-                                                id="taskSecuence"
-                                                name="taskSecuence"
-                                                checked={taskSecuence.check}
-                                                value={taskSecuence}
-                                                onChange={(e) =>
-                                                            setFormData({
-                                                            ...formData,
-                                                            taskSecuence: e.target.checked,
-                                                            })}
-                        />
-                    </div> */}
-{/*                     <div className='flex gap-2 mt-2'>
-                        <label htmlFor="stopTime" className='text-lg'>
-                            Detener tiempo última vuelta
-                        </label>
-                        <input type="checkbox" className='
-                                                        mt-1
-                                                        form-input 
-                                                        block 
-                                                        h-6
-                                                        rounded-md 
-                                                        border-gray-300 
-                                                        shadow-sm
-                                                        focus:border-indigo-300 
-                                                        focus:ring 
-                                                        focus:ring-indigo-200 
-                                                        focus:ring-opacity-50'
-                                                id="stopTime"
-                                                name="stopTime"
-                                                checked={stopTime.check}
-                                                value={stopTime}
-                                                onChange={(e) =>
-                                                            setFormData({
-                                                            ...formData,
-                                                            stopTime: e.target.checked,
-                                                            })}
-                        />
-                    </div> */}
-
-{/*                     <div className="mt-3">
-                        <label className="col-sm-3 col-form-label" htmlFor="bonusType">
-                            Puntaje Bonus
-                        </label>
-                        <div className="">
-                            <select
-                                className='
-                                            p-2
-                                            border-gray-300
-                                            rounded-md
-                                            form-input
-                                            mt-1
-                                            block
-                                            shadow-sm
-                                            focus:border-indigo-300 
-                                            focus:ring 
-                                            focus:ring-indigo-200 
-                                            focus:ring-opacity-50'
-                                name="bonusType"
-                                id="bonustype"
-                                value={bonusType}
-                                onChange={handleChange}
-                            >
-                                <option value="">Ninguno</option>
-                                <option value="timer">Sumar tiempo restante Timer</option>
-                                <option value="manual">Ingresar manualmente</option>
-                            </select>
-                        </div>
-                    </div> */}
                 </div>
                 <hr className='mt-4'/>
                 <div className='inline-block mt-3 w-1/2 pl-1'>
