@@ -68,9 +68,13 @@ const AddTaskChallenge = () => {
     e.preventDefault();
     console.log("dos",formData)
     /* await setDoc(doc(firestore,"challenges",name),formData) */
+    setSelectedCategory([])
+    setFormData(initialState)
     }
 
+    const cleanForm = () => {
 
+    }
 
     const addTask = (task) => {
     setFormData({ ...formData, tasks: [...tasks, task] });
@@ -85,7 +89,6 @@ const AddTaskChallenge = () => {
     };
 
     const handleChange = (e)=>{
-    /* setFormData({...formData,[e.target.name]:e.target.type === 'checkbox' ? e.target.checked : e.target.value}) */
     setFormData({...formData,
         [e.target.name]:
         ('maxTurns'===e.target.name
