@@ -9,35 +9,35 @@ const LateralBar = () => {
   return (
     <div id="bar">
         <ul>
-            <li className='text-lg pt-4 flex'>
+            <li className='text-sm lg:text-lg pt-4 flex'>
               <Link to='/events' className='menu'>
-                <SiProbot className='iconMenu text-4xl sm:text-xl'/>
+                <SiProbot className='iconMenu text-4xl md:text-xl'/>
               </Link>
-              <Link to='/events' className='menu invisible sm:visible'>
+              <Link to='/events' className='menu invisible md:visible'>
                 Eventos
               </Link>
             </li>
-            <li className='text-lg pt-4 flex'>
+            <li className='text-sm lg:text-lg pt-4 flex'>
               <Link to='/challenges' className='menu'>
-                <MdOutlineEmojiEvents className='iconMenu text-4xl sm:text-xl'/>
+                <MdOutlineEmojiEvents className='iconMenu text-4xl md:text-xl'/>
               </Link>
-              <Link to='/challenges' className='menu invisible sm:visible'>
+              <Link to='/challenges' className='menu invisible md:visible'>
                 Retos
               </Link>
             </li>
-            <li className='text-lg pt-4 flex'>
+            <li className='text-sm lg:text-lg pt-4 flex'>
               <Link to='/users' className='menu'>
-                <HiOutlineUser className='iconMenu text-4xl sm:text-xl'/>
+                <HiOutlineUser className='iconMenu text-4xl md:text-xl'/>
               </Link>
-              <Link to='/users' className='menu invisible sm:visible'>
+              <Link to='/users' className='menu invisible md:visible'>
                 Usuarios
               </Link>
             </li>
-            <li className='text-lg pt-4 flex'>
+            <li className='text-sm lg:text-lg pt-4 flex'>
               <Link to='/teams' className='menu'>
-                <HiOutlineUserGroup className='iconMenu text-4xl sm:text-xl'/>
+                <HiOutlineUserGroup className='iconMenu text-4xl md:text-xl'/>
               </Link>
-              <Link to='/teams' className='menu invisible sm:visible'>
+              <Link to='/teams' className='menu invisible md:visible'>
                 Equipos
               </Link>
             </li>
