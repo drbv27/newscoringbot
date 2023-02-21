@@ -23,6 +23,7 @@ const initialState = {
     minTeams:0,
     categories: [],
     challenges:[],
+    available:true,
   };
 
 const AddEvent = () => {
@@ -61,6 +62,7 @@ const AddEvent = () => {
       minTeams,
       categories,
       challenges,
+      available
     } = formData;
     
   useEffect(() => {
@@ -69,7 +71,7 @@ const AddEvent = () => {
       try{
           const querySnapshot =  await getDocs(collection(firestore, "challenges"));
           querySnapshot.forEach((doc) => {
-            console.log(doc.data().id) 
+           /*  console.log(doc.data().id)  */
             list.push(doc.data()).name})
             setChallengesList(list)
             /* console.log(list) */
@@ -85,7 +87,7 @@ const AddEvent = () => {
   async function addEventData(e){
   e.preventDefault();
   const eventId = idGnerator()
-  console.log("probando",eventId)
+  /* console.log("probando",eventId) */
    await setDoc(doc(firestore,"events",eventId),formData)
   cleanForm(e) 
   }
@@ -93,21 +95,10 @@ const AddEvent = () => {
   const cleanForm = (e) => {
       setSelectedCategory([])
       setSelectedChallenge([])
+      e.target.available.checked=false
       setFormData(initialState)
 
   }
-
-/*     const addTask = (task) => {
-    setFormData({ ...formData, tasks: [...tasks, task] });
-    console.log("tareas",tasks)
-    }; */
-
-/*     const deleteTask = (e,index) => {
-    e.preventDefault()
-    const copyTask= [...tasks]
-    copyTask.splice(index,1)
-    setFormData({ ...formData, tasks: [...copyTask] });
-    }; */
 
   const handleChange = (e)=>{
   setFormData({...formData,
@@ -144,232 +135,234 @@ const AddEvent = () => {
 
 /* console.log("afuera",selectedOptions) */
 
-    return (
-        <Layout>
-            <div className='py-4'>
-                <Link to="/events" className='bg-blue-900 text-white p-2 mt-8 ml-24 rounded'>Atrás</Link>
-            </div>
-            <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl mb-5' onSubmit={addEventData}>
-                <div className='mb-4 flex'>
-                    <h1 className='text-4xl font-bold text-blue-900'>Agregar Evento</h1>
-{/*                     <div className='ml-auto flex gap-2'>
-                        <label htmlFor="available" className='text-xl'>Habilitar:</label>
-                        <input type="checkbox" className='
-                                                        mt-1
-                                                        form-input 
-                                                        block 
-                                                        h-6
-                                                        rounded-md 
-                                                        border-gray-300 
-                                                        shadow-sm
-                                                        focus:border-indigo-300 
-                                                        focus:ring 
-                                                        ocus:ring-indigo-200 
-                                                        focus:ring-opacity-50'
-                                                id="available"
-                                                name="available"
-                                                checked={available.check}
-                                                value={available}
-                                                onChange={() =>
-                                                    setFormData({
-                                                    ...formData,
-                                                    available: !formData.available,})}/>
-                    </div> */}
-                    <hr className='text-black'/>
-                </div>
-                <label htmlFor="eventName">Nombre Evento (*):</label>
-                <input type="text" className='
-                                            mt-1
-                                            form-input 
-                                            block 
-                                            w-full 
-                                            rounded-md 
-                                            border-gray-300 
-                                            shadow-sm
-                                            focus:border-indigo-300 
-                                            focus:ring 
-                                            focus:ring-indigo-200 
-                                            focus:ring-opacity-50'
-                                    id="eventName"
-                                    name="eventName"
-                                    value={eventName}
-                                    onChange={handleChange}
-                                    required/>
-                <label htmlFor="eventSlug">Slug Reto (*):</label>
-                <input type="text" className='
-                                            mt-1
-                                            form-input 
-                                            block 
-                                            w-full 
-                                            rounded-md 
-                                            border-gray-300 
-                                            shadow-sm
-                                            focus:border-indigo-300 
-                                            focus:ring 
-                                            focus:ring-indigo-200 
-                                            focus:ring-opacity-50'
-                                    id="eventSlug"
-                                    name="eventSlug"
-                                    value={eventSlug}
-                                    onChange={handleChange}
-                                    required/>
-                <label htmlFor="imageURL">url imagen(*):</label>
-                <input type="text" className='
-                                            mt-1
-                                            form-input 
-                                            block 
-                                            w-full 
-                                            rounded-md 
-                                            border-gray-300 
-                                            shadow-sm
-                                            focus:border-indigo-300 
-                                            focus:ring 
-                                            focus:ring-indigo-200 
-                                            focus:ring-opacity-50'
-                                    id="imageURL"
-                                    name="imageURL"
-                                    value={imageURL}
-                                    onChange={handleChange}
-                                    required/>
-                <label htmlFor="eventYear">año(*):</label>
-                <input type="number" className='
-                                            mt-1
-                                            form-input 
-                                            block 
-                                            w-full 
-                                            rounded-md 
-                                            border-gray-300 
-                                            shadow-sm
-                                            focus:border-indigo-300 
-                                            focus:ring 
-                                            focus:ring-indigo-200 
-                                            focus:ring-opacity-50'
-                                    id="eventYear"
-                                    name="eventYear"
-                                    value={eventYear}
-                                    onChange={handleChange}
-                                    required/>
-                <label htmlFor="eventDescription">Descripcion: </label>
-                <textarea  className='
-                                    mt-1
-                                    form-input 
-                                    block 
-                                    w-full 
-                                    rounded-md 
-                                    border-gray-300 
-                                    shadow-sm
-                                    focus:border-indigo-300 
-                                    focus:ring 
-                                    focus:ring-indigo-200 
-                                    focus:ring-opacity-50'
-                            id="eventDescription"
-                            name="eventDescription"
-                            value={eventDescription}
-                            onChange={handleChange}/>
-                
-                <div>
-                  <label htmlFor="stage">Etapa</label>
-                  <select
-                    className="mt-1
-                              form-input
-                              block
-                              w-full
-                              rounded-md
-                              border-gray-300
-                              shadow-sm
-                              focus:border-indigo-300 
-                              focus:ring 
-                              focus:ring-indigo-200 
-                              focus:ring-opacity-50"
-                    name="stage"
-                    id="stage"
-                    value={stage}
-                    onChange={handleChange}
-                  >
-                    <option value="registration">Registro Equipos</option>
-                    <option value="scoring">Calificando</option>
-                    <option value="finished">Terminado</option>
-                  </select>
-                </div>
+  return (
+      <Layout>
+          <div className='py-4'>
+              <Link to="/events" className='bg-blue-900 text-white p-2 mt-8 ml-24 rounded'>Atrás</Link>
+          </div>
+          <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl mb-5' onSubmit={addEventData}>
+              <div className='mb-4 flex'>
+                  <h1 className='text-4xl font-bold text-blue-900'>Agregar Evento</h1>
+                  <div className='ml-auto flex gap-2'>
+                      <label htmlFor="available" className='text-xl'>Habilitar:</label>
+                      <input type="checkbox" className='
+                                                      mt-1
+                                                      form-input 
+                                                      block 
+                                                      h-6
+                                                      rounded-md 
+                                                      border-gray-300 
+                                                      shadow-sm
+                                                      focus:border-indigo-300 
+                                                      focus:ring 
+                                                      ocus:ring-indigo-200 
+                                                      focus:ring-opacity-50'
+                                              id="available"
+                                              name="available"
+                                              defaultChecked={true}
+                                              checked={available.check}
+                                              value={available}
+                                              onChange={() =>
+                                                  setFormData({
+                                                  ...formData,
+                                                  available: !formData.available,})}/>
+                  </div>
+                  <hr className='text-black'/>
+              </div>
+              <label htmlFor="eventName">Nombre Evento (*):</label>
+              <input type="text" className='
+                                          mt-1
+                                          form-input 
+                                          block 
+                                          w-full 
+                                          rounded-md 
+                                          border-gray-300 
+                                          shadow-sm
+                                          focus:border-indigo-300 
+                                          focus:ring 
+                                          focus:ring-indigo-200 
+                                          focus:ring-opacity-50'
+                                  id="eventName"
+                                  name="eventName"
+                                  value={eventName}
+                                  onChange={handleChange}
+                                  required/>
+              <label htmlFor="eventSlug">Slug Reto (*):</label>
+              <input type="text" className='
+                                          mt-1
+                                          form-input 
+                                          block 
+                                          w-full 
+                                          rounded-md 
+                                          border-gray-300 
+                                          shadow-sm
+                                          focus:border-indigo-300 
+                                          focus:ring 
+                                          focus:ring-indigo-200 
+                                          focus:ring-opacity-50'
+                                  id="eventSlug"
+                                  name="eventSlug"
+                                  value={eventSlug}
+                                  onChange={handleChange}
+                                  required/>
+              <label htmlFor="imageURL">url imagen(*):</label>
+              <input type="text" className='
+                                          mt-1
+                                          form-input 
+                                          block 
+                                          w-full 
+                                          rounded-md 
+                                          border-gray-300 
+                                          shadow-sm
+                                          focus:border-indigo-300 
+                                          focus:ring 
+                                          focus:ring-indigo-200 
+                                          focus:ring-opacity-50'
+                                  id="imageURL"
+                                  name="imageURL"
+                                  value={imageURL}
+                                  onChange={handleChange}
+                                  required/>
+              <label htmlFor="eventYear">año(*):</label>
+              <input type="number" className='
+                                          mt-1
+                                          form-input 
+                                          block 
+                                          w-full 
+                                          rounded-md 
+                                          border-gray-300 
+                                          shadow-sm
+                                          focus:border-indigo-300 
+                                          focus:ring 
+                                          focus:ring-indigo-200 
+                                          focus:ring-opacity-50'
+                                  id="eventYear"
+                                  name="eventYear"
+                                  value={eventYear}
+                                  onChange={handleChange}
+                                  required/>
+              <label htmlFor="eventDescription">Descripcion: </label>
+              <textarea  className='
+                                  mt-1
+                                  form-input 
+                                  block 
+                                  w-full 
+                                  rounded-md 
+                                  border-gray-300 
+                                  shadow-sm
+                                  focus:border-indigo-300 
+                                  focus:ring 
+                                  focus:ring-indigo-200 
+                                  focus:ring-opacity-50'
+                          id="eventDescription"
+                          name="eventDescription"
+                          value={eventDescription}
+                          onChange={handleChange}/>
+              
+              <div>
+                <label htmlFor="stage">Etapa</label>
+                <select
+                  className="mt-1
+                            form-input
+                            block
+                            w-full
+                            rounded-md
+                            border-gray-300
+                            shadow-sm
+                            focus:border-indigo-300 
+                            focus:ring 
+                            focus:ring-indigo-200 
+                            focus:ring-opacity-50"
+                  name="stage"
+                  id="stage"
+                  value={stage}
+                  onChange={handleChange}
+                >
+                  <option value="">Selecciona la etapa</option>
+                  <option value="registration">Registro Equipos</option>
+                  <option value="scoring">Calificando</option>
+                  <option value="finished">Terminado</option>
+                </select>
+              </div>
 
 
-                <label htmlFor="maxTeams">maximo de equipos(*):</label>
-                <input type="number" className='
-                                                mt-1
-                                                form-input 
-                                                block 
-                                                w-full 
-                                                rounded-md 
-                                                border-gray-300 
-                                                shadow-sm
-                                                focus:border-indigo-300 
-                                                focus:ring 
-                                                focus:ring-indigo-200 
-                                                focus:ring-opacity-50'
-                                    id="maxTeams"
-                                    name="maxTeams"
-                                    value={maxTeams}
-                                    onChange={handleChange}
-                                    required/>
-                <label htmlFor="minTeams">maximo de equipos(*):</label>
-                <input type="number" className='
-                                                mt-1
-                                                form-input 
-                                                block 
-                                                w-full 
-                                                rounded-md 
-                                                border-gray-300 
-                                                shadow-sm
-                                                focus:border-indigo-300 
-                                                focus:ring 
-                                                focus:ring-indigo-200 
-                                                focus:ring-opacity-50'
-                                    id="minTeams"
-                                    name="minTeams"
-                                    value={minTeams}
-                                    onChange={handleChange}
-                                    required/>
+              <label htmlFor="maxTeams">maximo de equipos(*):</label>
+              <input type="number" className='
+                                              mt-1
+                                              form-input 
+                                              block 
+                                              w-full 
+                                              rounded-md 
+                                              border-gray-300 
+                                              shadow-sm
+                                              focus:border-indigo-300 
+                                              focus:ring 
+                                              focus:ring-indigo-200 
+                                              focus:ring-opacity-50'
+                                  id="maxTeams"
+                                  name="maxTeams"
+                                  value={maxTeams}
+                                  onChange={handleChange}
+                                  required/>
+              <label htmlFor="minTeams">minimo de equipos(*):</label>
+              <input type="number" className='
+                                              mt-1
+                                              form-input 
+                                              block 
+                                              w-full 
+                                              rounded-md 
+                                              border-gray-300 
+                                              shadow-sm
+                                              focus:border-indigo-300 
+                                              focus:ring 
+                                              focus:ring-indigo-200 
+                                              focus:ring-opacity-50'
+                                  id="minTeams"
+                                  name="minTeams"
+                                  value={minTeams}
+                                  onChange={handleChange}
+                                  required/>
 
-                <label htmlFor="categories">Categorias (*): </label>
+              <label htmlFor="categories">Categorias (*): </label>
+              <Select
+                      placeholder='Selecciona las categorias'
+                      closeMenuOnSelect={true}
+                      components={animatedComponents}
+                      isMulti
+                      isClearable
+                      options={categoryOptions}
+                      id="categories"
+                      className='mt-1'
+                      name="categories"
+                      value={categoryOptions.filter((elm)=>selectedCategory.includes(elm.value))}
+                      onChange={handleChangeSelect}
+                      required/>
+              <div>
+              <label htmlFor="retos">Retos (*): </label>
+
                 <Select
-                        placeholder='Selecciona las categorias'
-                        closeMenuOnSelect={true}
-                        components={animatedComponents}
-                        isMulti
-                        isClearable
-                        options={categoryOptions}
-                        id="categories"
-                        className='mt-1'
-                        name="categories"
-                        value={categoryOptions.filter((elm)=>selectedCategory.includes(elm.value))}
-                        onChange={handleChangeSelect}
-                        required/>
-                <div>
-                <label htmlFor="retos">Retos (*): </label>
- 
-                  <Select
-                        placeholder='Selecciona los retos'
-                        closeMenuOnSelect={true}
-                        components={animatedComponents}
-                        isMulti
-                        isClearable
-                        options={challengesOptions}
-                        id="challenges"
-                        className='mt-1'
-                        name="challenges"
-                        value={challengesOptions.filter((elm)=>selectedChallenge.includes(elm.value))}
-                        onChange={handleChangeSelect2}
-                        required/>
-                </div>
+                      placeholder='Selecciona los retos'
+                      closeMenuOnSelect={true}
+                      components={animatedComponents}
+                      isMulti
+                      isClearable
+                      options={challengesOptions}
+                      id="challenges"
+                      className='mt-1'
+                      name="challenges"
+                      value={challengesOptions.filter((elm)=>selectedChallenge.includes(elm.value))}
+                      onChange={handleChangeSelect2}
+                      required/>
+              </div>
 
-                <hr className='mt-4'/>
-                <div className='inline-block mt-3 w-1/2 pl-1'>
-                    <button type="submit" className='bg-blue-900 p-2 text-white rounded mr-2'>Guardar</button>
-                    <button type="reset" className='border border-blue-900 p-2 text-blue-900 rounded'>Cancelar</button>
-                </div>
-            </form>
-        </Layout>
-    )
+              <hr className='mt-4'/>
+              <div className='inline-block mt-3 w-1/2 pl-1'>
+                  <button type="submit" className='bg-blue-900 p-2 text-white rounded mr-2'>Guardar</button>
+                  <button type="reset" className='border border-blue-900 p-2 text-blue-900 rounded'>Cancelar</button>
+              </div>
+          </form>
+      </Layout>
+  )
 }
 
 export default AddEvent
