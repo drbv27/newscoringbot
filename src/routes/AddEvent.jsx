@@ -24,6 +24,7 @@ const initialState = {
     categories: [],
     challenges:[],
     available:true,
+    id:"",
   };
 
 const AddEvent = () => {
@@ -57,7 +58,8 @@ const AddEvent = () => {
       minTeams,
       categories,
       challenges,
-      available
+      available,
+      id
     } = formData;
     
   useEffect(() => {
@@ -78,51 +80,56 @@ const AddEvent = () => {
   }, [])
 
   async function addEventData(e){
-  e.preventDefault();
-  const eventId = idGnerator()
-  /* console.log("probando",eventId) */
-   await setDoc(doc(firestore,"events",eventId),formData)
-  cleanForm(e) 
+    e.preventDefault();
+    /* console.log("probando",formData) */
+    await setDoc(doc(firestore,"events",id),formData)
+    /* console.log("probando2",formData) */
+    cleanForm(e) 
   }
 
   const cleanForm = (e) => {
       setSelectedCategory([])
       setSelectedChallenge([])
-      e.target.available.checked=false
+      e.target.available.checked=true
       setFormData(initialState)
   }
 
   const handleChange = (e)=>{
-  setFormData({...formData,
-      [e.target.name]:
-      ('eventYear'===e.target.name
-      ||'maxTeams'===e.target.name
-      ||'minTeams'===e.target.name)
-      ? parseInt(e.target.value)
-      :e.target.type === 'checkbox'
-      ? e.target.checked 
-      : e.target.value})
+    setFormData({...formData,
+        [e.target.name]:
+        ('eventYear'===e.target.name
+        ||'maxTeams'===e.target.name
+        ||'minTeams'===e.target.name)
+        ? parseInt(e.target.value)
+        :e.target.type === 'checkbox'
+        ? e.target.checked 
+        : e.target.value})
   };
 
   const handleChangeSelect = (e)=>{
-  const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
-  setSelectedCategory(selectedOptions)
-  setFormData({
-      ...formData,
-      categories: categoryOptions
-          .filter((option) => selectedOptions.includes(option.value))
-          .map((elm) => elm.label),
-      });
+    const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
+    setSelectedCategory(selectedOptions)
+    setFormData({
+        ...formData,
+        categories: categoryOptions
+            .filter((option) => selectedOptions.includes(option.value))
+            .map((elm) => elm.label),
+        });
   };
   const handleChangeSelect2 = (e)=>{
-  const selectedChallenges = Array.isArray(e) ? e.map((option) => option.value) : [];
-  setSelectedChallenge(selectedChallenges)
-  setFormData({
+    const eventId = idGnerator()
+    const selectedChallenges = Array.isArray(e) ? e.map((option) => option.value) : [];
+    setSelectedChallenge(selectedChallenges)
+    setFormData({
+        ...formData,
+        challenges: challengesOptions
+            .filter((option) => selectedChallenges.includes(option.value))
+            .map((elm) => elm.label),
+        });
+    setFormData({
       ...formData,
-      challenges: challengesOptions
-          .filter((option) => selectedChallenges.includes(option.value))
-          .map((elm) => elm.label),
-      });
+      id:eventId
+    })
   };
 
   return (
