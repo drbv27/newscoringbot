@@ -1,16 +1,13 @@
-import React,{ useState,useEffect } from 'react'
+import React,{ useState,useEffect,useId } from 'react'
+import uuid from 'react-uuid';
 import {Link} from 'react-router-dom'
 import ChallengeForm from '../components/ChallengeForm'
 import Layout from '../components/Layout'
 import Select from 'react-select'
-import ToggleSwitch from '../components/ToggleSwitch'
 import makeAnimated from 'react-select/animated';
-import MatchChallengeForm from '../components/MatchChallengeForm';
-import TaskChallengeForm from '../components/TaskChallengeForm';
-import TasksTableForm from '../components/TasksTableForm'
 import { CategoriesType } from '../helpers/categories'
 import app from '../firebase';
-import { collection,getDocs,getFirestore } from 'firebase/firestore'
+import { collection,getDocs,getFirestore,doc,setDoc } from 'firebase/firestore'
 
 const firestore = getFirestore(app)
 
@@ -29,69 +26,76 @@ const initialState = {
   };
 
 const AddEvent = () => {
+
   const [challengesList,setChallengesList] = useState([])
-      // selecet Categories use State
-    const categoryOptions = CategoriesType.map((elm, index) => ({
-                    value: index,
-                     label: elm,
+  const challengesOptions = challengesList.map((elm, index) => ({
+                              value: index,
+                              label: elm.name,
                             }));
-    const [selectedCategory, setSelectedCategory] = useState([])
 
-    const [formData, setFormData] = useState(initialState);
-    /* const [selectedOptions, setSelectedOptions] = useState([]); */
-    const {
-        eventName,
-        eventSlug,
-        imageURL,
-        eventYear,
-        eventDescription,
-        stage,
-        maxTeams,
-        minTeams,
-        categories,
-        challenges,
-      } = formData;
-    
-    useEffect(() => {
-      const fetchChallenges = async () => {
-        let list = [];
-        try{
-            const querySnapshot =  await getDocs(collection(firestore, "challenges"));
-            querySnapshot.forEach((doc) => {
-              list.push(doc.data())})
-              setChallengesList(list)
-              /* console.log(list) */
-        }catch (err){
-            console.log(err);
-        }
-      }
-      fetchChallenges();
+  const categoryOptions = CategoriesType.map((elm, index) => ({
+                            value: index,
+                            label: elm,
+                          }));
+
+  const [selectedCategory, setSelectedCategory] = useState([])
+  const [selectedChallenge, setSelectedChallenge] = useState([])
+  const idGnerator = () =>{
+    const fullId = uuid()
+    const firstId = fullId.substring(0,8)
+    const secondId = fullId.slice(9,13)
+    return `${firstId}${secondId}`
+  }
   
-    }, [])
 
-    console.log(challengesList)
-
-/*     async function addChallenge(e){
-    e.preventDefault();
-    await setDoc(doc(firestore,"challenges",name),formData)
-    cleanForm(e)
-    } */
-    async function addEventData(e){
-    e.preventDefault();
-    console.log("probando")
-/*     await setDoc(doc(firestore,"challenges",name),formData)
-    cleanForm(e) */
+  const [formData, setFormData] = useState(initialState);
+  /* const [selectedOptions, setSelectedOptions] = useState([]); */
+  const {
+      eventName,
+      eventSlug,
+      imageURL,
+      eventYear,
+      eventDescription,
+      stage,
+      maxTeams,
+      minTeams,
+      categories,
+      challenges,
+    } = formData;
+    
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      let list = [];
+      try{
+          const querySnapshot =  await getDocs(collection(firestore, "challenges"));
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data().id) 
+            list.push(doc.data()).name})
+            setChallengesList(list)
+            /* console.log(list) */
+      }catch (err){
+          console.log(err);
+      }
     }
+    fetchChallenges();
 
-/*     const cleanForm = (e) => {
-        setSelectedCategory([])
-        e.target.available.checked=false
-        e.target.playoffs.checked=false
-        e.target.stopTime.checked=false
-        e.target.taskSecuence.checked=false
-        setFormData(initialState)
+  }, [])
 
-    } */
+
+  async function addEventData(e){
+  e.preventDefault();
+  const eventId = idGnerator()
+  console.log("probando",eventId)
+   await setDoc(doc(firestore,"events",eventId),formData)
+  cleanForm(e) 
+  }
+
+  const cleanForm = (e) => {
+      setSelectedCategory([])
+      setSelectedChallenge([])
+      setFormData(initialState)
+
+  }
 
 /*     const addTask = (task) => {
     setFormData({ ...formData, tasks: [...tasks, task] });
@@ -105,30 +109,38 @@ const AddEvent = () => {
     setFormData({ ...formData, tasks: [...copyTask] });
     }; */
 
-    const handleChange = (e)=>{
-    setFormData({...formData,
-        [e.target.name]:
-        ('maxTurns'===e.target.name
-        ||'maxTeams'===e.target.name
-        ||'finalTeams'===e.target.name
-        ||'maxTime'===e.target.name
-        ||'topMaxTurns'===e.target.name)
-        ? parseInt(e.target.value)
-        :e.target.type === 'checkbox'
-        ? e.target.checked 
-        : e.target.value})
-    };
+  const handleChange = (e)=>{
+  setFormData({...formData,
+      [e.target.name]:
+      ('eventYear'===e.target.name
+      ||'maxTeams'===e.target.name
+      ||'minTeams'===e.target.name)
+      ? parseInt(e.target.value)
+      :e.target.type === 'checkbox'
+      ? e.target.checked 
+      : e.target.value})
+  };
 
-    const handleChangeSelect = (e)=>{
-    const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
-    setSelectedCategory(selectedOptions)
-    setFormData({
-        ...formData,
-        categories: categoryOptions
-            .filter((option) => selectedOptions.includes(option.value))
-            .map((elm) => elm.label),
-        });
-    };
+  const handleChangeSelect = (e)=>{
+  const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
+  setSelectedCategory(selectedOptions)
+  setFormData({
+      ...formData,
+      categories: categoryOptions
+          .filter((option) => selectedOptions.includes(option.value))
+          .map((elm) => elm.label),
+      });
+  };
+  const handleChangeSelect2 = (e)=>{
+  const selectedChallenges = Array.isArray(e) ? e.map((option) => option.value) : [];
+  setSelectedChallenge(selectedChallenges)
+  setFormData({
+      ...formData,
+      challenges: challengesOptions
+          .filter((option) => selectedChallenges.includes(option.value))
+          .map((elm) => elm.label),
+      });
+  };
 
 /* console.log("afuera",selectedOptions) */
 
@@ -219,7 +231,7 @@ const AddEvent = () => {
                                     value={imageURL}
                                     onChange={handleChange}
                                     required/>
-                <label htmlFor="eventYear">url imagen(*):</label>
+                <label htmlFor="eventYear">año(*):</label>
                 <input type="number" className='
                                             mt-1
                                             form-input 
@@ -334,39 +346,19 @@ const AddEvent = () => {
                         required/>
                 <div>
                 <label htmlFor="retos">Retos (*): </label>
-                <select
-                    className="mt-1
-                              form-input
-                              block
-                              w-full
-                              rounded-md
-                              border-gray-300
-                              shadow-sm
-                              focus:border-indigo-300 
-                              focus:ring 
-                              focus:ring-indigo-200 
-                              focus:ring-opacity-50"
-                    name="stage"
-                    id="stage"
-                    value={stage}
-                    onChange={handleChange}
-                  >
-                    
-                    {challengesList && challengesList.map((challenge)=><option>{challenge.name}</option>)}
-
-                  </select>
+ 
                   <Select
                         placeholder='Selecciona los retos'
                         closeMenuOnSelect={true}
                         components={animatedComponents}
                         isMulti
                         isClearable
-                        options={categoryOptions}
-                        id="categories"
+                        options={challengesOptions}
+                        id="challenges"
                         className='mt-1'
-                        name="categories"
-                        value={categoryOptions.filter((elm)=>selectedCategory.includes(elm.value))}
-                        onChange={handleChangeSelect}
+                        name="challenges"
+                        value={challengesOptions.filter((elm)=>selectedChallenge.includes(elm.value))}
+                        onChange={handleChangeSelect2}
                         required/>
                 </div>
 
