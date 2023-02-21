@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from 'react'
-import { FaUserEdit,FaRegTrashAlt } from 'react-icons/fa'
+import { FaUserEdit,FaRegTrashAlt,FaKey,FaUserAlt } from 'react-icons/fa'
+import { GiWhistle } from 'react-icons/gi';
 import { getFirestore,collection, getDocs } from "firebase/firestore";
 import app from '../firebase';
 const firestore = getFirestore(app)
@@ -27,8 +28,8 @@ useEffect(() => {queryUsers()},[])
 
 
   return (
-    <div>
-        <div className='columns-4 bg-gray-800 py-4 text-xl text-white text-center'>
+    <div className='mr-1.5 border-4 rounded-t-lg'>
+        <div className='columns-4 bg-sky-800 py-4 text-xl text-white text-center rounded-t-lg'>
             <p>Nombre Completo</p>
             <p>Email</p>
             <p>Rol</p>
@@ -41,7 +42,11 @@ useEffect(() => {queryUsers()},[])
                 <div className='columns-4 text-center mt-3' key={user.email}>
                     <p>{user.name} {user.lastname}</p>
                     <p>{user.email}</p>
-                    <p>{user.role}</p>
+                    <p>{user.role==="admin"
+                            ?<FaKey className='mx-auto text-2xl text-sky-700'/>
+                            :user.role==="judge"
+                                ?<GiWhistle className='mx-auto text-2xl text-sky-700'/>:
+                                <FaUserAlt className='mx-auto text-2xl text-sky-700'/>}</p>
                     <div>
                         <button><FaUserEdit className='bg-amber-500 p-1 text-3xl text-white rounded border border-amber-800 mr-1'/></button>
                         <button><FaRegTrashAlt className='bg-red-600 p-1 text-3xl text-white rounded border border-red-800'/></button>

@@ -14,8 +14,8 @@ const EventsList = ({eventsArray}) => {
         </div>
         {eventsArray.map((event)=>{
             return(
-                <>
-                    <div className='columns-4 text-center mt-3' key={event.id}>
+                <div key={event.id}>
+                    <div className='columns-4 text-center mt-3' >
                         <p>{event.eventName}</p>
                         <p>{event.eventYear}</p>
                         <p>{event.available 
@@ -28,7 +28,7 @@ const EventsList = ({eventsArray}) => {
                         </div>
                     </div>
                     <hr />
-                </>
+                </div>
             )
         })}
     </div>
