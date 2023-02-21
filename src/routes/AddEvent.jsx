@@ -33,12 +33,10 @@ const AddEvent = () => {
                               value: index,
                               label: elm.name,
                             }));
-
   const categoryOptions = CategoriesType.map((elm, index) => ({
                             value: index,
                             label: elm,
                           }));
-
   const [selectedCategory, setSelectedCategory] = useState([])
   const [selectedChallenge, setSelectedChallenge] = useState([])
   const idGnerator = () =>{
@@ -47,10 +45,7 @@ const AddEvent = () => {
     const secondId = fullId.slice(9,13)
     return `${firstId}${secondId}`
   }
-  
-
   const [formData, setFormData] = useState(initialState);
-  /* const [selectedOptions, setSelectedOptions] = useState([]); */
   const {
       eventName,
       eventSlug,
@@ -80,9 +75,7 @@ const AddEvent = () => {
       }
     }
     fetchChallenges();
-
   }, [])
-
 
   async function addEventData(e){
   e.preventDefault();
@@ -97,7 +90,6 @@ const AddEvent = () => {
       setSelectedChallenge([])
       e.target.available.checked=false
       setFormData(initialState)
-
   }
 
   const handleChange = (e)=>{
@@ -132,8 +124,6 @@ const AddEvent = () => {
           .map((elm) => elm.label),
       });
   };
-
-/* console.log("afuera",selectedOptions) */
 
   return (
       <Layout>
@@ -322,7 +312,6 @@ const AddEvent = () => {
                                   value={minTeams}
                                   onChange={handleChange}
                                   required/>
-
               <label htmlFor="categories">Categorias (*): </label>
               <Select
                       placeholder='Selecciona las categorias'
@@ -339,22 +328,20 @@ const AddEvent = () => {
                       required/>
               <div>
               <label htmlFor="retos">Retos (*): </label>
-
-                <Select
-                      placeholder='Selecciona los retos'
-                      closeMenuOnSelect={true}
-                      components={animatedComponents}
-                      isMulti
-                      isClearable
-                      options={challengesOptions}
-                      id="challenges"
-                      className='mt-1'
-                      name="challenges"
-                      value={challengesOptions.filter((elm)=>selectedChallenge.includes(elm.value))}
-                      onChange={handleChangeSelect2}
-                      required/>
+              <Select
+                    placeholder='Selecciona los retos'
+                    closeMenuOnSelect={true}
+                    components={animatedComponents}
+                    isMulti
+                    isClearable
+                    options={challengesOptions}
+                    id="challenges"
+                    className='mt-1'
+                    name="challenges"
+                    value={challengesOptions.filter((elm)=>selectedChallenge.includes(elm.value))}
+                    onChange={handleChangeSelect2}
+                    required/>
               </div>
-
               <hr className='mt-4'/>
               <div className='inline-block mt-3 w-1/2 pl-1'>
                   <button type="submit" className='bg-blue-900 p-2 text-white rounded mr-2'>Guardar</button>
