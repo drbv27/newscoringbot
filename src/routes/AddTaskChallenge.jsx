@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import uuid from 'react-uuid';
 import {Link} from 'react-router-dom'
 import ChallengeForm from '../components/ChallengeForm'
 import Layout from '../components/Layout'
@@ -26,13 +27,14 @@ const initialState = {
     playoffs: false,
     finalTeams: 0,
     categories: [],
-    available: false,
+    available: true,
     maxTime: 0,
     tasks: [],
     taskSecuence: false,
     stopTime: false,
     bonusType: "",
-    challengeType:"tasks"
+    challengeType:"tasks",
+    id:""
   };
 
 const AddTaskChallenge = () => {
@@ -62,18 +64,26 @@ const AddTaskChallenge = () => {
         playoffs,
         finalTeams,
         available,
+        id
       } = formData;
+
+    const idGnerator = () =>{
+        const fullId = uuid()
+        const firstId = fullId.substring(0,8)
+        const secondId = fullId.slice(9,13)
+        return `${firstId}${secondId}`
+    }
 
 
     async function addChallenge(e){
-    e.preventDefault();
-    await setDoc(doc(firestore,"challenges",name),formData)
-    cleanForm(e)
+        e.preventDefault();
+        await setDoc(doc(firestore,"challenges",id),formData)
+        cleanForm(e)
     }
 
     const cleanForm = (e) => {
         setSelectedCategory([])
-        e.target.available.checked=false
+        e.target.available.checked=true
         e.target.playoffs.checked=false
         e.target.stopTime.checked=false
         e.target.taskSecuence.checked=false
@@ -82,40 +92,42 @@ const AddTaskChallenge = () => {
     }
 
     const addTask = (task) => {
-    setFormData({ ...formData, tasks: [...tasks, task] });
-    console.log("tareas",tasks)
+        setFormData({ ...formData, tasks: [...tasks, task] });
+        console.log("tareas",tasks)
     };
 
     const deleteTask = (e,index) => {
-    e.preventDefault()
-    const copyTask= [...tasks]
-    copyTask.splice(index,1)
-    setFormData({ ...formData, tasks: [...copyTask] });
-    };
+        e.preventDefault()
+        const copyTask= [...tasks]
+        copyTask.splice(index,1)
+        setFormData({ ...formData, tasks: [...copyTask] });
+        };
 
     const handleChange = (e)=>{
-    setFormData({...formData,
-        [e.target.name]:
-        ('maxTurns'===e.target.name
-        ||'maxTeams'===e.target.name
-        ||'finalTeams'===e.target.name
-        ||'maxTime'===e.target.name
-        ||'topMaxTurns'===e.target.name)
-        ? parseInt(e.target.value)
-        :e.target.type === 'checkbox'
-        ? e.target.checked 
-        : e.target.value})
+        setFormData({...formData,
+            [e.target.name]:
+            ('maxTurns'===e.target.name
+            ||'maxTeams'===e.target.name
+            ||'finalTeams'===e.target.name
+            ||'maxTime'===e.target.name
+            ||'topMaxTurns'===e.target.name)
+            ? parseInt(e.target.value)
+            :e.target.type === 'checkbox'
+            ? e.target.checked 
+            : e.target.value})
     };
 
     const handleChangeSelect = (e)=>{
-    const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
-    setSelectedCategory(selectedOptions)
-    setFormData({
-        ...formData,
-        categories: categoryOptions
-            .filter((option) => selectedOptions.includes(option.value))
-            .map((elm) => elm.label),
-        });
+        const challengeId = idGnerator()
+        const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
+        setSelectedCategory(selectedOptions)
+        setFormData({
+            ...formData,
+            categories: categoryOptions
+                .filter((option) => selectedOptions.includes(option.value))
+                .map((elm) => elm.label),
+            id:challengeId
+            });
     };
 
 /* console.log("afuera",selectedOptions) */
@@ -129,7 +141,7 @@ const AddTaskChallenge = () => {
                 <div className='mb-4 flex'>
                     <h1 className='text-4xl font-bold text-blue-900'>Agregar Reto Tareas</h1>
                     <div className='ml-auto flex gap-2'>
-                        <label htmlFor="available" className='text-xl'>Habilitar:</label>
+                        <label htmlFor="available" className='text-xl text-green-600 font-bold'>Habilitar reto:</label>
                         <input type="checkbox" className='
                                                         mt-1
                                                         form-input 
@@ -144,6 +156,7 @@ const AddTaskChallenge = () => {
                                                         focus:ring-opacity-50'
                                                 id="available"
                                                 name="available"
+                                                defaultChecked={true}
                                                 checked={available.check}
                                                 value={available}
                                                 onChange={() =>

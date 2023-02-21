@@ -53,7 +53,7 @@ const Challenges = () => {
             Partido
           </Link>
         </div>
-        <ChallengesList challenges={challenges}/>
+        <ChallengesList challengesArray={challenges}/>
     </Layout>
   )
 }

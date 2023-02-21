@@ -1,13 +1,9 @@
 import React,{useState} from 'react'
+import uuid from 'react-uuid';
 import {Link} from 'react-router-dom'
-import ChallengeForm from '../components/ChallengeForm'
 import Layout from '../components/Layout'
 import Select from 'react-select'
-import ToggleSwitch from '../components/ToggleSwitch'
 import makeAnimated from 'react-select/animated';
-import MatchChallengeForm from '../components/MatchChallengeForm';
-import TaskChallengeForm from '../components/TaskChallengeForm';
-import TasksTableForm from '../components/TasksTableForm'
 import { CategoriesType } from '../helpers/categories'
 import app from '../firebase';
 import { getFirestore,updateDoc,doc,setDoc } from 'firebase/firestore';
@@ -28,8 +24,9 @@ const initialState = {
     playoffs: false,
     finalTeams: 0,
     categories: [],
-    available: false,
-    challengeType:"match"
+    available: true,
+    challengeType:"match",
+    id:""
   };
 
 const AddMatchChallenge = () => {
@@ -56,48 +53,56 @@ const AddMatchChallenge = () => {
         playoffs,
         finalTeams,
         available,
+        id
       } = formData;
+    
+    const idGnerator = () =>{
+      const fullId = uuid()
+      const firstId = fullId.substring(0,8)
+      const secondId = fullId.slice(9,13)
+      return `${firstId}${secondId}`
+    }
 
 
     async function addChallenge(e){
-    e.preventDefault();
-    await setDoc(doc(firestore,"challenges",name),formData)
-    cleanForm(e)
+      e.preventDefault();
+      await setDoc(doc(firestore,"challenges",id),formData)
+      cleanForm(e)
     }
 
     const cleanForm = (e) => {
         setSelectedCategory([])
-        e.target.available.checked=false
+        e.target.available.checked=true
         e.target.playoffs.checked=false
         setFormData(initialState)
-
     }
 
-
     const handleChange = (e)=>{
-    setFormData({...formData,
-        [e.target.name]:
-        ('maxTeams'===e.target.name
-        ||'innings'===e.target.name
-        ||'inningTime'===e.target.name
-        ||'winningPoints'===e.target.name
-        ||'tiePoints'===e.target.name
-        ||'finalTeams'===e.target.name)
-        ? parseInt(e.target.value)
-        :e.target.type === 'checkbox'
-        ? e.target.checked 
-        : e.target.value})
+      setFormData({...formData,
+          [e.target.name]:
+          ('maxTeams'===e.target.name
+          ||'innings'===e.target.name
+          ||'inningTime'===e.target.name
+          ||'winningPoints'===e.target.name
+          ||'tiePoints'===e.target.name
+          ||'finalTeams'===e.target.name)
+          ? parseInt(e.target.value)
+          :e.target.type === 'checkbox'
+          ? e.target.checked 
+          : e.target.value})
     };
 
     const handleChangeSelect = (e)=>{
-    const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
-    setSelectedCategory(selectedOptions)
-    setFormData({
-        ...formData,
-        categories: categoryOptions
-            .filter((option) => selectedOptions.includes(option.value))
-            .map((elm) => elm.label),
-        });
+      const challengeId = idGnerator()
+      const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
+      setSelectedCategory(selectedOptions)
+      setFormData({
+          ...formData,
+          categories: categoryOptions
+              .filter((option) => selectedOptions.includes(option.value))
+              .map((elm) => elm.label),
+          id:challengeId
+          });
     };
 
 /* console.log("afuera",selectedOptions) */
@@ -126,6 +131,7 @@ const AddMatchChallenge = () => {
                                                         focus:ring-opacity-50'
                                                 id="available"
                                                 name="available"
+                                                defaultChecked={true}
                                                 checked={available.check}
                                                 value={available}
                                                 onChange={() =>

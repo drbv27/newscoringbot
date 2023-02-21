@@ -1,7 +1,6 @@
 import React,{ useState,useEffect,useId } from 'react'
 import uuid from 'react-uuid';
 import {Link} from 'react-router-dom'
-import ChallengeForm from '../components/ChallengeForm'
 import Layout from '../components/Layout'
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
@@ -125,11 +124,8 @@ const AddEvent = () => {
         challenges: challengesOptions
             .filter((option) => selectedChallenges.includes(option.value))
             .map((elm) => elm.label),
+        id:eventId,
         });
-    setFormData({
-      ...formData,
-      id:eventId
-    })
   };
 
   return (
