@@ -67,8 +67,16 @@ const AddEvent = () => {
       try{
           const querySnapshot =  await getDocs(collection(firestore, "challenges"));
           querySnapshot.forEach((doc) => {
-           /*  console.log(doc.data().id)  */
-            list.push(doc.data()).name})
+            const name = doc.data().name
+            const id = doc.data().id
+            console.log(doc.data())
+/*             console.log(doc.data().id) 
+            console.log(doc.data().name)  */
+            /* list.push({name,id}) */
+            list.push(doc.data())
+            console.log(list)
+           /*  list.push(doc.data()).name */
+          })
             setChallengesList(list)
             /* console.log(list) */
       }catch (err){
@@ -279,7 +287,7 @@ const AddEvent = () => {
               </div>
 
 
-              <label htmlFor="maxTeams">maximo de equipos(*):</label>
+              <label htmlFor="maxTeams">maximo de participantes por equipo(*):</label>
               <input type="number" className='
                                               mt-1
                                               form-input 
@@ -297,7 +305,7 @@ const AddEvent = () => {
                                   value={maxTeams}
                                   onChange={handleChange}
                                   required/>
-              <label htmlFor="minTeams">minimo de equipos(*):</label>
+              <label htmlFor="minTeams">minimo de participantes por equipo(*):</label>
               <input type="number" className='
                                               mt-1
                                               form-input 

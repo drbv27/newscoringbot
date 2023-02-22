@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import ChallengeForm from '../components/ChallengeForm'
 import Layout from '../components/Layout'
@@ -10,15 +10,16 @@ import TaskChallengeForm from '../components/TaskChallengeForm';
 import TasksTableForm from '../components/TasksTableForm'
 import { CategoriesType } from '../helpers/categories'
 import app from '../firebase';
-import { getFirestore,updateDoc,doc,setDoc } from 'firebase/firestore';
+import { collection,getDocs,getFirestore,doc,setDoc } from 'firebase/firestore'
 
 const firestore = getFirestore(app)
 
 const animatedComponents = makeAnimated();
 const initialState = {
-    name: "",
-    slug: "",
-    imageURL: "",
+    teamName: "",
+    country: "",
+    city: "",
+    events:[],
     description: "",
     maxTeams: 0,
     maxTurns: 0,
@@ -36,6 +37,12 @@ const initialState = {
   };
 
 const AddTeam = () => {
+    const [eventList,setEventList] = useState([])
+    const eventsOptions = eventList.map((elm, index) => ({
+        value: index,
+        label: elm.eventName,
+      }));
+    const [selectedEvent, setSelectedEvent] = useState([])
       // selecet Categories use State
     const categoryOptions = CategoriesType.map((elm, index) => ({
                     value: index,
@@ -46,9 +53,11 @@ const AddTeam = () => {
     const [formData, setFormData] = useState(initialState);
     /* const [selectedOptions, setSelectedOptions] = useState([]); */
     const {
-        name,
-        slug,
-        imageURL,
+        teamName,
+        country,
+        city,
+        events,
+        institution,
         description,
         categories,
         maxTeams,
@@ -64,11 +73,38 @@ const AddTeam = () => {
         available,
       } = formData;
 
+    useEffect(() => {
+    const fetchEvents = async () => {
+        let list = [];
+        try{
+            const querySnapshot =  await getDocs(collection(firestore, "events"));
+            querySnapshot.forEach((doc) => {
+            /*  console.log(doc.data().id)  */
+            list.push(doc.data())
+            })
+            setEventList(list)
+            /* console.log(list) */
+        }catch (err){
+            console.log(err);
+        }
+    }
+    fetchEvents();
+    }, [])
 
-    async function addChallenge(e){
-    e.preventDefault();
-    await setDoc(doc(firestore,"challenges",name),formData)
-    cleanForm(e)
+   /*  console.log(eventList) */
+
+    async function saveTeam(e){
+        e.preventDefault();
+        const evetsToSend = selectedEvent.map((event)=>eventList[event].id)
+        console.log(evetsToSend)
+        setFormData({
+            ...formData,
+            events: evetsToSend})
+        console.log("enviando...")
+        console.log("al enviar",formData)
+        console.log(selectedEvent)
+        /* await setDoc(doc(firestore,"challenges",name),formData) */
+        /* cleanForm(e) */
     }
 
     const cleanForm = (e) => {
@@ -108,28 +144,26 @@ const AddTeam = () => {
     };
 
     const handleChangeSelect = (e)=>{
-    const selectedOptions = Array.isArray(e) ? e.map((option) => option.value) : [];
-    setSelectedCategory(selectedOptions)
-    setFormData({
-        ...formData,
-        categories: categoryOptions
-            .filter((option) => selectedOptions.includes(option.value))
-            .map((elm) => elm.label),
-        });
+        const selectedEvents = Array.isArray(e) ? e.map((option) => option.value) : [];
+        setSelectedEvent(selectedEvents)
+        console.log("prueba",selectedEvent)
+/*         setFormData({
+            ...formData,
+            events: selectedEvent}) */
     };
-
-/* console.log("afuera",selectedOptions) */
+console.log(selectedEvent)
+/* console.log("afuera",formData) */
 
     return (
         <Layout>
             <div className='py-4'>
                 <Link to="/teams" className='bg-blue-900 text-white p-2 mt-8 ml-24 rounded'>Atrás</Link>
             </div>
-            <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl mb-5' onSubmit={addChallenge}>
+            <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl mb-5' onSubmit={saveTeam}>
                 <div className='mb-4 flex'>
                     <h1 className='text-4xl font-bold text-blue-900'>Agregar Equipo</h1>
                     <div className='ml-auto flex gap-2'>
-                        <label htmlFor="available" className='text-xl'>Habilitar:</label>
+                        <label htmlFor="available" className='text-xl'>Habilitar equipo:</label>
                         <input type="checkbox" className='
                                                         mt-1
                                                         form-input 
@@ -144,6 +178,7 @@ const AddTeam = () => {
                                                         focus:ring-opacity-50'
                                                 id="available"
                                                 name="available"
+                                                defaultChecked={true}
                                                 checked={available.check}
                                                 value={available}
                                                 onChange={() =>
@@ -153,7 +188,7 @@ const AddTeam = () => {
                     </div>
                     <hr className='text-black'/>
                 </div>
-                <label htmlFor="name">Nombre Reto (*):</label>
+                <label htmlFor="teamName">Nombre Equipo (*):</label>
                 <input type="text" className='
                                             mt-1
                                             form-input 
@@ -166,12 +201,12 @@ const AddTeam = () => {
                                             focus:ring 
                                             focus:ring-indigo-200 
                                             focus:ring-opacity-50'
-                                    id="name"
-                                    name="name"
-                                    value={name}
+                                    id="teamName"
+                                    name="teamName"
+                                    value={teamName}
                                     onChange={handleChange}
                                     required/>
-                <label htmlFor="challengeSlug">Slug Reto (*):</label>
+                <label htmlFor="country">País (*):</label>
                 <input type="text" className='
                                             mt-1
                                             form-input 
@@ -184,12 +219,12 @@ const AddTeam = () => {
                                             focus:ring 
                                             focus:ring-indigo-200 
                                             focus:ring-opacity-50'
-                                    id="challengeSlug"
-                                    name="slug"
-                                    value={slug}
+                                    id="country"
+                                    name="country"
+                                    value={country}
                                     onChange={handleChange}
                                     required/>
-                <label htmlFor="urlImage">url imagen(*):</label>
+                <label htmlFor="city">ciudad(*):</label>
                 <input type="text" className='
                                             mt-1
                                             form-input 
@@ -202,11 +237,49 @@ const AddTeam = () => {
                                             focus:ring 
                                             focus:ring-indigo-200 
                                             focus:ring-opacity-50'
-                                    id="urlImage"
-                                    name="imageURL"
-                                    value={imageURL}
+                                    id="city"
+                                    name="city"
+                                    value={city}
                                     onChange={handleChange}
                                     required/>
+                <label htmlFor="institution">Institución(*):</label>
+                <input type="text" className='
+                                            mt-1
+                                            form-input 
+                                            block 
+                                            w-full 
+                                            rounded-md 
+                                            border-gray-300 
+                                            shadow-sm
+                                            focus:border-indigo-300 
+                                            focus:ring 
+                                            focus:ring-indigo-200 
+                                            focus:ring-opacity-50'
+                                    id="institution"
+                                    name="institution"
+                                    value={institution}
+                                    onChange={handleChange}
+                                    required/>
+                <label htmlFor="events">Eventos (*): </label>
+                <Select
+                        placeholder='Selecciona los eventos'
+                        closeMenuOnSelect={true}
+                        components={animatedComponents}
+                        isMulti
+                        isClearable
+                        options={eventsOptions}
+                        id="events"
+                        className='mt-1'
+                        name="events"
+                        value={eventsOptions.filter((elm)=>selectedEvent.includes(elm.value))}
+                        onChange={handleChangeSelect}
+                        required/>
+
+                {selectedEvent.length>0 
+                    ? eventList[selectedEvent].challenges.map((challenge)=>challenge)
+                    : <p>No hay seleccionado</p>
+                }
+                
                 <label htmlFor="description">Descripcion: </label>
                 <textarea  className='
                                     mt-1
@@ -225,7 +298,7 @@ const AddTeam = () => {
                             value={description}
                             onChange={handleChange}/>
 
-                <label htmlFor="categorias">Categorias (*): </label>
+{/*                 <label htmlFor="categorias">Categorias (*): </label>
                 <Select
                         placeholder='Selecciona las categorias'
                         closeMenuOnSelect={true}
@@ -238,7 +311,7 @@ const AddTeam = () => {
                         name="categories"
                         value={categoryOptions.filter((elm)=>selectedCategory.includes(elm.value))}
                         onChange={handleChangeSelect}
-                        required/>
+                        required/> */}
                 <label htmlFor="maxTeams">maximo de equipos(*):</label>
                 <input type="number" className='
                                                 mt-1
