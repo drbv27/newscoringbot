@@ -20,6 +20,7 @@ const initialState = {
     country: "",
     city: "",
     events:[],
+    teamEvent:"",
     description: "",
     maxTeams: 0,
     maxTurns: 0,
@@ -58,6 +59,7 @@ const AddTeam = () => {
         city,
         events,
         institution,
+        teamEvent,
         description,
         categories,
         maxTeams,
@@ -130,6 +132,14 @@ const AddTeam = () => {
     };
 
     const handleChange = (e)=>{
+        console.log(e.target)
+/*     setFormData({...formData,
+        [e.target.name]:
+        ('teamEvent'===e.target.name)
+        ? parseInt(e.target.value)
+        :e.target.type === 'checkbox'
+        ? e.target.checked 
+        : e.target.value}) */
     setFormData({...formData,
         [e.target.name]:
         ('maxTurns'===e.target.name
@@ -153,7 +163,15 @@ const AddTeam = () => {
     };
 console.log("eventos",selectedEvent)
 console.log(eventList)
-/* console.log("afuera",formData) */
+console.log(eventList.filter((evt)=>evt.available===true).map((evt)=>evt))
+console.log(teamEvent)
+console.log("afuera",formData)
+if(teamEvent!==""){
+    console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges.map((challenge)=>challenge.name))
+}
+/* console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges)
+console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges) */
+
 
     return (
         <Layout>
@@ -261,8 +279,8 @@ console.log(eventList)
                                     value={institution}
                                     onChange={handleChange}
                                     required/>
-                <label htmlFor="events">Eventos (*): </label>
-                <Select
+                <label htmlFor="events">Evento (*): </label>
+ {/*                <Select
                         placeholder='Selecciona los eventos'
                         closeMenuOnSelect={true}
                         components={animatedComponents}
@@ -274,7 +292,55 @@ console.log(eventList)
                         name="events"
                         value={eventsOptions.filter((elm)=>selectedEvent.includes(elm.value))}
                         onChange={handleChangeSelect}
-                        required/>
+                        required/> */}
+
+                <select name="teamEvent"
+                        value={teamEvent} 
+                        id="teamEvent" 
+                        onChange={handleChange}
+                        className='mt-1
+                                form-input 
+                                block 
+                                w-full 
+                                rounded-md 
+                                border-gray-300 
+                                shadow-sm
+                                focus:border-indigo-300 
+                                focus:ring 
+                                focus:ring-indigo-200 
+                                focus:ring-opacity-50'>
+                    <option value="">Seleccione evento</option>
+                    {eventList.filter((evt)=>evt.available===true).map((evt)=><option value={evt.id}>{evt.eventName}</option>)}
+                </select>
+
+{/*                 <div className="mt-3">
+                        <label className="" htmlFor="teamEvent">
+                            Puntaje Bonus
+                        </label>
+                        <div className="">
+                            <select
+                                className='
+                                            p-2
+                                            border-gray-300
+                                            rounded-md
+                                            form-input
+                                            mt-1
+                                            block
+                                            shadow-sm
+                                            focus:border-indigo-300 
+                                            focus:ring 
+                                            focus:ring-indigo-200 
+                                            focus:ring-opacity-50'
+                                name="teamEvent"
+                                id="teamEvent"
+                                value={teamEvent}
+                                onChange={handleChange}
+                            >
+                               <option value="">Seleccione evento</option>
+                                {eventList.filter((evt)=>evt.available===true).map((evt)=><option>{evt.eventName}</option>)}
+                            </select>
+                        </div>
+                    </div> */}
 
 {/*                 {selectedEvent.length>0 
                     &&  <select>
@@ -283,13 +349,31 @@ console.log(eventList)
                         </select>                     
                     
                 } */}
-                {selectedEvent.length>0 
-                    &&  <select>
-                            {eventList[selectedEvent].challenges.map((chall)=><option key={eventList[selectedEvent].id}>{chall.name}</option>)}
-                        </select>                     
+{/*                 {teamEvent!=="" &&
+                    <div className='flex-col'>
+                        <label htmlFor="teamChallenge"
+                                className='block'>
+                                    Reto (*):
+                        </label>
+                        <select name="teamChallenge"
+                                className='
+                                mt-1
+                                form-input 
+                                block 
+                                w-full 
+                                rounded-md 
+                                border-gray-300 
+                                shadow-sm
+                                focus:border-indigo-300 
+                                focus:ring 
+                                focus:ring-indigo-200 
+                                focus:ring-opacity-50'>
+                            {eventList[selectedEvent].challenges.map((chall)=><option key={`ev${eventList[selectedEvent].id}`}>{chall.name}</option>)}
+                        </select>     
+                    </div>                 
                     
-                }
-                {selectedEvent.length>0 && <p>prueba</p>}
+                } */}
+                {teamEvent!=="" && eventList.filter((event)=>event.id===teamEvent)[0].challenges.map((challenge)=><p>{challenge.name}</p>)}
                 
                 <label htmlFor="description">Descripcion: </label>
                 <textarea  className='
