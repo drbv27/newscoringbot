@@ -1,12 +1,9 @@
 import React,{useState} from 'react'
 import uuid from 'react-uuid';
 import {Link} from 'react-router-dom'
-import ChallengeForm from '../components/ChallengeForm'
 import Layout from '../components/Layout'
 import Select from 'react-select'
-import ToggleSwitch from '../components/ToggleSwitch'
 import makeAnimated from 'react-select/animated';
-import MatchChallengeForm from '../components/MatchChallengeForm';
 import TaskChallengeForm from '../components/TaskChallengeForm';
 import TasksTableForm from '../components/TasksTableForm'
 import { CategoriesType } from '../helpers/categories'
@@ -88,7 +85,6 @@ const AddTaskChallenge = () => {
         e.target.stopTime.checked=false
         e.target.taskSecuence.checked=false
         setFormData(initialState)
-
     }
 
     const addTask = (task) => {
@@ -129,7 +125,6 @@ const AddTaskChallenge = () => {
             id:challengeId
             });
     };
-
 /* console.log("afuera",selectedOptions) */
 
     return (

@@ -28,6 +28,7 @@ const initialState = {
 
 const AddEvent = () => {
 
+  const [formData, setFormData] = useState(initialState);
   const [challengesList,setChallengesList] = useState([])
   const challengesOptions = challengesList.map((elm, index) => ({
                               value: index,
@@ -45,7 +46,6 @@ const AddEvent = () => {
     const secondId = fullId.slice(9,13)
     return `${firstId}${secondId}`
   }
-  const [formData, setFormData] = useState(initialState);
   const {
       eventName,
       eventSlug,
@@ -67,18 +67,9 @@ const AddEvent = () => {
       try{
           const querySnapshot =  await getDocs(collection(firestore, "challenges"));
           querySnapshot.forEach((doc) => {
-            const name = doc.data().name
-            const id = doc.data().id
-            console.log(doc.data())
-/*             console.log(doc.data().id) 
-            console.log(doc.data().name)  */
-            /* list.push({name,id}) */
             list.push(doc.data())
-            console.log(list)
-           /*  list.push(doc.data()).name */
           })
             setChallengesList(list)
-            /* console.log(list) */
       }catch (err){
           console.log(err);
       }
@@ -88,8 +79,15 @@ const AddEvent = () => {
 
   async function addEventData(e){
     e.preventDefault();
-    /* console.log("probando",formData) */
-    await setDoc(doc(firestore,"events",id),formData)
+   /*  console.log(selectedChallenge) */
+    /* const challengesToSend = selectedChallenge.map((challenge)=>challengesList[challenge].id) */
+   /*  setFormData({
+      ...formData,
+      challenges:challengesToSend
+    })
+    console.log(challengesToSend) */
+    console.log("probando",formData)
+    /* await setDoc(doc(firestore,"events",id),formData) */
     /* console.log("probando2",formData) */
     cleanForm(e) 
   }
@@ -127,11 +125,14 @@ const AddEvent = () => {
     const eventId = idGnerator()
     const selectedChallenges = Array.isArray(e) ? e.map((option) => option.value) : [];
     setSelectedChallenge(selectedChallenges)
+    const challengesToSend = selectedChallenge.map((challenge)=>challengesList[challenge].id)
+    console.log(challengesToSend)
     setFormData({
         ...formData,
-        challenges: challengesOptions
+        challenges:selectedChallenges.map((challenge)=>challengesList[challenge].id),
+/*         challenges: challengesOptions
             .filter((option) => selectedChallenges.includes(option.value))
-            .map((elm) => elm.label),
+            .map((elm) => elm.label), */
         id:eventId,
         });
   };

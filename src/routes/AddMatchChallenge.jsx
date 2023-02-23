@@ -63,7 +63,6 @@ const AddMatchChallenge = () => {
       return `${firstId}${secondId}`
     }
 
-
     async function addChallenge(e){
       e.preventDefault();
       await setDoc(doc(firestore,"challenges",id),formData)
@@ -104,7 +103,6 @@ const AddMatchChallenge = () => {
           id:challengeId
           });
     };
-
 /* console.log("afuera",selectedOptions) */
 
     return (

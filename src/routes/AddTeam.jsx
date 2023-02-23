@@ -276,8 +276,10 @@ console.log(selectedEvent)
                         required/>
 
                 {selectedEvent.length>0 
-                    ? eventList[selectedEvent].challenges.map((challenge)=>challenge)
-                    : <p>No hay seleccionado</p>
+                    &&  <select>
+                            {eventList[selectedEvent].challenges.map((chall)=><option key={eventList[selectedEvent].id}>{chall}</option>)}
+                        </select>                     
+                    
                 }
                 
                 <label htmlFor="description">Descripcion: </label>
