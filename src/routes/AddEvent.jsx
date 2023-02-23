@@ -118,7 +118,6 @@ const AddEvent = () => {
     const selectedChallenges = Array.isArray(e) ? e.map((option) => option.value) : [];
     setSelectedChallenge(selectedChallenges)
     const challengesToSend = selectedChallenge.map((challenge)=>challengesList[challenge].id)
-    console.log(challengesToSend)
     setFormData({
         ...formData,
         challenges:selectedChallenges.map((challenge)=>challengesList[challenge]),

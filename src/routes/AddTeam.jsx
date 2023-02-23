@@ -95,14 +95,14 @@ const AddTeam = () => {
 
     async function saveTeam(e){
         e.preventDefault();
-        const evetsToSend = selectedEvent.map((event)=>eventList[event].id)
+/*         const evetsToSend = selectedEvent.map((event)=>eventList[event].id)
         console.log(evetsToSend)
         setFormData({
             ...formData,
-            events: evetsToSend})
+            events: evetsToSend}) */
         console.log("enviando...")
         console.log("al enviar",formData)
-        console.log(selectedEvent)
+       /*  console.log(selectedEvent) */
         /* await setDoc(doc(firestore,"challenges",name),formData) */
         /* cleanForm(e) */
     }
@@ -147,11 +147,12 @@ const AddTeam = () => {
         const selectedEvents = Array.isArray(e) ? e.map((option) => option.value) : [];
         setSelectedEvent(selectedEvents)
         console.log("prueba",selectedEvent)
-/*         setFormData({
+        setFormData({
             ...formData,
-            events: selectedEvent}) */
+            events: selectedEvents.map((event)=>eventList[event])})
     };
-console.log(selectedEvent)
+console.log("eventos",selectedEvent)
+console.log(eventList)
 /* console.log("afuera",formData) */
 
     return (
@@ -275,12 +276,20 @@ console.log(selectedEvent)
                         onChange={handleChangeSelect}
                         required/>
 
-                {selectedEvent.length>0 
+{/*                 {selectedEvent.length>0 
                     &&  <select>
                             {eventList[selectedEvent].challenges.map((chall)=><option key={eventList[selectedEvent].id}>{chall}</option>)}
+                            {eventList[selectedEvent].challenges.map((chall)=><option>{chall}</option>)}
+                        </select>                     
+                    
+                } */}
+                {selectedEvent.length>0 
+                    &&  <select>
+                            {eventList[selectedEvent].challenges.map((chall)=><option key={eventList[selectedEvent].id}>{chall.name}</option>)}
                         </select>                     
                     
                 }
+                {selectedEvent.length>0 && <p>prueba</p>}
                 
                 <label htmlFor="description">Descripcion: </label>
                 <textarea  className='
