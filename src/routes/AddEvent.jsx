@@ -79,16 +79,8 @@ const AddEvent = () => {
 
   async function addEventData(e){
     e.preventDefault();
-   /*  console.log(selectedChallenge) */
-    /* const challengesToSend = selectedChallenge.map((challenge)=>challengesList[challenge].id) */
-   /*  setFormData({
-      ...formData,
-      challenges:challengesToSend
-    })
-    console.log(challengesToSend) */
-    console.log("probando",formData)
-    /* await setDoc(doc(firestore,"events",id),formData) */
-    /* console.log("probando2",formData) */
+    /* console.log("probando",formData) */
+    await setDoc(doc(firestore,"events",id),formData)
     cleanForm(e) 
   }
 
@@ -129,10 +121,7 @@ const AddEvent = () => {
     console.log(challengesToSend)
     setFormData({
         ...formData,
-        challenges:selectedChallenges.map((challenge)=>challengesList[challenge].id),
-/*         challenges: challengesOptions
-            .filter((option) => selectedChallenges.includes(option.value))
-            .map((elm) => elm.label), */
+        challenges:selectedChallenges.map((challenge)=>challengesList[challenge]),
         id:eventId,
         });
   };
