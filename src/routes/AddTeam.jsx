@@ -1,26 +1,20 @@
 import React,{useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import ChallengeForm from '../components/ChallengeForm'
 import Layout from '../components/Layout'
-import Select from 'react-select'
-import ToggleSwitch from '../components/ToggleSwitch'
-import makeAnimated from 'react-select/animated';
-import MatchChallengeForm from '../components/MatchChallengeForm';
-import TaskChallengeForm from '../components/TaskChallengeForm';
-import TasksTableForm from '../components/TasksTableForm'
 import { CategoriesType } from '../helpers/categories'
 import app from '../firebase';
 import { collection,getDocs,getFirestore,doc,setDoc } from 'firebase/firestore'
+import UserTeamForm from '../components/UserTeamForm'
 
 const firestore = getFirestore(app)
 
-const animatedComponents = makeAnimated();
 const initialState = {
     teamName: "",
     country: "",
     city: "",
     events:[],
     teamEvent:"",
+    teamChallenge:"",
     description: "",
     maxTeams: 0,
     maxTurns: 0,
@@ -30,7 +24,7 @@ const initialState = {
     categories: [],
     available: false,
     maxTime: 0,
-    tasks: [],
+    members: [],
     taskSecuence: false,
     stopTime: false,
     bonusType: "",
@@ -60,12 +54,13 @@ const AddTeam = () => {
         events,
         institution,
         teamEvent,
+        teamChallenge,
         description,
         categories,
         maxTeams,
         maxTurns,
         topMaxTurns,
-        tasks,
+        members,
         taskSecuence,
         stopTime,
         bonusType,
@@ -119,16 +114,19 @@ const AddTeam = () => {
 
     }
 
-    const addTask = (task) => {
-    setFormData({ ...formData, tasks: [...tasks, task] });
-    console.log("tareas",tasks)
+    const addMember = (member) => {
+        console.log(member)
+        console.log(formData)
+        setFormData({ ...formData, members: [...members, member] });
+        console.log(formData)
+    console.log("miembros",members)
     };
 
-    const deleteTask = (e,index) => {
+    const deleteMember = (e,index) => {
     e.preventDefault()
-    const copyTask= [...tasks]
-    copyTask.splice(index,1)
-    setFormData({ ...formData, tasks: [...copyTask] });
+    const copyMember= [...members]
+    copyMember.splice(index,1)
+    setFormData({ ...formData, members: [...copyMember] });
     };
 
     const handleChange = (e)=>{
@@ -280,19 +278,6 @@ console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges) */
                                     onChange={handleChange}
                                     required/>
                 <label htmlFor="events">Evento (*): </label>
- {/*                <Select
-                        placeholder='Selecciona los eventos'
-                        closeMenuOnSelect={true}
-                        components={animatedComponents}
-                        isMulti
-                        isClearable
-                        options={eventsOptions}
-                        id="events"
-                        className='mt-1'
-                        name="events"
-                        value={eventsOptions.filter((elm)=>selectedEvent.includes(elm.value))}
-                        onChange={handleChangeSelect}
-                        required/> */}
 
                 <select name="teamEvent"
                         value={teamEvent} 
@@ -313,51 +298,13 @@ console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges) */
                     {eventList.filter((evt)=>evt.available===true).map((evt)=><option value={evt.id}>{evt.eventName}</option>)}
                 </select>
 
-{/*                 <div className="mt-3">
-                        <label className="" htmlFor="teamEvent">
-                            Puntaje Bonus
-                        </label>
-                        <div className="">
-                            <select
-                                className='
-                                            p-2
-                                            border-gray-300
-                                            rounded-md
-                                            form-input
-                                            mt-1
-                                            block
-                                            shadow-sm
-                                            focus:border-indigo-300 
-                                            focus:ring 
-                                            focus:ring-indigo-200 
-                                            focus:ring-opacity-50'
-                                name="teamEvent"
-                                id="teamEvent"
-                                value={teamEvent}
-                                onChange={handleChange}
-                            >
-                               <option value="">Seleccione evento</option>
-                                {eventList.filter((evt)=>evt.available===true).map((evt)=><option>{evt.eventName}</option>)}
-                            </select>
-                        </div>
-                    </div> */}
 
-{/*                 {selectedEvent.length>0 
-                    &&  <select>
-                            {eventList[selectedEvent].challenges.map((chall)=><option key={eventList[selectedEvent].id}>{chall}</option>)}
-                            {eventList[selectedEvent].challenges.map((chall)=><option>{chall}</option>)}
-                        </select>                     
-                    
-                } */}
-{/*                 {teamEvent!=="" &&
-                    <div className='flex-col'>
-                        <label htmlFor="teamChallenge"
-                                className='block'>
-                                    Reto (*):
-                        </label>
-                        <select name="teamChallenge"
-                                className='
-                                mt-1
+                <label htmlFor="teamChallenge">Reto (*): </label>
+                <select name="teamChallenge"
+                        value={teamChallenge} 
+                        id="teamChallenge" 
+                        onChange={handleChange}
+                        className='mt-1
                                 form-input 
                                 block 
                                 w-full 
@@ -368,247 +315,19 @@ console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges) */
                                 focus:ring 
                                 focus:ring-indigo-200 
                                 focus:ring-opacity-50'>
-                            {eventList[selectedEvent].challenges.map((chall)=><option key={`ev${eventList[selectedEvent].id}`}>{chall.name}</option>)}
-                        </select>     
-                    </div>                 
-                    
-                } */}
-                {teamEvent!=="" && eventList.filter((event)=>event.id===teamEvent)[0].challenges.map((challenge)=><p>{challenge.name}</p>)}
-                
-                <label htmlFor="description">Descripcion: </label>
-                <textarea  className='
-                                    mt-1
-                                    form-input 
-                                    block 
-                                    w-full 
-                                    rounded-md 
-                                    border-gray-300 
-                                    shadow-sm
-                                    focus:border-indigo-300 
-                                    focus:ring 
-                                    focus:ring-indigo-200 
-                                    focus:ring-opacity-50'
-                            id="description"
-                            name="description"
-                            value={description}
-                            onChange={handleChange}/>
+                    <option value="">Seleccione reto</option>
+                    {teamEvent!=="" && eventList
+                                        .filter((event)=>event.id===teamEvent)[0].challenges
+                                        .map((challenge)=><option value={challenge.id}>{challenge.name}</option>)}
+                </select>
 
-{/*                 <label htmlFor="categorias">Categorias (*): </label>
-                <Select
-                        placeholder='Selecciona las categorias'
-                        closeMenuOnSelect={true}
-                        components={animatedComponents}
-                        isMulti
-                        isClearable
-                        options={categoryOptions}
-                        id="categories"
-                        className='mt-1'
-                        name="categories"
-                        value={categoryOptions.filter((elm)=>selectedCategory.includes(elm.value))}
-                        onChange={handleChangeSelect}
-                        required/> */}
-                <label htmlFor="maxTeams">maximo de equipos(*):</label>
-                <input type="number" className='
-                                                mt-1
-                                                form-input 
-                                                block 
-                                                w-full 
-                                                rounded-md 
-                                                border-gray-300 
-                                                shadow-sm
-                                                focus:border-indigo-300 
-                                                focus:ring 
-                                                focus:ring-indigo-200 
-                                                focus:ring-opacity-50'
-                                    id="maxTeams"
-                                    name="maxTeams"
-                                    value={maxTeams}
-                                    onChange={handleChange}
-                                    required/>
                 <div>
                     <hr className='mt-5'/>
-                    <h2 className='text-xl font-bold'>Turnos</h2>
-                    <label htmlFor="maxTurns">No. Turnos por Equipo(*):</label>
-                    <input type="number" className='
-                                                    mt-1
-                                                    form-input 
-                                                    block 
-                                                    w-full 
-                                                    rounded-md 
-                                                    border-gray-300 
-                                                    shadow-sm
-                                                    focus:border-indigo-300 
-                                                    focus:ring 
-                                                    focus:ring-indigo-200 
-                                                    focus:ring-opacity-50'
-                                        id="maxTurns"
-                                        name="maxTurns"
-                                        value={maxTurns}
-                                        onChange={handleChange}
-                                        required/>
-                    <label htmlFor="topMaxTurns">No. Turnos por Suma Top para clasificar(*):</label>
-                    <input type="number" className='
-                                                    mt-1
-                                                    form-input 
-                                                    block 
-                                                    w-full 
-                                                    rounded-md 
-                                                    border-gray-300 
-                                                    shadow-sm
-                                                    focus:border-indigo-300 
-                                                    focus:ring 
-                                                    focus:ring-indigo-200 
-                                                    focus:ring-opacity-50'
-                                        id="topMaxTurns"
-                                        name="topMaxTurns"
-                                        value={topMaxTurns}
-                                        onChange={handleChange}
-                                        required/>
-                    <hr className='mt-5'/>
-                    <h2 className='text-xl font-bold'>Finales</h2>
-                    <div className='flex gap-2'>
-                        <label htmlFor="playoffs" className='text-lg'>PlayOffs:</label>
-                        <input type="checkbox" className='
-                                                        mt-1
-                                                        form-input 
-                                                        block 
-                                                        h-6
-                                                        rounded-md 
-                                                        border-gray-300 
-                                                        shadow-sm
-                                                        focus:border-indigo-300 
-                                                        focus:ring 
-                                                        focus:ring-indigo-200 
-                                                        focus:ring-opacity-50'
-                                                id="playoffs"
-                                                name="playoffs"
-                                                checked={playoffs.check}
-                                                value={playoffs}
-                                                onChange={handleChange}/>
-                    </div>
-                    <label htmlFor="finalTeams">No. equipos finalistas:</label>
-                    <input type="number" className='
-                                                    mt-1
-                                                    form-input 
-                                                    block 
-                                                    w-full 
-                                                    rounded-md 
-                                                    border-gray-300 
-                                                    shadow-sm
-                                                    focus:border-indigo-300 
-                                                    focus:ring 
-                                                    focus:ring-indigo-200 
-                                                    focus:ring-opacity-50'
-                                        id="finalTeams"
-                                        name="finalTeams"
-                                        value={finalTeams}
-                                        onChange={handleChange}
-                                        disabled={!playoffs}/>
-                    <hr className='mt-5'/>
-                    <h2 className='text-xl font-bold'>Tareas</h2>
-                    <label htmlFor="maxTime">Tiempo Maxímo (segundos):</label>
-                    <input type="number" className='
-                                                    mt-1
-                                                    form-input 
-                                                    block
-                                                    w-full 
-                                                    rounded-md 
-                                                    border-gray-300 
-                                                    shadow-sm
-                                                    focus:border-indigo-300 
-                                                    focus:ring 
-                                                    focus:ring-indigo-200 
-                                                    focus:ring-opacity-50'
-                                        id="maxTime"
-                                        name="maxTime"
-                                        value={maxTime}
-                                        onChange={handleChange}/>
-                    <TasksTableForm taskArray={tasks} deleteTask={deleteTask}/>
-                    <TaskChallengeForm addTask={addTask} textButton="Añadir" />
-                    <div className='flex gap-2 mt-2'>
-                        <label htmlFor="taskSecuence" className='text-lg'>
-                            Tareas en secuencia
-                        </label>
-                        <input type="checkbox" className='
-                                                        mt-1
-                                                        form-input 
-                                                        block 
-                                                        h-6
-                                                        rounded-md 
-                                                        border-gray-300 
-                                                        shadow-sm
-                                                        focus:border-indigo-300 
-                                                        focus:ring 
-                                                        focus:ring-indigo-200 
-                                                        focus:ring-opacity-50'
-                                                id="taskSecuence"
-                                                name="taskSecuence"
-                                                checked={taskSecuence.check}
-                                                value={taskSecuence}
-                                                onChange={(e) =>
-                                                            setFormData({
-                                                            ...formData,
-                                                            taskSecuence: e.target.checked,
-                                                            })}
-                        />
-                    </div>
-                    <div className='flex gap-2 mt-2'>
-                        <label htmlFor="stopTime" className='text-lg'>
-                            Detener tiempo última vuelta
-                        </label>
-                        <input type="checkbox" className='
-                                                        mt-1
-                                                        form-input 
-                                                        block 
-                                                        h-6
-                                                        rounded-md 
-                                                        border-gray-300 
-                                                        shadow-sm
-                                                        focus:border-indigo-300 
-                                                        focus:ring 
-                                                        focus:ring-indigo-200 
-                                                        focus:ring-opacity-50'
-                                                id="stopTime"
-                                                name="stopTime"
-                                                checked={stopTime.check}
-                                                value={stopTime}
-                                                onChange={(e) =>
-                                                            setFormData({
-                                                            ...formData,
-                                                            stopTime: e.target.checked,
-                                                            })}
-                        />
-                    </div>
+                    <h2 className='text-xl font-bold'>Participantes:</h2>
+ 
+                    <UserTeamForm addMember={addMember} textButton="Añadir"/>
+                    
 
-                    <div className="mt-3">
-                        <label className="col-sm-3 col-form-label" htmlFor="bonusType">
-                            Puntaje Bonus
-                        </label>
-                        <div className="">
-                            <select
-                                className='
-                                            p-2
-                                            border-gray-300
-                                            rounded-md
-                                            form-input
-                                            mt-1
-                                            block
-                                            shadow-sm
-                                            focus:border-indigo-300 
-                                            focus:ring 
-                                            focus:ring-indigo-200 
-                                            focus:ring-opacity-50'
-                                name="bonusType"
-                                id="bonustype"
-                                value={bonusType}
-                                onChange={handleChange}
-                            >
-                                <option value="">Ninguno</option>
-                                <option value="timer">Sumar tiempo restante Timer</option>
-                                <option value="manual">Ingresar manualmente</option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
                 <hr className='mt-4'/>
                 <div className='inline-block mt-3 w-1/2 pl-1'>
