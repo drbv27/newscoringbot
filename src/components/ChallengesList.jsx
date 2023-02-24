@@ -5,12 +5,12 @@ import { GiAutoRepair,GiSoccerBall } from 'react-icons/gi'
 
 const ChallengesList = ({challengesArray}) => {
   return (
-    <div className='mr-1.5 border-4 rounded-t-lg'>
-        <div className='columns-4 bg-sky-800 py-4 text-xl text-white text-center rounded-t-lg'>
+    <div className='mr-1.5 border-4 rounded-t-lg rounded-b-sm'>
+        <div className='columns-4 bgoscurostem py-4 text-xl text-white text-center rounded-t-lg'>
             <p>Nombre</p>
             <p>Tipo</p>
             <p>Estado</p>
-            <p>Acciones</p>
+            <p>Acción</p>
         </div>
         {challengesArray.map((challenge)=>{
           return(
@@ -18,15 +18,15 @@ const ChallengesList = ({challengesArray}) => {
                 <div className='columns-4 text-center mt-3'>
                     <p>{challenge.name}</p>
                     <p>{challenge.challengeType ==="tasks" 
-                        ? <GiAutoRepair className='mx-auto text-3xl text-sky-700'/> 
-                        : <GiSoccerBall className='mx-auto text-3xl text-sky-700'/>}</p>
+                        ? <GiAutoRepair className='mx-auto text-3xl txtoscurostem'/> 
+                        : <GiSoccerBall className='mx-auto text-3xl txtoscurostem'/>}</p>
                     <p>{challenge.available 
-                        ? <MdEventAvailable className='mx-auto text-2xl text-green-600'/> 
-                        : <CgUnavailable className='mx-auto text-2xl text-red-600'/> }
+                        ? <MdEventAvailable className='mx-auto text-3xl txtsec'/> 
+                        : <CgUnavailable className='mx-auto text-3xl txtrojostem'/> }
                     </p>
                     <div>
-                        <button><FaUserEdit className='bg-amber-500 p-1 text-3xl text-white rounded border border-amber-800 mr-1'/></button>
-                        <button><FaRegTrashAlt className='bg-red-600 p-1 text-3xl text-white rounded border border-red-800'/></button>
+                        <button><FaUserEdit className='bgnaranjastem p-1 text-3xl text-white rounded border border-amber-700 mr-1'/></button>
+                        <button><FaRegTrashAlt className='bgrojostem p-1 text-3xl text-white rounded border border-red-700'/></button>
                     </div>
                 </div>
                 <hr />

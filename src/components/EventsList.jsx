@@ -23,8 +23,8 @@ const EventsList = ({eventsArray}) => {
                             : <CgUnavailable className='mx-auto text-2xl text-red-600'/> }
                         </p>
                         <div>
-                            <button><FaUserEdit className='bg-amber-500 p-1 text-3xl text-white rounded border border-amber-800 mr-1'/></button>
-                            <button><FaRegTrashAlt className='bg-red-600 p-1 text-3xl text-white rounded border border-red-800'/></button>
+                            <button><FaUserEdit className='bgnaranjastem p-1 text-3xl text-white rounded border border-amber-700 mr-1'/></button>
+                            <button><FaRegTrashAlt className='bg-red-500 p-1 text-3xl text-white rounded border border-red-700'/></button>
                         </div>
                     </div>
                     <hr />

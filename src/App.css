@@ -4,3 +4,44 @@
   margin:0;
 }
 
+
+* {
+  font-family: Quicksand;
+}
+
+.txtppal{
+  color:#1097d5
+}
+.bgppal{
+  background-color:#1097d5
+}
+.txtsec{
+  color:#98bf11
+}
+.bgsec{
+  background-color:#98bf11
+}
+.txtazulapp{
+  color:#007bbd
+}
+.bgazulapp{
+  background-color:#007bbd
+}
+.txtoscurostem{
+  color:#00629e
+}
+.bgoscurostem{
+  background-color:#00629e
+}
+.txtnaranjastem{
+  color:#f59c10
+}
+.bgnaranjastem{
+  background-color:#f59c10
+}
+.txtrojostem{
+  color:#e94947
+}
+.bgrojostem{
+  background-color:#e94947
+}

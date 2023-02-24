@@ -41,15 +41,18 @@ const Challenges = () => {
   return (
         <Layout>
         <h1 
-        className='text-3xl text-center font-bold text-blue-900'>
+          className='text-3xl 
+                    text-center 
+                    font-bold 
+                    txtppal'>
           RETOS
         </h1>
-        <div className='mt-4 mb-4 ml-12 flex gap-4'>
-          <h2 className='text-2xl'>Agregar reto:</h2>
-          <Link to='/challenges/addtaskchallenge' className='bg-blue-900 text-white p-2  rounded'>
+        <div className='mt-4 mb-4  flex gap-4 justify-end mr-4'>
+          <h2 className='text-xl sm:text-2xl'>Agregar reto:</h2>
+          <Link to='/challenges/addtaskchallenge' className='bgazulapp text-white p-2  rounded'>
             Tareas
           </Link>
-          <Link to='/challenges/addmatchchallenge' className='bg-blue-900 text-white p-2  rounded'>
+          <Link to='/challenges/addmatchchallenge' className='bgazulapp text-white p-2  rounded'>
             Partido
           </Link>
         </div>

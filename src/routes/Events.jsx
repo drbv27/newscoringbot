@@ -39,7 +39,7 @@ const Events = () => {
                     text-blue-900'
                     >EVENTOS
       </h1>
-      <div className='mt-4 mb-4 ml-12 flex gap-4'>
+      <div className='mt-4 mb-4 ml-12 flex gap-4 justify-end mr-4'>
         <h2 className='text-xl sm:text-2xl'>Agregar evento:</h2>
         <Link to='/events/addevent' className='bg-blue-900 text-white p-2  rounded text-xl sm:text-2xl'>
           <MdOutlineEmojiEvents />
