@@ -9,12 +9,12 @@ const Teams = () => {
   return (
     <Layout>
     <h1 
-    className='text-3xl text-center font-bold text-blue-900'>
+    className='text-3xl text-center font-bold txtppal'>
       EQUIPOS
     </h1>
-    <div className='mt-4 mb-4 ml-12 flex gap-4'>
-      <h2 className='text-2xl'>Agregar equipo:</h2>
-      <Link to='/teams/addteams' className='bg-blue-900 text-white p-2  rounded text-2xl'>
+    <div className='mt-4 mb-4 ml-12 flex gap-4 justify-end mr-4'>
+      <h2 className='text-xl sm:text-2xl'>Agregar equipo:</h2>
+      <Link to='/teams/addteams' className='bgazulapp text-white p-2  rounded text-xl sm:text-2xl'>
         <AiOutlineUsergroupAdd />
       </Link>
     </div>

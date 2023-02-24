@@ -37,7 +37,7 @@ const UserTeamForm = ({
   };
 
   return (
-    <div className='flex:lg gap-1 mt-4 bg-gray-300 p-2 rounded-md'>
+    <div className='flex:lg gap-1 mt-4 bggrismedio p-2 rounded-md'>
       <h4 className='uppercase font-bold text-center'>Agregar participante</h4>
       <div className='flex-col'>
         <label htmlFor="mamberName">Nombre Participante:</label>
@@ -138,7 +138,7 @@ const UserTeamForm = ({
         </div>
       </div>
       <div className='w-full'>
-        <button className='bg-blue-900 p-2 text-white rounded mr-2 w-full mt-2' onClick={handleSubmit}>
+        <button className='bgoscurostem p-2 text-white rounded mr-2 w-full mt-2' onClick={handleSubmit}>
           {textButton}
         </button>
       </div>

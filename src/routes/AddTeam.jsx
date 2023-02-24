@@ -115,13 +115,13 @@ const AddTeam = () => {
     return (
         <Layout>
             <div className='py-4'>
-                <Link to="/teams" className='bg-blue-900 text-white p-2 mt-8 ml-24 rounded'>Atrás</Link>
+                <Link to="/teams" className='bgoscurostem text-white p-2 mt-8 ml-10 rounded'>Atrás</Link>
             </div>
-            <form className='w-10/12 mx-auto bg-gray-200 p-5 rounded-xl mb-5' onSubmit={saveTeam}>
+            <form className='w-10/12 mx-auto bggrisclaro p-5 rounded-xl mb-5' onSubmit={saveTeam}>
                 <div className='mb-4 flex'>
-                    <h1 className='text-4xl font-bold text-blue-900'>Agregar Equipo</h1>
+                    <h1 className='text-2xl md:text-4xl font-bold txtoscurostem'>Agregar Equipo</h1>
                     <div className='ml-auto flex gap-2'>
-                        <label htmlFor="available" className='text-xl'>Habilitar equipo:</label>
+                        <label htmlFor="available" className='text-lg txtsec font-bold md:text-xl'>Habilitar equipo:</label>
                         <input type="checkbox" className='
                                                         mt-1
                                                         form-input 
@@ -271,9 +271,9 @@ const AddTeam = () => {
 
                 </div>
                 <hr className='mt-4'/>
-                <div className='inline-block mt-3 w-1/2 pl-1'>
-                    <button type="submit" className='bg-blue-900 p-2 text-white rounded mr-2'>Guardar</button>
-                    <button type="reset" className='border border-blue-900 p-2 text-blue-900 rounded'>Cancelar</button>
+                <div className='inline-block mt-3 w-full pl-1 text-right'>
+                    <button type="submit" className=' p-2 text-white rounded mr-2' style={{backgroundColor:'#1097d5'}}>Guardar</button>
+                    <button type="reset" className='border borderppal p-2 txtppal rounded'>Cancelar</button>
                 </div>
             </form>
         </Layout>
