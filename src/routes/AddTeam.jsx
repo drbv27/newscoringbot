@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react'
+import uuid from 'react-uuid';
 import {Link} from 'react-router-dom'
 import Layout from '../components/Layout'
 import { CategoriesType } from '../helpers/categories'
@@ -18,6 +19,7 @@ const initialState = {
     teamChallenge:"",
     members:[],
     available: true,
+    id:""
   };
 
 const AddTeam = () => {
@@ -27,15 +29,9 @@ const AddTeam = () => {
         label: elm.eventName,
       }));
     const [selectedEvent, setSelectedEvent] = useState([])
-      // selecet Categories use State
-    const categoryOptions = CategoriesType.map((elm, index) => ({
-                    value: index,
-                     label: elm,
-                            }));
-    const [selectedCategory, setSelectedCategory] = useState([])
 
     const [formData, setFormData] = useState(initialState);
-    /* const [selectedOptions, setSelectedOptions] = useState([]); */
+
     const {
         teamName,
         country,
@@ -45,7 +41,15 @@ const AddTeam = () => {
         teamChallenge,
         members,
         available,
+        id,
       } = formData;
+
+    const idGnerator = () =>{
+        const fullId = uuid()
+        const firstId = fullId.substring(0,8)
+        const secondId = fullId.slice(9,13)
+        return `${firstId}${secondId}`
+    }
 
     useEffect(() => {
     const fetchEvents = async () => {
@@ -65,38 +69,19 @@ const AddTeam = () => {
     fetchEvents();
     }, [])
 
-   /*  console.log(eventList) */
-
     async function saveTeam(e){
         e.preventDefault();
-/*         const evetsToSend = selectedEvent.map((event)=>eventList[event].id)
-        console.log(evetsToSend)
-        setFormData({
-            ...formData,
-            events: evetsToSend}) */
-        console.log("enviando...")
-        console.log("al enviar",formData)
-       /*  console.log(selectedEvent) */
-        /* await setDoc(doc(firestore,"challenges",name),formData) */
-        /* cleanForm(e) */
+        await setDoc(doc(firestore,"teams",id),formData)
+        cleanForm(e)
     }
 
     const cleanForm = (e) => {
-        setSelectedCategory([])
-        e.target.available.checked=false
-        e.target.playoffs.checked=false
-        e.target.stopTime.checked=false
-        e.target.taskSecuence.checked=false
+        e.target.available.checked=true
         setFormData(initialState)
-
     }
 
     const addMember = (member) => {
-        console.log(member)
-        console.log(formData)
         setFormData({ ...formData, members: [...members, member] });
-        console.log(formData)
-    console.log("miembros",members)
     };
 
     const deleteMember = (e,index) => {
@@ -106,47 +91,26 @@ const AddTeam = () => {
         setFormData({ ...formData, members: [...copyMember] });
     };
 
-    const handleChange = (e)=>{
-        console.log(e.target)
-/*     setFormData({...formData,
-        [e.target.name]:
-        ('teamEvent'===e.target.name)
-        ? parseInt(e.target.value)
-        :e.target.type === 'checkbox'
-        ? e.target.checked 
-        : e.target.value}) */
-    setFormData({...formData,
-        [e.target.name]:
-        ('maxTurns'===e.target.name
-        ||'maxTeams'===e.target.name
-        ||'finalTeams'===e.target.name
-        ||'maxTime'===e.target.name
-        ||'topMaxTurns'===e.target.name)
-        ? parseInt(e.target.value)
-        :e.target.type === 'checkbox'
-        ? e.target.checked 
-        : e.target.value})
-    };
-
-    const handleChangeSelect = (e)=>{
-        const selectedEvents = Array.isArray(e) ? e.map((option) => option.value) : [];
-        setSelectedEvent(selectedEvents)
-        console.log("prueba",selectedEvent)
+    const handleAssign = (e)=>{
         setFormData({
             ...formData,
-            events: selectedEvents.map((event)=>eventList[event])})
-    };
-console.log("eventos",selectedEvent)
-console.log(eventList)
-console.log(eventList.filter((evt)=>evt.available===true).map((evt)=>evt))
-console.log(teamEvent)
-console.log("afuera",formData)
-if(teamEvent!==""){
-    console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges.map((challenge)=>challenge.name))
-}
-/* console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges)
-console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges) */
+            [e.target.name]:e.target.value,
+            id: idGnerator()})
+    }
 
+    const handleChange = (e)=>{
+        setFormData({...formData,
+            [e.target.name]:
+            ('maxTurns'===e.target.name
+            ||'maxTeams'===e.target.name
+            ||'finalTeams'===e.target.name
+            ||'maxTime'===e.target.name
+            ||'topMaxTurns'===e.target.name)
+            ? parseInt(e.target.value)
+            :e.target.type === 'checkbox'
+            ? e.target.checked 
+            : e.target.value})
+    };
 
     return (
         <Layout>
@@ -198,7 +162,7 @@ console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges) */
                                     id="teamName"
                                     name="teamName"
                                     value={teamName}
-                                    onChange={handleChange}
+                                    onChange={handleAssign}
                                     required/>
                 <label htmlFor="country">País (*):</label>
                 <input type="text" className='

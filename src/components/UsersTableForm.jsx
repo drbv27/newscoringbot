@@ -6,14 +6,14 @@ const UsersTableForm = ({membersArray,deleteMember}) => {
   return (
     <div>
      {membersArray && membersArray.map((member,index)=>
-      <div key={index} className='flex border border-slate-400 rounded-md mb-1'>
+      <div key={index} className='flex border border-slate-400 rounded-md mb-1 bg-white'>
         <div className='w-1/5 bg-sky-800 text-white font-bold py-1 rounded-l-md'>
           <h3 className='ml-1.5'>Nombre:</h3>
           <h3 className='ml-1.5'>Edad:</h3>
           <h3 className='ml-1.5'>Id:</h3>
           <h3 className='ml-1.5'>Genero:</h3>
         </div>
-        <div className='w-3/5 text-center'>
+        <div className='w-3/5 pl-2 py-1'>
           <p>{member.memberName}</p>
           <p>{member.age}</p>
           <p>{member.memberId}</p>
