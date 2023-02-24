@@ -5,6 +5,7 @@ import { CategoriesType } from '../helpers/categories'
 import app from '../firebase';
 import { collection,getDocs,getFirestore,doc,setDoc } from 'firebase/firestore'
 import UserTeamForm from '../components/UserTeamForm'
+import UsersTableForm from '../components/UsersTableForm';
 
 const firestore = getFirestore(app)
 
@@ -12,23 +13,11 @@ const initialState = {
     teamName: "",
     country: "",
     city: "",
-    events:[],
+    institution:"",
     teamEvent:"",
     teamChallenge:"",
-    description: "",
-    maxTeams: 0,
-    maxTurns: 0,
-    topMaxTurns: 0,
-    playoffs: false,
-    finalTeams: 0,
-    categories: [],
-    available: false,
-    maxTime: 0,
-    members: [],
-    taskSecuence: false,
-    stopTime: false,
-    bonusType: "",
-    challengeType:"tasks"
+    members:[],
+    available: true,
   };
 
 const AddTeam = () => {
@@ -51,22 +40,10 @@ const AddTeam = () => {
         teamName,
         country,
         city,
-        events,
         institution,
         teamEvent,
         teamChallenge,
-        description,
-        categories,
-        maxTeams,
-        maxTurns,
-        topMaxTurns,
         members,
-        taskSecuence,
-        stopTime,
-        bonusType,
-        maxTime,
-        playoffs,
-        finalTeams,
         available,
       } = formData;
 
@@ -123,10 +100,10 @@ const AddTeam = () => {
     };
 
     const deleteMember = (e,index) => {
-    e.preventDefault()
-    const copyMember= [...members]
-    copyMember.splice(index,1)
-    setFormData({ ...formData, members: [...copyMember] });
+        e.preventDefault()
+        const copyMember= [...members]
+        copyMember.splice(index,1)
+        setFormData({ ...formData, members: [...copyMember] });
     };
 
     const handleChange = (e)=>{
@@ -324,7 +301,7 @@ console.log(eventList.filter((event)=>event.id===teamEvent)[0].challenges) */
                 <div>
                     <hr className='mt-5'/>
                     <h2 className='text-xl font-bold'>Participantes:</h2>
- 
+                    <UsersTableForm membersArray={members} deleteMember={deleteMember}/>
                     <UserTeamForm addMember={addMember} textButton="Añadir"/>
                     
 
