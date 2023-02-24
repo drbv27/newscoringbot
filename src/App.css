@@ -15,6 +15,9 @@
 .bgppal{
   background-color:#1097d5
 }
+.borderppal{
+  border-color:#1097d5
+}
 .txtsec{
   color:#98bf11
 }
@@ -44,4 +47,13 @@
 }
 .bgrojostem{
   background-color:#e94947
+}
+.bggrisclaro{
+  background-color: #dadada;
+}
+.bggrismedio{
+  background-color: #b2b2b2;
+}
+.bggrisoscuro{
+  background-color: #575756;
 }

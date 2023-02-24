@@ -5,7 +5,7 @@ const TasksTableForm = ({taskArray,deleteTask}) => {
     /* console.log(taskArray) */
   return (
     <table className='mt-5 w-full mb-2'>
-        <thead className='bg-sky-900 text-white mb-5 rounded-sm'>
+        <thead className='bgoscurostem text-white mb-5'>
             <tr className='rounded-sm'>
                 <th>Tarea</th>
                 <th>Puntos</th>
@@ -23,7 +23,7 @@ const TasksTableForm = ({taskArray,deleteTask}) => {
               <button onClick={(e)=>deleteTask(e,index)}
                       className='
                                 text-white
-                                bg-red-600
+                                bgrojostem
                                 p-1.5
                                 rounded-md
                                 '>

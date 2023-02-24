@@ -36,63 +36,74 @@ const TaskChallengeForm = ({
   };
 
   return (
-    <div className='flex:lg gap-1'>
-      <input
-        type="text"
-        placeholder="Nombre Tarea"
-        name="label"
-        value={label}
-        onChange={handleChange}
-        className='
-                  form-control
-                  mt-1
-                  form-input 
-                  rounded-md 
-                  border-gray-300 
-                  shadow-sm
-                  focus:border-indigo-300 
-                  focus:ring 
-                  focus:ring-indigo-200 
-                  focus:ring-opacity-50
-                  grow'
-      />
-      <input
-        type="number"
-        name="points"
-        value={points}
-        onChange={handleChange}
-        className='
-                  form-control
-                  mt-1
-                  form-input 
-                  rounded-md 
-                  border-gray-300 
-                  shadow-sm
-                  focus:border-indigo-300 
-                  focus:ring 
-                  focus:ring-indigo-200 
-                  focus:ring-opacity-50
-                  grow'
-      />
-      <input
-        type="number"
-        name="penalty"
-        value={penalty}
-        onChange={handleChange}
-        className='
-                  form-control
-                  mt-1
-                  form-input 
-                  rounded-md 
-                  border-gray-300 
-                  shadow-sm
-                  focus:border-indigo-300 
-                  focus:ring 
-                  focus:ring-indigo-200 
-                  focus:ring-opacity-50
-                  grow'
-      />
-      <button className='bg-blue-900 p-2 text-white rounded mr-2 grow' onClick={handleSubmit}>
+    <div className=' flex flex-col gap-1 bggrismedio p-1.5 rounded-md'>
+      <div className='flex flex-col'>
+        <label htmlFor="label">Tarea:</label>
+        <input
+          type="text"
+          placeholder="Nombre Tarea"
+          name="label"
+          value={label}
+          onChange={handleChange}
+          className='
+                    form-control
+                    mt-1
+                    form-input 
+                    rounded-md 
+                    border-gray-300 
+                    shadow-sm
+                    focus:border-indigo-300 
+                    focus:ring 
+                    focus:ring-indigo-200 
+                    focus:ring-opacity-50
+                    grow'
+        />
+      </div>
+      <div className='flex gap-1'>
+        <div className='flex flex-col grow'>
+          <label htmlFor="points">Puntos:</label>
+          <input
+          type="number"
+          name="points"
+          value={points}
+          onChange={handleChange}
+          className='
+                    form-control
+                    mt-1
+                    form-input 
+                    rounded-md 
+                    border-gray-300 
+                    shadow-sm
+                    focus:border-indigo-300 
+                    focus:ring 
+                    focus:ring-indigo-200 
+                    focus:ring-opacity-50
+                    grow'
+        />
+        </div>
+        <div className='flex flex-col grow'>
+          <label htmlFor="penalty">Penalidad:</label>
+          <input
+          type="number"
+          name="penalty"
+          value={penalty}
+          onChange={handleChange}
+          className='
+                    form-control
+                    mt-1
+                    form-input 
+                    rounded-md 
+                    border-gray-300 
+                    shadow-sm
+                    focus:border-indigo-300 
+                    focus:ring 
+                    focus:ring-indigo-200 
+                    focus:ring-opacity-50
+                    grow'
+        />
+        </div>
+      </div>
+      <button className='bgoscurostem p-2 text-white rounded mr-2 mt-2 grow' onClick={handleSubmit}>
         {textButton}
       </button>
 
