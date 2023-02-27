@@ -14,6 +14,10 @@ import AddTaskChallenge from './routes/AddTaskChallenge';
 import AddMatchChallenge from './routes/AddMatchChallenge';
 import MiPrueba from './routes/MiPrueba';
 import AddTeam from './routes/AddTeam';
+import ActiveEvents from './routes/ActiveEvents';
+import QualifyEvent from './routes/QualifyEvent';
+import QualifyMatch from './routes/QualifyMatch';
+import QualifyTask from './routes/QualifyTask';
 
 function App() {
 
@@ -29,9 +33,13 @@ function App() {
         <Route path='/challenges/addmatchchallenge' element={<AddMatchChallenge />} />
         <Route path='/users' element={<Users />} />
         <Route path='/users/adduser' element={<AddUser />} />
-        <Route path='teams' element={<Teams />} />
-        <Route path='teams/addteams' element={<AddTeam />} />
+        <Route path='/teams' element={<Teams />} />
+        <Route path='/teams/addteams' element={<AddTeam />} />
         <Route path='/prueba' element={<MiPrueba />} />
+        <Route path='/activeevents' element={<ActiveEvents />} />
+        <Route path='/activeevents/:eventId' element={<QualifyEvent />} />
+        <Route path='/activeevents/:eventId/:matchId' element={<QualifyMatch />} />
+        <Route path='/activeevents/:eventId/:taskId' element={<QualifyTask />} />
       </Routes>
     </AuthContextProvider>
   )
