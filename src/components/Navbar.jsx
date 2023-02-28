@@ -48,7 +48,7 @@ const handleLogout = async () => {
 /* console.log(userDetails) */
   return (
     <div className='rounded-div flex items-center justify-between h-20 font-bold' id="upnav">
-        <Link to="/">
+        <Link to="/home">
             <div>
             <h1 className='text-3xl'>ScoringBot</h1>
             <div className='flex ml-24 mt-2'><p>By: </p><img src={PygmaLogo} alt="" className='w-24 ml-2'/></div>

@@ -27,19 +27,19 @@ function App() {
         <Route path='/' element={<SignIn />} />
         <Route path='/home' element={<Home />} />
         <Route path='/events' element={<Events />} />
-        <Route path='/events/addevent' element={<AddEvent/>} />
+          <Route path='/events/addevent' element={<AddEvent/>} />
         <Route path='/challenges' element={<Challenges />} />
-        <Route path='/challenges/addtaskchallenge' element={<AddTaskChallenge />} />
-        <Route path='/challenges/addmatchchallenge' element={<AddMatchChallenge />} />
+          <Route path='/challenges/addtaskchallenge' element={<AddTaskChallenge />} />
+          <Route path='/challenges/addmatchchallenge' element={<AddMatchChallenge />} />
         <Route path='/users' element={<Users />} />
-        <Route path='/users/adduser' element={<AddUser />} />
+          <Route path='/users/adduser' element={<AddUser />} />
         <Route path='/teams' element={<Teams />} />
-        <Route path='/teams/addteams' element={<AddTeam />} />
+          <Route path='/teams/addteams' element={<AddTeam />} />
         <Route path='/prueba' element={<MiPrueba />} />
         <Route path='/activeevents' element={<ActiveEvents />} />
-        <Route path='/activeevents/:eventId' element={<QualifyEvent />} />
-        <Route path='/activeevents/:eventId/:matchId' element={<QualifyMatch />} />
-        <Route path='/activeevents/:eventId/:taskId' element={<QualifyTask />} />
+          <Route path='/activeevents/:eventId' element={<QualifyEvent />} />
+            <Route path='/activeevents/:eventId/:matchId' element={<QualifyMatch />} />
+            <Route path='/activeevents/:eventId/:taskId' element={<QualifyTask />} />
       </Routes>
     </AuthContextProvider>
   )
