@@ -39,7 +39,7 @@ function App() {
         <Route path='/activeevents' element={<ActiveEvents />} />
           <Route path='/activeevents/:eventId' element={<QualifyEvent />} />
             <Route path='/activeevents/:eventId/:matchId' element={<QualifyMatch />} />
-            <Route path='/activeevents/:eventId/:taskId' element={<QualifyTask />} />
+            {/* <Route path='/activeevents/:eventId/:taskId' element={<QualifyTask />} /> */}
       </Routes>
     </AuthContextProvider>
   )

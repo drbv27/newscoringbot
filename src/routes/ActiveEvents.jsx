@@ -28,7 +28,6 @@ const ActiveEvents = () => {
   
     }, [])
 
-    console.log(events.filter((evento)=>evento.available===true))
   return (
     <Layout>
         <h1 className='
@@ -56,8 +55,6 @@ const ActiveEvents = () => {
                                     <hr />
                                 </div>
                             )})}
-
-        
   </Layout>
   )
 }
