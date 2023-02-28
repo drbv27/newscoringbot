@@ -98,16 +98,17 @@ const QualifyEvent = () => {
                                                     <p>{chall.name}</p>
                                                 </div>
                                                 <div>
-                                                    {chall.challengeType === "match" && 
-                                                    <Link to={`/activeevents/${eventId}/${chall.id}`}>Ir a Calificar</Link>
-                                                    
+                                                    {chall.challengeType === "match" 
+                                                    ?<Link to={`/activeevents/match/${eventId}/${chall.id}`}>Calificar Partido</Link>
+                                                    :<Link to={`/activeevents/tasks/${eventId}/${chall.id}`}>Calificar Tareas</Link>
+
                                                     }
                                                 </div>
                                             </div>
                                             <hr />
                                         </>
                                             )
-                                        :null}
+                        :null}
     </Layout>
   )
 }

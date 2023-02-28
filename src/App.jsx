@@ -38,8 +38,8 @@ function App() {
         <Route path='/prueba' element={<MiPrueba />} />
         <Route path='/activeevents' element={<ActiveEvents />} />
           <Route path='/activeevents/:eventId' element={<QualifyEvent />} />
-            <Route path='/activeevents/:eventId/:matchId' element={<QualifyMatch />} />
-            {/* <Route path='/activeevents/:eventId/:taskId' element={<QualifyTask />} /> */}
+            <Route path='/activeevents/:eventId/match/:matchId' element={<QualifyMatch />} />
+            <Route path='/activeevents/:eventId/tasks/:taskId' element={<QualifyTask />} />
       </Routes>
     </AuthContextProvider>
   )
