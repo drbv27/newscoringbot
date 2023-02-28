@@ -92,14 +92,17 @@ const QualifyEvent = () => {
         <div>Retos:</div>
             {/* {eventDetail ? <p>Ok</p> : null} */}
             {eventDetail ? eventDetail.challenges.map((chall)=>
-                                            <div key={chall.id}>
+                                        <>
+                                            <div key={chall.id} className='flex justify-between mr-4'>
                                                 <div>
                                                     <p>{chall.name}</p>
                                                 </div>
                                                 <div>
-                                                    <Link to={`/activeevents/${eventId}/${chall.id}`}>Ir a Calificar:</Link>
+                                                    <Link to={`/activeevents/${eventId}/${chall.id}`}>Ir a Calificar</Link>
                                                 </div>
                                             </div>
+                                            <hr />
+                                        </>
                                             )
                                         :null}
     </Layout>
