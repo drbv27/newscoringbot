@@ -98,7 +98,10 @@ const QualifyEvent = () => {
                                                     <p>{chall.name}</p>
                                                 </div>
                                                 <div>
+                                                    {chall.challengeType === "match" && 
                                                     <Link to={`/activeevents/${eventId}/${chall.id}`}>Ir a Calificar</Link>
+                                                    
+                                                    }
                                                 </div>
                                             </div>
                                             <hr />
