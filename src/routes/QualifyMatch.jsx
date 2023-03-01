@@ -91,9 +91,9 @@ const QualifyMatch = () => {
         <div>
             {pairMatches
             && <div>{pairMatches.map((pair)=>{
-                return(<p>{`${pair[0]} vs ${pair[1]}`}</p>)
+                return(<p>{`${pair[0].teamName} vs ${pair[1].teamName}`}</p>)
             })}</div>
-            /* :<p>no falla</p> */}
+            }
         </div>
     </Layout>
   )
