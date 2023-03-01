@@ -14,8 +14,8 @@ const QualifyMatch = () => {
 
     const {eventId,matchId} = useParams()
     
-    console.log(eventId)
-    console.log(matchId)
+/*     console.log(eventId)
+    console.log(matchId) */
 
     useEffect(()=>{
         const fetchTeams = async () => {
@@ -24,7 +24,7 @@ const QualifyMatch = () => {
                 const docSnap = await getDoc(docRef)
     
                 if (docSnap.exists()) {
-                    console.log("Document data:", docSnap.data());
+/*                     console.log("Document data:", docSnap.data()); */
                     setChallengeInfo(docSnap.data())
                   } else {
                     // doc.data() will be undefined in this case
@@ -43,7 +43,7 @@ const QualifyMatch = () => {
             setChallengesTeams(challengeInfo.teams)
         }
       }catch{
-        console.log("first")
+        console.log("error")
       }
 
     }, [challengeInfo])
@@ -55,31 +55,20 @@ const QualifyMatch = () => {
           }
     },[challengeTeams])
 
-    console.log(challengeInfo)
-    console.log(challengeTeams)
+/*     console.log(challengeInfo)
+    console.log(challengeTeams) */
     if(pairMatches){
         pairMatches.map((pair)=>console.log(pair[0],"vs",pair[1]))
     }
     
-
-
-
-
     const pairMatch = (list)=> {
         let pairs = new Array((list.length * (list.length - 1)) / 2),
-
         pos = 0;
-
         for (let i = 0; i < list.length; i++) {
-
             for (let j = i + 1; j < list.length; j++) {
-
                 pairs[pos++] = [list[i], list[j]];
-
             }
-
         }
-
         return pairs;
     }
 

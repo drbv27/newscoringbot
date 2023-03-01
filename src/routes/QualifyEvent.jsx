@@ -11,9 +11,7 @@ const QualifyEvent = () => {
 
     const [eventDetail,setEventDetail] = useState(null)
     const { eventId } = useParams()
-    console.log(eventId)
-
-
+/*     console.log(eventId) */
 
     useEffect(()=>{
         const fetchEvent = async () => {
@@ -22,7 +20,7 @@ const QualifyEvent = () => {
                 const docSnap = await getDoc(docRef)
     
                 if (docSnap.exists()) {
-                    console.log("Document data:", docSnap.data());
+                    /* console.log("Document data:", docSnap.data()); */
                     setEventDetail(docSnap.data())
                   } else {
                     // doc.data() will be undefined in this case
@@ -33,9 +31,9 @@ const QualifyEvent = () => {
             }
         }
         fetchEvent()
-        console.log(eventDetail)
+        /* console.log(eventDetail) */
     },[])
-    console.log(eventDetail)
+    /* console.log(eventDetail) */
 
 /*     const fetchEvent = async () => {
         try{
@@ -92,21 +90,21 @@ const QualifyEvent = () => {
         <div>Retos:</div>
             {/* {eventDetail ? <p>Ok</p> : null} */}
             {eventDetail ? eventDetail.challenges.map((chall)=>
-                                        <>
-                                            <div key={chall.id} className='flex justify-between mr-4'>
+                                        <div key={chall.id}>
+                                            <div className='flex justify-between mr-4'>
                                                 <div>
                                                     <p>{chall.name}</p>
                                                 </div>
                                                 <div>
                                                     {chall.challengeType === "match" 
-                                                    ?<Link to={`/activeevents/match/${eventId}/${chall.id}`}>Calificar Partido</Link>
-                                                    :<Link to={`/activeevents/tasks/${eventId}/${chall.id}`}>Calificar Tareas</Link>
+                                                    ?<Link to={`/activeevents/${eventId}/match/${chall.id}`}>Calificar Partido</Link>
+                                                    :<Link to={`/activeevents/${eventId}/tasks/${chall.id}`}>Calificar Tareas</Link>
 
                                                     }
                                                 </div>
                                             </div>
                                             <hr />
-                                        </>
+                                        </div>
                                             )
                         :null}
     </Layout>
