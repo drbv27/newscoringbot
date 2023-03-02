@@ -236,7 +236,7 @@ const AddTeam = () => {
                                 focus:ring-indigo-200 
                                 focus:ring-opacity-50'>
                     <option value="">Seleccione evento</option>
-                    {eventList.filter((evt)=>evt.available===true).map((evt)=><option value={evt.id}>{evt.eventName}</option>)}
+                    {eventList.filter((evt)=>(evt.available===true)&&(evt.stage==="registration")).map((evt)=><option value={evt.id}>{evt.eventName}</option>)}
                 </select>
 
 
