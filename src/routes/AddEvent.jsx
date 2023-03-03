@@ -81,6 +81,24 @@ const AddEvent = () => {
     e.preventDefault();
     /* console.log("probando",formData) */
     await setDoc(doc(firestore,"events",id),formData)
+    challenges.forEach(async(challenge)=>{
+      if(challenge.challengeType==="match"){
+        await setDoc(doc(firestore,"eventchallenge",`${id}${challenge.id}`),{
+          available:available,
+          eventId:id,
+          eventChallId:`${id}${challenge.id}`,
+          stage:stage,
+          type:challenge.challengeType,
+          innings:challenge.innings,
+          time:challenge.inningTime,
+          maxTeams:challenge.maxTeams,
+          teams:[],
+  
+        })
+      }
+      
+
+    })
     cleanForm(e) 
   }
 
