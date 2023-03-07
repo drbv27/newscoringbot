@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import Layout from '../components/Layout'
 import { CategoriesType } from '../helpers/categories'
 import app from '../firebase';
-import { collection,getDocs,getFirestore,doc,setDoc } from 'firebase/firestore'
+import { collection,getDocs,getFirestore,doc,setDoc,updateDoc, arrayUnion } from 'firebase/firestore'
 import UserTeamForm from '../components/UserTeamForm'
 import UsersTableForm from '../components/UsersTableForm';
 
@@ -72,6 +72,9 @@ const AddTeam = () => {
     async function saveTeam(e){
         e.preventDefault();
         await setDoc(doc(firestore,"teams",id),formData)
+        await updateDoc(doc(firestore,"eventchallenge",`${teamEvent}${teamChallenge}`),{
+            teams:arrayUnion(formData)
+        })
         cleanForm(e)
     }
 
