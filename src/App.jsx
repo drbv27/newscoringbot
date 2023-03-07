@@ -18,6 +18,7 @@ import ActiveEvents from './routes/ActiveEvents';
 import QualifyEvent from './routes/QualifyEvent';
 import QualifyMatch from './routes/QualifyMatch';
 import QualifyTask from './routes/QualifyTask';
+import MatchGames from './routes/MatchGames'
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
         <Route path='/activeevents' element={<ActiveEvents />} />
           <Route path='/activeevents/:eventId' element={<QualifyEvent />} />
             <Route path='/activeevents/:eventId/match/:matchId' element={<QualifyMatch />} />
+            <Route path='/activeevents/:eventId/match/:matchId/games' element={<MatchGames />} />
             <Route path='/activeevents/:eventId/tasks/:taskId' element={<QualifyTask />} />
       </Routes>
     </AuthContextProvider>
