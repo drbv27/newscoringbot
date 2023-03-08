@@ -69,7 +69,7 @@ const QualifyMatch = () => {
         pos = 0;
         for (let i = 0; i < list.length; i++) {
             for (let j = i + 1; j < list.length; j++) {
-                pairs[pos++] = {teamA:list[i], teamB:list[j]};
+                pairs[pos++] = {teamA:list[i],pointsA:null,goalsA:null, teamB:list[j],pointsB:null,goalsB:null};
             }
         }
         return pairs;
