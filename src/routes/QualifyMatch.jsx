@@ -131,11 +131,11 @@ const QualifyMatch = () => {
         console.log(pairMatches)
 /*         console.log('partidos',matches) */
         setSeeMatches(true)
-/*         await updateDoc(doc(firestore,"eventchallenge",`${eventId}${matchId}`),{
+        await updateDoc(doc(firestore,"eventchallenge",`${eventId}${matchId}`),{
             stage:'scoring',
             tournament:'ligue',
             matches: pairMatches
-        }) */
+        })
         /* navigate('/activeevents/:eventId/match/:matchId/games') */
         {/* <Navigate to='/activeevents/:eventId/match/:matchId/games' replace={true}/> */}
     }
