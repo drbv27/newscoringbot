@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from 'react'
 import { Link, useParams, Navigate, useNavigate } from 'react-router-dom'
+import Layout from '../components/Layout';
 import app from '../firebase';
-import { doc,getDoc,getFirestore } from 'firebase/firestore'
-import Layout from '../components/Layout'
+import { collection,getDocs,getFirestore,doc,setDoc,getDoc,updateDoc } from 'firebase/firestore'
 
 const firestore = getFirestore(app)
 
@@ -27,7 +27,7 @@ const QualifyMatch = () => {
                 const docSnap = await getDoc(docRef)
     
                 if (docSnap.exists()) {
-/*                     console.log("Document data:", docSnap.data()); */
+                    console.log("Document data:", docSnap.data());
                     setChallengeInfo(docSnap.data())
                   } else {
                     // doc.data() will be undefined in this case
@@ -69,7 +69,7 @@ const QualifyMatch = () => {
         pos = 0;
         for (let i = 0; i < list.length; i++) {
             for (let j = i + 1; j < list.length; j++) {
-                pairs[pos++] = [list[i], list[j]];
+                pairs[pos++] = {teamA:list[i], teamB:list[j]};
             }
         }
         return pairs;
@@ -83,7 +83,7 @@ const QualifyMatch = () => {
         console.log(pairMatch(last))
     }
     function shuffle(array) {
-        var m = array.length,
+        let m = array.length,
           t, i;
       
         // While there remain elements to shuffle...
@@ -112,14 +112,52 @@ const QualifyMatch = () => {
         console.log(challengeTeams)
     }
 
-    const selTournament = (e)=>{
+    const selTournament = async(e)=>{
         e.preventDefault()
-        
-        console.log('enviando',tournament);
+/*         await setDoc(doc(firestore,"eventchallenge",`${id}${challenge.id}`),{
+            available:available,
+            eventId:id,
+            eventChallId:`${id}${challenge.id}`,
+            stage:stage,
+            type:challenge.challengeType,
+            innings:challenge.innings,
+            time:challenge.inningTime,
+            maxTeams:challenge.maxTeams,
+            teams:[],
+    
+          }) */
+        console.log('enviando');
+/*         const matches = shuffle(pairMatches); */
+        console.log(pairMatches)
+/*         console.log('partidos',matches) */
         setSeeMatches(true)
+/*         await updateDoc(doc(firestore,"eventchallenge",`${eventId}${matchId}`),{
+            stage:'scoring',
+            tournament:'ligue',
+            matches: pairMatches
+        }) */
         /* navigate('/activeevents/:eventId/match/:matchId/games') */
         {/* <Navigate to='/activeevents/:eventId/match/:matchId/games' replace={true}/> */}
     }
+
+    async function addEventData(e){
+        e.preventDefault();
+        /* console.log("probando",formData) */
+        await setDoc(doc(firestore,"events",id),formData)
+        challenges.forEach(async(challenge)=>{
+          if(challenge.challengeType==="match"){
+            await updateDoc(doc(firestore,"eventchallenge",`${eventId}${matchId}`),{
+                stage:'scoring',
+                tournament:'ligue',
+                matches:'prueba'
+      
+            })
+          }
+          
+    
+        })
+        cleanForm(e) 
+      }
 
 
     const handleChange = (e)=>{
@@ -177,7 +215,7 @@ const QualifyMatch = () => {
                 <input type="submit" value='Sortear'/>
             </form>
         <div>
-            {(pairMatches && seeMatches)
+{/*             {(pairMatches && seeMatches)
             && <div>
                 <h3>Partidos:</h3>
                 {shuffle(pairMatches).map((pair)=>{
@@ -186,7 +224,7 @@ const QualifyMatch = () => {
                     <Link to="/" className='bgsec text-white p-0.5 ml-1 rounded'>iniciar</Link>
                     </div>)
             })}</div>
-            }
+            } */}
         </div>
     </Layout>
   )
