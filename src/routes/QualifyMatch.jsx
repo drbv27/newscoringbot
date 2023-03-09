@@ -136,7 +136,7 @@ const QualifyMatch = () => {
             tournament:'ligue',
             matches: pairMatches
         })
-        /* navigate('/activeevents/:eventId/match/:matchId/games') */
+         navigate('/activeevents/:eventId/match/:matchId/tournament') 
         {/* <Navigate to='/activeevents/:eventId/match/:matchId/games' replace={true}/> */}
     }
 
@@ -183,10 +183,18 @@ const QualifyMatch = () => {
                 {challengeTeams && challengeTeams.map((team)=><li>{team.teamName}</li>)}
             </ul>
         </div>
+        {(challengeInfo && challengeInfo.stage==='scoring')
+        ?
+        <div>
+            <h3>El torneo está en curso</h3>
+            <Link to='/activeevents/:eventId/match/:matchId/tournament'>Ir al torneo</Link>
+        </div>
+        :
+        <div>
             <h3 className='text-center'>Selecciona el tipo de torneo</h3>
             <form onSubmit={selTournament} className='text-center'>
                 <select
-                  className="mt-1
+                className="mt-1
                             ml-auto
                             mr-auto
                             form-input
@@ -199,22 +207,25 @@ const QualifyMatch = () => {
                             focus:ring 
                             focus:ring-indigo-200 
                             focus:ring-opacity-50"
-                  name="tournament"
-                  id="tournament"
-                  value={tournament}
-                  onChange={handleChange}
+                name="tournament"
+                id="tournament"
+                value={tournament}
+                onChange={handleChange}
                 >
                     <option value="ligue">Liga</option>
                     <option value="playoff">Liga + Playoffs</option>
                     {(challengeTeams && challengeTeams.length%2 ===0) && <option value="double">Liga Doble</option> }
                     {(challengeTeams && challengeTeams.length%2 ===0) && <option value="elimligue">Eliminación + Liga</option> }
                     {(challengeTeams && (Math.log(challengeTeams.length)/Math.log(2))%1 ===0) && <option value="elimination">Eliminación</option> }
-                    
-                    
                 </select>
+                {/*  */}
                 <input type="submit" value='Sortear'/>
             </form>
+        </div>
+        }
+
         <div>
+        {/* {(challengeInfo && challengeInfo.stage==='scoring')?'mensaje':'boton' } */}
 {/*             {(pairMatches && seeMatches)
             && <div>
                 <h3>Partidos:</h3>
