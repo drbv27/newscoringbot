@@ -3,11 +3,15 @@ import { Link, useParams, Navigate, useNavigate } from 'react-router-dom'
 import Layout from '../components/Layout'
 import app from '../firebase';
 import { collection,getDocs,getFirestore,doc,setDoc,getDoc,updateDoc } from 'firebase/firestore'
+import GameMatch from '../components/GameMatch';
 
 const firestore = getFirestore(app)
 
 const Tournament = () => {
     const [challengeInfo,setChallengeInfo] = useState(null)
+    const [display,setDisplay] = useState('matches')
+    const [match,setMatch] = useState({})
+    const [index,setIndex] = useState('')
     const {eventId,matchId} = useParams()
 
     useEffect(()=>{
@@ -31,35 +35,65 @@ const Tournament = () => {
         fetchTeams()
     },[])
 
-    {challengeInfo && console.log(challengeInfo)}
+    {challengeInfo && console.log(display)}
+    
+    const handleClick = (e) => {
+        console.log(e.target.getAttribute("index"))
+        setIndex(e.target.getAttribute("index"))
+        setMatch(challengeInfo.matches[e.target.getAttribute("index")])
+        console.log(challengeInfo.matches[e.target.getAttribute("index")])
+        setDisplay('one')
+    }
+    const handleClick2 = () => {
+        setDisplay('matches')
+    }
 
-
-
-  return (
+    return (
     <Layout>
         <h2>Torneo...</h2>
-        {challengeInfo 
-        &&
+        {(challengeInfo && display==='one') 
+        &&  
         <div>
-            {challengeInfo.matches.map((team)=>{
-                return <div key={`${team.teamA.id}${team.teamB.id}`}
-                            className='flex justify-between ml-8 mr-8 mb-2'>
-                            {team.teamA.teamName} vs {team.teamB.teamName} 
-                            <button className='
-                                                bgsec
-                                                text-white
-                                                rounded-md
-                                                px-1
-                                                ml-2
-                                                '>
-                                Jugar
-                            </button>
-                    </div>
-            })}
-        </div>
-        }
+            <GameMatch match={match} position={index}/>                       
+            <button className='
+                                bgsec
+                                text-white
+                                rounded-md
+                                px-1
+                                ml-2'
+                    onClick={handleClick2}>TERMINAR
+            </button>
+        </div> }
+
+
+        {/* Partidos */}
+        {(challengeInfo && display==='matches')
+        ?
+        <div>
+        {challengeInfo.matches.map((teamMatch,index)=>{
+            return <div key={`${teamMatch.teamA.id}${teamMatch.teamB.id}`}
+                        className='flex justify-between ml-8 mr-8 mb-2'>
+                        {teamMatch.teamA.teamName} vs {teamMatch.teamB.teamName} 
+                        <button className='
+                                            bgsec
+                                            text-white
+                                            rounded-md
+                                            px-1
+                                            ml-2
+                                            '
+                                onClick={handleClick}
+                                index={
+                                    index
+                                }>Jugar
+                        </button>
+                </div>
+        })}
+    </div>
+        :
+        <p>prueba</p>
+        } 
     </Layout>
-  )
+    )
 }
 
 export default Tournament
