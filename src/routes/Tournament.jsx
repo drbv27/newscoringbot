@@ -8,6 +8,10 @@ import GameMatch from '../components/GameMatch';
 const firestore = getFirestore(app)
 
 const Tournament = () => {
+    const [goalsA,setGoalsA] = useState(0);
+    const [pointsA,setPointsA] = useState(0);
+    const [goalsB,setGoalsB] = useState(0);
+    const [pointsB,setPointsB] = useState(0);
     const [challengeInfo,setChallengeInfo] = useState(null)
     const [display,setDisplay] = useState('matches')
     const [match,setMatch] = useState({})
@@ -34,8 +38,6 @@ const Tournament = () => {
         }
         fetchTeams()
     },[])
-
-    {challengeInfo && console.log(display)}
     
     const handleClick = (e) => {
         console.log(e.target.getAttribute("index"))
@@ -43,18 +45,39 @@ const Tournament = () => {
         setMatch(challengeInfo.matches[e.target.getAttribute("index")])
         console.log(challengeInfo.matches[e.target.getAttribute("index")])
         setDisplay('one')
-    }
-    const handleClick2 = () => {
-        setDisplay('matches')
+        setGoalsA(0)
+        setGoalsB(0)
     }
 
+    const handleClick2 = () => {
+        setDisplay('matches')
+        saveMatch()
+    }
+
+    async function saveMatch(){
+        const newInfo = challengeInfo
+        newInfo.matches[index].goalsA = goalsA
+        newInfo.matches[index].goalsB = goalsB
+        newInfo.matches[index].pointsA = pointsA
+        newInfo.matches[index].pointsB = pointsB
+        console.log(newInfo.matches[index])
+    }
+    
     return (
     <Layout>
         <h2>Torneo...</h2>
         {(challengeInfo && display==='one') 
         &&  
         <div>
-            <GameMatch match={match} position={index}/>                       
+            <GameMatch match={match} 
+                        position={index} 
+                        info={challengeInfo} 
+                        goalsA={goalsA} 
+                        goalsB={goalsB} 
+                        setGoalsA={setGoalsA} 
+                        setGoalsB={setGoalsB}
+                        setPointsA={setPointsA}                  
+                        setPointsB={setPointsB}/>                       
             <button className='
                                 bgsec
                                 text-white
@@ -68,7 +91,7 @@ const Tournament = () => {
 
         {/* Partidos */}
         {(challengeInfo && display==='matches')
-        ?
+        &&
         <div>
         {challengeInfo.matches.map((teamMatch,index)=>{
             return <div key={`${teamMatch.teamA.id}${teamMatch.teamB.id}`}
@@ -86,11 +109,9 @@ const Tournament = () => {
                                     index
                                 }>Jugar
                         </button>
-                </div>
+                    </div>
         })}
-    </div>
-        :
-        <p>prueba</p>
+        </div>
         } 
     </Layout>
     )

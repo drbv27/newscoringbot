@@ -66,8 +66,8 @@ const handleLogout = async () => {
                 </Link>
             </div>
             :
-            <div className='flex-row gap-10 hidden md:flex'>
-                <div className='flex text-xl gap-2'>
+            <div className='flex-row gap-10 hidden md:flex mr-5'>
+{/*                 <div className='flex text-xl gap-2'>
                     <TooltipP tooltipText="Registro">
                     <div className='text-4xl'>
                         <Link to='/account'><AiOutlineFileDone/></Link>
@@ -86,17 +86,15 @@ const handleLogout = async () => {
                     </TooltipP>
                     :null
                     } 
-{/*                     <TooltipP tooltipText="Theme">
+                    <TooltipP tooltipText="Theme">
                     <div className='text-xl'>
                         <ThemeToggle/>
                     </div>
-                    </TooltipP> */}
-
-
-                </div>
+                    </TooltipP>
+                </div> */}
                 <div className='flex flex-col items-center gap-2'>
                     <div>
-                        <p>Welcome:   {userDetails && userDetails.name}   </p>              
+                        <p>{userDetails && userDetails.name}   </p>              
                     </div>
                     <div>
                         <button
