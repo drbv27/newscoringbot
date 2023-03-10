@@ -38,6 +38,26 @@ const Tournament = () => {
         }
         fetchTeams()
     },[])
+
+    useEffect(()=>{
+        handlePoints()
+    },[goalsA,goalsB])
+
+    const handlePoints = () =>{
+        if(goalsA>goalsB){
+            setPointsA(3)
+            setPointsB(0)
+            console.log('mayor')
+        }if(goalsA<goalsB){
+            setPointsA(0)
+            setPointsB(3)
+            console.log('menor')
+        }if(goalsA===goalsB){
+            setPointsA(1)
+            setPointsB(1)
+            console.log('igual')
+        }
+    }
     
     const handleClick = (e) => {
         console.log(e.target.getAttribute("index"))
@@ -61,8 +81,12 @@ const Tournament = () => {
         newInfo.matches[index].pointsA = pointsA
         newInfo.matches[index].pointsB = pointsB
         console.log(newInfo.matches[index])
+        await updateDoc(doc(firestore,"eventchallenge",`${eventId}${matchId}`),{
+            matches: newInfo
+        })
     }
-    
+    console.log(goalsA,goalsB,pointsA,pointsB)
+
     return (
     <Layout>
         <h2>Torneo...</h2>
@@ -77,7 +101,8 @@ const Tournament = () => {
                         setGoalsA={setGoalsA} 
                         setGoalsB={setGoalsB}
                         setPointsA={setPointsA}                  
-                        setPointsB={setPointsB}/>                       
+                        setPointsB={setPointsB}
+                        handlePoints={handlePoints}/>                       
             <button className='
                                 bgsec
                                 text-white
@@ -95,14 +120,14 @@ const Tournament = () => {
         <div>
         {challengeInfo.matches.map((teamMatch,index)=>{
             return <div key={`${teamMatch.teamA.id}${teamMatch.teamB.id}`}
-                        className='flex justify-between ml-8 mr-8 mb-2'>
+                        className='flex justify-between ml-8 mr-8 mb-2 border-b-2 border-dashed pb-1'>
                         {teamMatch.teamA.teamName} vs {teamMatch.teamB.teamName} 
                         <button className='
                                             bgsec
                                             text-white
                                             rounded-md
                                             px-1
-                                            ml-2
+                                            mr-2
                                             '
                                 onClick={handleClick}
                                 index={

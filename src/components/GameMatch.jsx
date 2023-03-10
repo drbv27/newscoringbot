@@ -4,9 +4,9 @@ import withReactContent from 'sweetalert2-react-content'
 
 const MySwal = withReactContent(Swal)
 
-const GameMatch = ({match,goalsA,position,setGoalsA,info,goalsB,setGoalsB,setPointsA,setPointsB}) => {
+const GameMatch = ({match,goalsA,position,setGoalsA,info,goalsB,setGoalsB,setPointsA,setPointsB,handlePoints}) => {
 
-    const handlePoints = () =>{
+/*     const handlePoints = () =>{
         if(goalsA>goalsB){
             setPointsA(3)
             setPointsB(0)
@@ -20,17 +20,16 @@ const GameMatch = ({match,goalsA,position,setGoalsA,info,goalsB,setGoalsB,setPoi
             setPointsB(1)
             console.log('igual')
         }
-    }
+    } */
 
     const handleGoalsA = ()=>{
         setGoalsA(goalsA+1)
-        handlePoints()
-
     }
     const handleGoalsB = ()=>{
         setGoalsB(goalsB+1)
-        handlePoints()
     }
+
+    console.log('goalsAfuera',goalsA)
 
     const cancelGoalsA = ()=>{
             MySwal.fire({
@@ -95,6 +94,7 @@ const GameMatch = ({match,goalsA,position,setGoalsA,info,goalsB,setGoalsB,setPoi
             }
 
     console.log(match.teamA)
+    
   return (
     <div className='flex flex-col items-center gap-x-11'>
         <div className='flex gap-11'>
