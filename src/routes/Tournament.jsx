@@ -86,6 +86,8 @@ const Tournament = () => {
         })
     }
     console.log(goalsA,goalsB,pointsA,pointsB)
+/*     console.log(challengeInfo)
+    console.log(challengeInfo.matches) */
 
     return (
     <Layout>
@@ -118,10 +120,11 @@ const Tournament = () => {
         {(challengeInfo && display==='matches')
         &&
         <div>
-        {challengeInfo.matches.map((teamMatch,index)=>{
+        {challengeInfo.matches.matches.map((teamMatch,index)=>{
             return <div key={`${teamMatch.teamA.id}${teamMatch.teamB.id}`}
                         className='flex justify-between ml-8 mr-8 mb-2 border-b-2 border-dashed pb-1'>
-                        {teamMatch.teamA.teamName} vs {teamMatch.teamB.teamName} 
+                        {teamMatch.teamA.teamName} vs {teamMatch.teamB.teamName}
+                        {teamMatch.goalsA!==null && <p>jugado</p>}
                         <button className='
                                             bgsec
                                             text-white
@@ -132,7 +135,7 @@ const Tournament = () => {
                                 onClick={handleClick}
                                 index={
                                     index
-                                }>Jugar
+                                }>jugar
                         </button>
                     </div>
         })}

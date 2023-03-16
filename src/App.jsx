@@ -20,6 +20,8 @@ import QualifyMatch from './routes/QualifyMatch';
 import QualifyTask from './routes/QualifyTask';
 import MatchGames from './routes/MatchGames'
 import Tournament from './routes/Tournament';
+import Scores from './routes/Scores';
+import ScoresTable from './routes/ScoresTable';
 
 function App() {
 
@@ -44,6 +46,9 @@ function App() {
             <Route path='/activeevents/:eventId/match/:matchId/games' element={<MatchGames />} />
             <Route path='/activeevents/:eventId/match/:matchId/tournament' element={<Tournament />} />
             <Route path='/activeevents/:eventId/tasks/:taskId' element={<QualifyTask />} />
+        <Route path='/scores' element={<Scores/>} />
+          <Route path='/scores/:tournament' element={<ScoresTable/>} />
+        
       </Routes>
     </AuthContextProvider>
   )

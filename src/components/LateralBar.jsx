@@ -2,8 +2,9 @@ import React from 'react'
 import './LateralBar.css'
 import '../App.css'
 import { Link } from 'react-router-dom'
-import { MdOutlineEmojiEvents } from 'react-icons/md'
+import { MdOutlineEmojiEvents,MdScore,MdOutlineScore } from 'react-icons/md'
 import { SiProbot } from 'react-icons/si'
+import { GiPodium } from 'react-icons/gi'
 import { BsUiChecks } from 'react-icons/bs'
 import { HiOutlineUser,HiOutlineUserGroup } from 'react-icons/hi'
 
@@ -54,6 +55,18 @@ const LateralBar = () => {
           </Link>
           <Link to='/activeevents' className='menu invisible md:visible'>
               Eventos
+          </Link>
+          </li>
+      </ul>
+      <hr className='border-sky-500 mx-1 border-dotted'/>
+      <p className='mt-4'>Posición:</p>
+      <ul>
+        <li className='text-sm lg:text-lg pt-4 flex'>
+          <Link to='/scores' className='menu'>
+            <GiPodium className='iconMenu text-4xl md:text-xl'/>
+          </Link>
+          <Link to='/scores' className='menu invisible md:visible'>
+              Puntajes
           </Link>
           </li>
       </ul>
