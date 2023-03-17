@@ -28,7 +28,8 @@ useEffect(()=>{
                 /* console.log(doc.id, " => ", doc.data()); */
                 setScores(scoresArray)
             });
-            console.log(scores[0].matches.matches)
+            console.log(scores[0]
+                )
             
 /*             const docRef = doc(firestore,'events',`${eventId}`)
             const docSnap = await getDoc(docRef) */
@@ -65,6 +66,19 @@ const puntos = function(partidos,equipo){
             gd:golesFavor-golesContra}
 }
 
+function sortBy(ar) {
+    return ar.sort((a, b) => a.points === b.points 
+        ? b.gd-a.gd
+        : b.points-a.points
+  )}
+
+const tabla = scores[0].teams.map((team)=>puntos(scores[0].matches.matches,team.teamName))
+console.log(tabla)
+
+const order = sortBy(tabla)
+console.log(order)
+
+
 const Disney = puntos(scores[0].matches.matches,"Disney")
 console.log(Disney)
 
@@ -73,9 +87,27 @@ console.log(Disney)
 
   return (
     <Layout>
-        {scores && scores.filter((score)=> score.stage==="scoring").map((score)=>{
+{/*         {scores && scores.filter((score)=> score.stage==="scoring").map((score)=>{
         return <p>{score.tournamentName}</p>
-})}
+})} */}
+        <table className='border-collapse border border-slate-500 hover:border-collapse'>
+            <tr>
+                <th className='border border-slate-600 bg-slate-600 text-white px-2'>Equipo</th>
+                <th className='border border-slate-600 bg-slate-600 text-white px-2'>Puntos</th>
+                <th className='border border-slate-600 bg-slate-600 text-white px-2'>GD</th>
+                <th className='border border-slate-600 bg-slate-600 text-white px-2'>GF</th>
+                <th className='border border-slate-600 bg-slate-600 text-white px-2'>GC</th>
+            </tr>
+        {order && order.map((team)=>{
+            return      <tr>
+                            <td className='border border-slate-700 px-1'>{team.team}</td>
+                            <td className='border border-slate-700 text-center'>{team.points}</td>
+                            <td className='border border-slate-700 text-center'>{team.gd}</td>
+                            <td className='border border-slate-700 text-center'>{team.gf}</td>
+                            <td className='border border-slate-700 text-center'>{team.gc}</td>
+                        </tr>
+        })}
+        </table>
     </Layout>
   )
 }
