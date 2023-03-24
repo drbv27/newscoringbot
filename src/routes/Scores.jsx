@@ -7,6 +7,7 @@ const firestore = getFirestore(app)
 
 const Scores = () => {
     const [scores,setScores] = useState([])
+    const [count,setCount] = useState(0)
 
 /* useEffect(()=>{
     const fetchEventChall = async () => {
@@ -41,11 +42,16 @@ useEffect(()=>{
          }  
     }
     fetchEventChall()
+    const interval = setInterval(()=>{
+        fetchEventChall()
+        /* setCount(count+1) */
+    },15000);
+    return () =>clearInterval(interval)
 },[]);
 
+console.log(count)
 
-
-console.log(scores)
+/* console.log(scores) */
 
 const puntos = function(partidos,equipo){
     const puntos=partidos.filter((partido)=> partido.teamA.teamName===equipo || partido.teamB.teamName===equipo).map((partido)=>{
@@ -91,7 +97,7 @@ if(scores.length > 0){
 /* console.log(tabla) */
 
 //const order = sortBy(tabla)
-console.log(order)
+/* console.log(order) */
 
 
 //const Disney = puntos(scores[0].matches.matches,"Disney")
@@ -102,9 +108,9 @@ console.log(order)
 
   return (
     <Layout>
-{/*         {scores && scores.filter((score)=> score.stage==="scoring").map((score)=>{
+        {scores && scores.filter((score)=> score.stage==="scoring").map((score)=>{
         return <p>{score.tournamentName}</p>
-})} */}
+})}
         <table className='border-collapse border border-slate-500 hover:border-collapse'>
             <thead>
             <tr>
