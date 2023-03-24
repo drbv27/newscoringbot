@@ -8,34 +8,44 @@ const firestore = getFirestore(app)
 const Scores = () => {
     const [scores,setScores] = useState([])
 
-useEffect(()=>{
+/* useEffect(()=>{
     const fetchEventChall = async () => {
-        /* try{ */
             const querySnapshot = await getDocs(collection(firestore, "eventchallenge"));
             let scoresArray = []
-/*             if (querySnapshot){
-                setScores(querySnapshot.data())
-            }else{
-                console.log("no se pudo")
-            }
-        }catch(error){
-            console.log(error)
-        } */
-           
             querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, "=>",doc.data())
                 scoresArray = [...scoresArray,doc.data()]
-                /* console.log(doc.id, " => ", doc.data()); */
+                console.log(scoresArray)
                 setScores(scoresArray)
+                console.log(scores)
             });
-            console.log(scores[0]
-                )
-            
-/*             const docRef = doc(firestore,'events',`${eventId}`)
-            const docSnap = await getDoc(docRef) */
+            setScores(scoresArray)
+            console.log(scores[0])
     }
     fetchEventChall()
-},[])
+},[]); */
+
+useEffect(()=>{
+    const fetchEventChall = async () => {
+         try{ 
+            const querySnapshot = await getDocs(collection(firestore, "eventchallenge"));
+            if(querySnapshot){
+                let scoresArray = []
+                /* scoresArray = [...scoresArray,querySnapshot.docs[0].data()] */
+                setScores([...scores,querySnapshot.docs[0].data()])
+            }else{
+                console.log("no pude")
+            }
+         }catch(error){
+            console.log(error)
+         }  
+    }
+    fetchEventChall()
+},[]);
+
+
+
+console.log(scores)
 
 const puntos = function(partidos,equipo){
     const puntos=partidos.filter((partido)=> partido.teamA.teamName===equipo || partido.teamB.teamName===equipo).map((partido)=>{
@@ -72,15 +82,20 @@ function sortBy(ar) {
         : b.points-a.points
   )}
 
-const tabla = scores[0].teams.map((team)=>puntos(scores[0].matches.matches,team.teamName))
-console.log(tabla)
+  let order = null
+if(scores.length > 0){
+    const tabla = scores[0].teams.map((team)=>puntos(scores[0].matches.matches,team.teamName))
+    order = sortBy(tabla)
+    const Disney = puntos(scores[0].matches.matches,"Disney")
+}
+/* console.log(tabla) */
 
-const order = sortBy(tabla)
+//const order = sortBy(tabla)
 console.log(order)
 
 
-const Disney = puntos(scores[0].matches.matches,"Disney")
-console.log(Disney)
+//const Disney = puntos(scores[0].matches.matches,"Disney")
+/* console.log(Disney) */
 
 
 
@@ -91,6 +106,7 @@ console.log(Disney)
         return <p>{score.tournamentName}</p>
 })} */}
         <table className='border-collapse border border-slate-500 hover:border-collapse'>
+            <thead>
             <tr>
                 <th className='border border-slate-600 bg-slate-600 text-white px-2'>Equipo</th>
                 <th className='border border-slate-600 bg-slate-600 text-white px-2'>Puntos</th>
@@ -98,8 +114,10 @@ console.log(Disney)
                 <th className='border border-slate-600 bg-slate-600 text-white px-2'>GF</th>
                 <th className='border border-slate-600 bg-slate-600 text-white px-2'>GC</th>
             </tr>
-        {order && order.map((team)=>{
-            return      <tr>
+            </thead>
+            <tbody>
+        {order && order.map((team,index)=>{
+            return      <tr key={index}>
                             <td className='border border-slate-700 px-1'>{team.team}</td>
                             <td className='border border-slate-700 text-center'>{team.points}</td>
                             <td className='border border-slate-700 text-center'>{team.gd}</td>
@@ -107,6 +125,7 @@ console.log(Disney)
                             <td className='border border-slate-700 text-center'>{team.gc}</td>
                         </tr>
         })}
+        </tbody>
         </table>
     </Layout>
   )
