@@ -49,11 +49,17 @@ const QualifyMatch = () => {
     }, [challengeInfo])
 
     useEffect(()=>{
-        if(challengeTeams){
+        if(challengeTeams  && (tournament==="ligue")){
             const parejas = shuffle(pairMatch(challengeTeams))
             setPairMatches(parejas)
+            //console.log("uno")
           }
-    },[challengeTeams])
+        if(challengeTeams  && (tournament==="elimination")){
+            const parejas = aleatoryElimination(challengeTeams)
+            setPairMatches(parejas)
+            console.log("dos")
+          }
+    },[tournament])
     
     const pairMatch = (list)=> {
         let pairs = new Array((list.length * (list.length - 1)) / 2),
@@ -64,6 +70,17 @@ const QualifyMatch = () => {
             }
         }
         return pairs;
+    }
+
+    function aleatoryElimination(arr){
+        const randomList = shuffle(arr);
+        //console.log(randomList);
+        let pairList = [];
+        for(let i = 0; i <= ((randomList.length-2)/2); i++){
+            //pairList.push([randomList[i],randomList[randomList.length-i-1]]);
+            pairList.push({teamA:randomList[i],pointsA:null,goalsA:null,teamB:randomList[randomList.length-i-1],pointsB:null,goalsB:null});
+        }
+        return pairList;
     }
 
     const doubleLigue = (list) => {
@@ -92,16 +109,28 @@ const QualifyMatch = () => {
     const selTournament = async(e)=>{
         e.preventDefault()
         setSeeMatches(true)
-        await updateDoc(doc(firestore,"eventchallenge",`${eventId}${matchId}`),{
+        setTournament(e.target.value)
+        console.log(e.target.value)
+        if(tournament==="ligue" ||tournament==="elimination"){
+            const obj = {
+                stage:"scoring",
+                tournament:tournament,
+                matches:pairMatches
+            }
+            await updateDoc(doc(firestore,"eventchallenge",`${eventId}${matchId}`),obj)
+            console.log(obj)
+        }
+ /*        await updateDoc(doc(firestore,"eventchallenge",`${eventId}${matchId}`),{
             stage:'scoring',
             tournament:'ligue',
             matches: pairMatches
-        })
+        }) */
          navigate('/activeevents/:eventId/match/:matchId/tournament') 
     }
+    //console.log(tournament)
 
     const handleChange = (e)=>{
-        console.log(e.target.value)
+        //console.log(e.target.value)
         setTournament(e.target.value)
         
     }
@@ -109,6 +138,7 @@ const QualifyMatch = () => {
         doubleLigue(challengeTeams)
     }
 
+    //console.log(challengeTeams)
     return (
     <Layout>
         <div>qualify</div>
