@@ -139,6 +139,25 @@ const Tournament = () => {
                         </button>
                     </div>
         })} */}
+        {challengeInfo.matches.map((teamMatch,index)=>{
+            return <div key={`${teamMatch.teamA.id}${teamMatch.teamB.id}`}
+                        className='flex justify-between ml-8 mr-8 mb-2 border-b-2 border-dashed pb-1'>
+                        {teamMatch.teamA.teamName} vs {teamMatch.teamB.teamName}
+                        {teamMatch.goalsA!==null && <p>jugado</p>}
+                        <button className='
+                                            bgsec
+                                            text-white
+                                            rounded-md
+                                            px-1
+                                            mr-2
+                                            '
+                                onClick={handleClick}
+                                index={
+                                    index
+                                }>jugar
+                        </button>
+                    </div>
+        })}
         </div>
         } 
     </Layout>

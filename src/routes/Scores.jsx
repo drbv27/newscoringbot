@@ -32,8 +32,13 @@ useEffect(()=>{
             const querySnapshot = await getDocs(collection(firestore, "eventchallenge"));
             if(querySnapshot){
                 let scoresArray = []
+                querySnapshot.forEach((doc)=>{
+                    console.log(doc.data())
+                    scoresArray.push(doc.data())
+                    setScores(scoresArray)
+                })
                 /* scoresArray = [...scoresArray,querySnapshot.docs[0].data()] */
-                setScores([...scores,querySnapshot.docs[0].data()])
+                //setScores([...scores,querySnapshot.docs[0].data()])
             }else{
                 console.log("no pude")
             }
@@ -42,18 +47,17 @@ useEffect(()=>{
          }  
     }
     fetchEventChall()
-    const interval = setInterval(()=>{
+/*     const interval = setInterval(()=>{
         fetchEventChall()
-        /* setCount(count+1) */
     },15000);
-    return () =>clearInterval(interval)
+    return () =>clearInterval(interval) */
 },[]);
 
 console.log(count)
 
-/* console.log(scores) */
+ console.log(scores) 
 
-const puntos = function(partidos,equipo){
+/* const puntos = function(partidos,equipo){
     const puntos=partidos.filter((partido)=> partido.teamA.teamName===equipo || partido.teamB.teamName===equipo).map((partido)=>{
         if(partido.teamA.teamName===equipo){
             return partido.pointsA
@@ -80,9 +84,9 @@ const puntos = function(partidos,equipo){
             gf:golesFavor,
             gc:golesContra,
             gd:golesFavor-golesContra}
-}
+} */
 
-function sortBy(ar) {
+/* function sortBy(ar) {
     return ar.sort((a, b) => a.points === b.points 
         ? b.gd-a.gd
         : b.points-a.points
@@ -93,7 +97,7 @@ if(scores.length > 0){
     const tabla = scores[0].teams.map((team)=>puntos(scores[0].matches.matches,team.teamName))
     order = sortBy(tabla)
     const Disney = puntos(scores[0].matches.matches,"Disney")
-}
+} */
 /* console.log(tabla) */
 
 //const order = sortBy(tabla)
@@ -122,7 +126,7 @@ if(scores.length > 0){
             </tr>
             </thead>
             <tbody>
-        {order && order.map((team,index)=>{
+{/*         {order && order.map((team,index)=>{
             return      <tr key={index}>
                             <td className='border border-slate-700 px-1'>{team.team}</td>
                             <td className='border border-slate-700 text-center'>{team.points}</td>
@@ -130,7 +134,7 @@ if(scores.length > 0){
                             <td className='border border-slate-700 text-center'>{team.gf}</td>
                             <td className='border border-slate-700 text-center'>{team.gc}</td>
                         </tr>
-        })}
+        })} */}
         </tbody>
         </table>
     </Layout>
