@@ -57,7 +57,7 @@ console.log(count)
 
  console.log(scores) 
 
-/* const puntos = function(partidos,equipo){
+const puntos = function(partidos,equipo){
     const puntos=partidos.filter((partido)=> partido.teamA.teamName===equipo || partido.teamB.teamName===equipo).map((partido)=>{
         if(partido.teamA.teamName===equipo){
             return partido.pointsA
@@ -84,7 +84,7 @@ console.log(count)
             gf:golesFavor,
             gc:golesContra,
             gd:golesFavor-golesContra}
-} */
+}
 
 /* function sortBy(ar) {
     return ar.sort((a, b) => a.points === b.points 
@@ -113,7 +113,7 @@ if(scores.length > 0){
   return (
     <Layout>
         {scores && scores.filter((score)=> score.stage==="scoring").map((score)=>{
-        return <p>{score.tournamentName}</p>
+        return <p key={score.eventId}>{score.tournamentName}</p>
 })}
         <table className='border-collapse border border-slate-500 hover:border-collapse'>
             <thead>

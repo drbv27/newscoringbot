@@ -97,8 +97,8 @@ const QualifyEvent = () => {
                                                 </div>
                                                 <div>
                                                     {chall.challengeType === "match" 
-                                                    ?<Link to={`/activeevents/${eventId}/match/${chall.id}`}>Calificar Partido</Link>
-                                                    :<Link to={`/activeevents/${eventId}/tasks/${chall.id}`}>Calificar Tareas</Link>
+                                                    ?<Link to={`/activeevents/${eventId}/match/${chall.id}`}>Sortear partidos</Link>
+                                                    :<Link to={`/activeevents/${eventId}/tasks/${chall.id}`}>sortear turnos</Link>
 
                                                     }
                                                 </div>
