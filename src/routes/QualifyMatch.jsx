@@ -125,7 +125,7 @@ const QualifyMatch = () => {
             tournament:'ligue',
             matches: pairMatches
         }) */
-         navigate('/activeevents/:eventId/match/:matchId/tournament') 
+         //navigate('/activeevents/:eventId/match/:matchId/tournament') 
     }
     //console.log(tournament)
 

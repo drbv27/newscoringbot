@@ -30,18 +30,19 @@ useEffect(()=>{
     const fetchEventChall = async () => {
          try{ 
             const querySnapshot = await getDocs(collection(firestore, "eventchallenge"));
-            if(querySnapshot){
+            /* if(querySnapshot){ */
                 let scoresArray = []
                 querySnapshot.forEach((doc)=>{
                     console.log(doc.data())
                     scoresArray.push(doc.data())
+                    console.log(scoresArray)
                     setScores(scoresArray)
                 })
                 /* scoresArray = [...scoresArray,querySnapshot.docs[0].data()] */
                 //setScores([...scores,querySnapshot.docs[0].data()])
-            }else{
+/*             }else{
                 console.log("no pude")
-            }
+            } */
          }catch(error){
             console.log(error)
          }  
@@ -86,14 +87,14 @@ const puntos = function(partidos,equipo){
             gd:golesFavor-golesContra}
 }
 
-/* function sortBy(ar) {
+function sortBy(ar) {
     return ar.sort((a, b) => a.points === b.points 
         ? b.gd-a.gd
         : b.points-a.points
   )}
 
   let order = null
-if(scores.length > 0){
+/* if(scores.length > 0){
     const tabla = scores[0].teams.map((team)=>puntos(scores[0].matches.matches,team.teamName))
     order = sortBy(tabla)
     const Disney = puntos(scores[0].matches.matches,"Disney")
@@ -113,7 +114,7 @@ if(scores.length > 0){
   return (
     <Layout>
         {scores && scores.filter((score)=> score.stage==="scoring").map((score)=>{
-        return <p key={score.eventId}>{score.tournamentName}</p>
+        return <p key={score.eventId}>{score.tournamentName} </p>
 })}
         <table className='border-collapse border border-slate-500 hover:border-collapse'>
             <thead>
